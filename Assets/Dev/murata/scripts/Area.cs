@@ -81,7 +81,7 @@ public class Area : MonoBehaviour
 			// «ŒR‚É‚·‚é
 			if (nearestIndex == _generalIndex)
 			{
-				int idx = card.GetComponent<SetCard>().CardIndex;
+				int idx = card.GetComponent<SetSoldier>().CardIndex;
 
 				_soldierData.SoldierList[idx].General = true;
 				Debug.Log($"{card.name} ‚ª‘å«‚É‚È‚è‚Ü‚µ‚½");

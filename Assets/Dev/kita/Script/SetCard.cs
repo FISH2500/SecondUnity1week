@@ -44,10 +44,6 @@ public class SetCard : MonoBehaviour
         else frontImage.sprite = soldierData.SoldierBack;//兵士の裏の画像をセット
 
         backImage.sprite = soldierData.SoldierBack;//兵士の裏の画像をセット
-
-
     }
-
-    //void 
 
 }

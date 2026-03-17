@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class SpawnSoldierScr : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class SpawnSoldierScr : MonoBehaviour
 
     [SerializeField]
     float spawVel;//どれくらいの間隔で生成するか
+
+    [SerializeField]
+    Vector3[] turnPos;//先攻、後攻を決めるためのカードの配置
 
     public void SpawnSelectSoldier(List<int> array)//6枚を選択してスポーンする関数 
     {
@@ -28,5 +32,14 @@ public class SpawnSoldierScr : MonoBehaviour
 
             setSoldier.CardIndex = array[i];//生成したい値をセット
         }
+    }
+
+    public void Spawn(int idx,int num)//インデックスを基にスポーン 
+    {
+        GameObject soldier = Instantiate(soldierPrefab, turnPos[num], Quaternion.identity);
+
+        SetCard setSoldier = soldier.GetComponent<SetCard>();
+
+        setSoldier.CardIndex = idx;//生成したい値をセット
     }
 }

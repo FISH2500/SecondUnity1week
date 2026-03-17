@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 5565478656997334338}
   - component: {fileID: 9030890359673164492}
   - component: {fileID: 1996183244342722178}
+  - component: {fileID: -7542011657266404990}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Card
@@ -280,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardIndex: 0
+  SoldierAtk: 0
   soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   frontImage: {fileID: 3261882522157365357}
   backImage: {fileID: 8461504812913185378}
@@ -304,6 +306,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0155644, y: 1.3001713, z: 1}
   m_Center: {x: 0.001556476, y: -0.01667674, z: 0}
+--- !u!114 &-7542011657266404990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198287788953400632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e740b995e8ee5441a3a9a0ce34642b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberObj:
+  - {fileID: 7042106189345298846, guid: 51f6306871733af49bac5391cf1ca105, type: 3}
+  - {fileID: 6926070171032166298, guid: bc057e42fb8ccd84885486208c3cdcd5, type: 3}
+  - {fileID: 7549737162546528918, guid: 57f9c09a11b86a348b5367375b6ce4b8, type: 3}
+  - {fileID: 659667942802816792, guid: 17bcde4ccb485fb49aeacafb3ed101dc, type: 3}
+  - {fileID: 7702043048997536161, guid: d90bdacefcf59264f9861d4f63aee350, type: 3}
+  - {fileID: 3408050890189238328, guid: 398e14a7107e206458bcdbcb772221be, type: 3}
+  - {fileID: 5631279258439088975, guid: e26c9b8558193b4428ee2313e513f702, type: 3}
+  - {fileID: 3847812849940439639, guid: 76c85b10c840f1c438f1df5957d6fa07, type: 3}
+  - {fileID: 7021540436723501110, guid: c5aaf9854fe54584b99e658dfd7b34a3, type: 3}
+  - {fileID: 3285724968899081718, guid: a81fc704138154d448f2e9f2b788437b, type: 3}
+  rotateSpeed: 100
 --- !u!1 &7050366770611869002
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,12 @@ public class SpawnSoldierScr : MonoBehaviour
 
             GameObject soldier = Instantiate(soldierPrefab, pos, Quaternion.identity);
 
-            SetCard setSoldier = soldier.GetComponent<SetCard>();
+            SetSoldier setSoldier = soldier.GetComponent<SetSoldier>();
+
+            if (setSoldier == null) 
+            {
+                Debug.LogError("SetCardスクリプトが見つかりません。");
+            }
 
             setSoldier.CardIndex = array[i];//生成したい値をセット
         }
@@ -38,7 +43,12 @@ public class SpawnSoldierScr : MonoBehaviour
     {
         GameObject soldier = Instantiate(soldierPrefab, turnPos[num], Quaternion.identity);
 
-        SetCard setSoldier = soldier.GetComponent<SetCard>();
+        SetSoldier setSoldier = soldier.GetComponent<SetSoldier>();
+
+        if (setSoldier == null)
+        {
+            Debug.LogError("SetCardスクリプトが見つかりません。");
+        }
 
         setSoldier.CardIndex = idx;//生成したい値をセット
     }

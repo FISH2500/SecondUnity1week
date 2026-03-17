@@ -2,12 +2,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetCard : MonoBehaviour
+public class SetSoldier : MonoBehaviour
 {
     public int CardIndex;//セットしたい兵士の添え字を入力
 
     
-    private int CarddierAtk;//セットしたい兵士のレベルを入力
+    public int SoldierAtk;//セットしたい兵士のレベルを入力
 
     [SerializeField]
     SoldierData soldierData;//兵士のデータベース
@@ -24,9 +24,9 @@ public class SetCard : MonoBehaviour
             Debug.LogError("兵士の添え字が大きすぎます。");
         }
 
-        CarddierAtk=soldierData.SoldierList[CardIndex].CardNum;//兵士のレベルをセット
+        SoldierAtk=soldierData.SoldierList[CardIndex].CardNum;//兵士のレベルをセット
 
-        Debug.Log("兵士の攻撃力は" + CarddierAtk + "です。");
+        Debug.Log("兵士の攻撃力は" + SoldierAtk + "です。");
 
         SetSprite();
 

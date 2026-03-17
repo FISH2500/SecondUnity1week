@@ -31,11 +31,11 @@ public class CardSelect : MonoBehaviour
                     {
                         _player1Selected = true;
                     }
-                    BattleManegar.PlayerCardPower = hitObj.GetComponent<SetCard>().CardIndex;
+                    BattleManegar.PlayerCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
                 }
                 if (hitObj.CompareTag("Player2Card") && _player1Selected)
                 {
-                    BattleManegar.EnemyCardPower = hitObj.GetComponent<SetCard>().CardIndex;
+                    BattleManegar.EnemyCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
                     BattleManegar battleManegar = GameObject.Find("BattleManegar").GetComponent<BattleManegar>();
                     battleManegar.Battle();
                     Debug.Log(BattleManegar.Result);

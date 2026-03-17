@@ -6,23 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/game.unity
+    path: Assets/Scenes/menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Dev/higasi/higasi.unity
-    guid: 0f5dbdbe1093a5040a47e850c8345390
+    path: Assets/Dev/higasi/S_higasi.unity
+    guid: 3ca92e70949360a469f0299816258aeb
   - enabled: 1
-    path: Assets/Dev/kita/kita.unity
-    guid: 68f2be5e14d19a143bd3ce3b21f6601d
+    path: Assets/Dev/kita/S_kita.unity
+    guid: 94425f86201a91342b277b27b178aca1
   - enabled: 1
-    path: Assets/Scenes/menu.unity
-    guid: 0a4458725d00f3844a5ae2fa822392a4
+    path: Assets/Dev/matunaga/S_matunaga.unity
+    guid: 7abb137b445191446bd339ae977cdf2a
   - enabled: 1
-    path: Assets/Scenes/result.unity
-    guid: a111f066476af6842b556babe3cd28b7
+    path: Assets/Dev/murata/S_murata.unity
+    guid: fdf19bca3460f8b46977c6e5ac79d9e5
+  - enabled: 1
+    path: Assets/Scenes/game.unity
+    guid: 6749a48712124ee4dbda0e2a5a6321e6
   - enabled: 1
     path: Assets/Scenes/pause.unity
-    guid: 3e6b5534dd91303448614c024dbe8bc3
+    guid: 84d5e3fb35193a94c91c892b3abf9fcb
+  - enabled: 1
+    path: Assets/Scenes/result.unity
+    guid: fee77bdbaf3ae5a458d3f60c3b53608d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

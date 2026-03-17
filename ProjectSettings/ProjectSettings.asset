@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: b429eac9d3b30114ba329326d6041309
+  productGUID: ede2261719e4bb14d951233b28ca5811
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Fukuzin
+  productName: FukuzinProject
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -542,7 +542,6 @@ PlayerSettings:
   - serializedVersion: 2
     m_BuildTarget: Android
     m_EncodingQuality: 1
-  m_BuildTargetGroupHDRCubemapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding:
@@ -838,14 +837,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Fukuzin
+  metroPackageName: FukuzinProject
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Fukuzin
+  metroApplicationDescription: FukuzinProject
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -916,10 +915,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e95aba06-b8c4-4523-8f28-16bf7f1b13c2
+  cloudProjectId: 5d571c54-ddf6-4460-89a3-cd587fb333f6
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Fukuzin
+  projectName: FukuzinProject
   organizationId: unity_babda38f5b5e2c60cf5b
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

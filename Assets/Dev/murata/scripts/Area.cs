@@ -7,6 +7,7 @@ public class Area : MonoBehaviour
 	[SerializeField] private float _setDistance = 1.0f; // セットを許容する最大距離
 
 	[SerializeField] private bool[] _isSet; // カードがセットされているかどうか 見るためにSerializeFieldに
+	[SerializeField] private GameObject _decision; // 決定ボタン
 
 	public bool AllSet = false;
 
@@ -31,6 +32,7 @@ public class Area : MonoBehaviour
 			{
 				_isSet[i] = false;
 				AllSet = false;
+				_decision.SetActive(false);
 				break;
 			}
 		}
@@ -84,6 +86,11 @@ public class Area : MonoBehaviour
 			}
 
 			AllSet = checkAll;
+
+			if(AllSet)
+			{
+				_decision.SetActive(true);
+			}
 
 			Debug.Log($"{card.name} を {nearestIndex} にセットしました");
 			if (AllSet) Debug.Log("すべてのカードがセットされました");

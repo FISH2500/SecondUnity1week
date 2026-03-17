@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class BattleManegar : MonoBehaviour
 {
-    public static CardManegar.Card PlayerCard;
-    public static CardManegar.Card EnemyCard;
+    public static int PlayerCardPower;
+    public static int EnemyCardPower;
     public static int TurnCount = 0;
 
     public enum BattleResult
@@ -13,7 +13,7 @@ public class BattleManegar : MonoBehaviour
         Lose,
         Draw
     }
-    public BattleResult Result;
+    public static BattleResult Result;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,23 +23,22 @@ public class BattleManegar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerCard.Power > EnemyCard.Power)
+       
+    }
+
+    public void Battle()
+    {
+        if (PlayerCardPower > EnemyCardPower)
         {
             Result = BattleResult.Win;
-            PlayerCard.IsOpen = true;
-            EnemyCard.IsLost = true;
         }
-        else if (PlayerCard.Power < EnemyCard.Power)
+        else if (PlayerCardPower < EnemyCardPower)
         {
             Result = BattleResult.Lose;
-            PlayerCard.IsLost = true;
-            EnemyCard.IsOpen = true;
         }
         else
         {
-            Result = BattleResult.Draw;
-            PlayerCard.IsLost = true;
-            EnemyCard.IsLost = true;
+            Result = BattleResult.Draw; 
         }
     }
 }

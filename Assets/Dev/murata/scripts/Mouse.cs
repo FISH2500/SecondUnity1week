@@ -20,8 +20,11 @@ public class Mouse : MonoBehaviour
 			if (Physics.Raycast(ray, out hit)) // 光線を飛ばして当たって
 			{
 				if (!hit.collider.CompareTag("Card")) return; // Card以外ならこれ以上行わない
+
 				// 選択したオブジェクトを保存
 				_dragObj = hit.collider.gameObject;
+
+				_area.RemoveAria(_dragObj);
 
 				// Zの位置を保存
 				_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;

@@ -3,6 +3,7 @@ using UnityEngine;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
 	[SerializeField] private Camera _camera; // rayを飛ばすためのカメラ
+	[SerializeField] private Area _area; // セットするためのエリア
 
 	private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
 	private float _zDistance = 0; // 選択した時のZ軸の位置
@@ -16,8 +17,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 
-			if (Physics.Raycast(ray, out hit)) // 光線を飛ばして当たったならば
+			if (Physics.Raycast(ray, out hit)) // 光線を飛ばして当たって
 			{
+				if (!hit.collider.CompareTag("Card")) return; // Card以外ならこれ以上行わない
 				// 選択したオブジェクトを保存
 				_dragObj = hit.collider.gameObject;
 
@@ -29,8 +31,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
 			}
 		}
 
+		if (_dragObj == null) return;
+
 		// ドラッグ中
-		if (Input.GetMouseButton(0) && _dragObj != null)
+		if (Input.GetMouseButton(0))
 		{
 			// マウスの座標を取得
 			Vector3 mousePos = Input.mousePosition;
@@ -48,6 +52,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 		// 指を離した時
 		if (Input.GetMouseButtonUp(0))
 		{
+			_area.SetAria(_dragObj);
 			_dragObj = null; // ドラッグしているオブジェクトをNULLに
 		}
 	}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Mouse : MonoBehaviour
 {
 	[SerializeField] private Camera _camera; // rayを飛ばすためのカメラ
 	[SerializeField] private Area _area; // セットするためのエリア

@@ -190,9 +190,10 @@ GameObject:
   - component: {fileID: 4654966565464892147}
   - component: {fileID: 5565478656997334338}
   - component: {fileID: 9030890359673164492}
+  - component: {fileID: 1996183244342722178}
   m_Layer: 0
   m_Name: Soldier
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -282,6 +283,27 @@ MonoBehaviour:
   soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   frontImage: {fileID: 3261882522157365357}
   backImage: {fileID: 8461504812913185378}
+--- !u!65 &1996183244342722178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198287788953400632}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0155644, y: 1.3001713, z: 1}
+  m_Center: {x: 0.001556476, y: -0.01667674, z: 0}
 --- !u!1 &7050366770611869002
 GameObject:
   m_ObjectHideFlags: 0

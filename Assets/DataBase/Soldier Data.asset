@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3ee3f2bdd460848b3c3df6a0ef762b, type: 3}
+  m_Name: Soldier Data
+  m_EditorClassIdentifier: 
+  SoldierBack: {fileID: -2065550583, guid: bdb0dd1eb833a9c47bf96b831e13f24b, type: 3}
+  SoldierList:
+  - CardNum: 1
+    CardSprite: {fileID: -244679614, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 2
+    CardSprite: {fileID: -1089323269, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 3
+    CardSprite: {fileID: -318101441, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 4
+    CardSprite: {fileID: -1477348101, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 5
+    CardSprite: {fileID: -51745396, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 6
+    CardSprite: {fileID: -587957782, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 7
+    CardSprite: {fileID: -203338016, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 8
+    CardSprite: {fileID: 1821168265, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 9
+    CardSprite: {fileID: -570917804, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 10
+    CardSprite: {fileID: 1878540199, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 11
+    CardSprite: {fileID: -357982324, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 1
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 12
+    CardSprite: {fileID: 1714080136, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0
+  - CardNum: 13
+    CardSprite: {fileID: -274162782, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardPossession: 0
+    CardBack: 0
+    CardDie: 0
+    CardArrangement: 0
+    General: 0

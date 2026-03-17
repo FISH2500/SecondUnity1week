@@ -9,6 +9,9 @@ public class Area : MonoBehaviour
 	[SerializeField] private bool[] _isSet; // カードがセットされているかどうか 見るためにSerializeFieldに
 	[SerializeField] private GameObject _decision; // 決定ボタン
 
+	[SerializeField] private SoldierData _soldierData;//兵士のデータベース
+	[SerializeField] private int _generalIndex;
+
 	public bool AllSet = false;
 
 	void Start()
@@ -33,6 +36,7 @@ public class Area : MonoBehaviour
 				_isSet[i] = false;
 				AllSet = false;
 				_decision.SetActive(false);
+				_soldierData.SoldierList[i].General = false;
 				break;
 			}
 		}
@@ -73,6 +77,15 @@ public class Area : MonoBehaviour
 
 			// フラグを立てる
 			_isSet[nearestIndex] = true;
+
+			// 将軍にする
+			if (nearestIndex == _generalIndex)
+			{
+				int idx = card.GetComponent<SetCard>().CardIndex;
+
+				_soldierData.SoldierList[idx].General = true;
+				Debug.Log($"{card.name} が大将になりました");
+			}
 
 			// 全てセットしたか確かめるループ
 			bool checkAll = true;

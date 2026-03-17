@@ -3,13 +3,17 @@ using UnityEngine;
 [System.Serializable]
 public class Soldier
 {
-    public int SolNum;//•ºm‚Ì”Ô†
+    public int CardNum;//Card‚Ì”Ô†
 
-    public Sprite SolSprite;//1`13‚Ì•ºm‚Ì‰æ‘œ
+    public Sprite CardSprite;//1`13‚ÌCard‚Ì‰æ‘œ
 
-    public bool SolBack;//•ºm‚ª— ‚©•\‚©
+    public bool CardPossession;//Player‚ª‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 
-    public bool SolDie;//•ºm‚ª€‚ñ‚Å‚¢‚é‚©¶‚«‚Ä‚¢‚é‚©
+    public bool CardBack;//Card‚ª— ‚©•\‚©
 
-    public bool SolArrangement;//•ºm‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    public bool CardDie;//Card‚ª€‚ñ‚Å‚¢‚é‚©¶‚«‚Ä‚¢‚é‚©
+
+    public bool CardArrangement;//Card‚ª”z’u‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+
+    public bool General;//‘å«‚©‚Ç‚¤‚©
 }

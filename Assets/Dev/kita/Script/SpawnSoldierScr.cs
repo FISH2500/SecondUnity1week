@@ -39,7 +39,7 @@ public class SpawnSoldierScr : MonoBehaviour
         }
     }
 
-    public void Spawn(int idx,int num)//インデックスを基にスポーン 
+    public GameObject Spawn(int idx,int num)//インデックスを基にスポーン 
     {
         GameObject soldier = Instantiate(soldierPrefab, turnPos[num], Quaternion.identity);
 
@@ -51,5 +51,8 @@ public class SpawnSoldierScr : MonoBehaviour
         }
 
         setSoldier.CardIndex = idx;//生成したい値をセット
+
+        return soldier;
+
     }
 }

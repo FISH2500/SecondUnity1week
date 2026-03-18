@@ -284,13 +284,10 @@ MonoBehaviour:
   SoldierAtk: 0
   OwnerPlayer: 0
   IsGeneral: 0
+  IsBack: 0
   _soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   _frontImage: {fileID: 3261882522157365357}
   _backImage: {fileID: 8461504812913185378}
-  _DestroyObject:
-  - {fileID: 2066738169137544112}
-  - {fileID: 830967199025789612}
-  - {fileID: 7050366770611869002}
 --- !u!65 &1996183244342722178
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -324,7 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e740b995e8ee5441a3a9a0ce34642b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberObj:
+  IsShowText: 1
+  _numberObj:
   - {fileID: 7042106189345298846, guid: 51f6306871733af49bac5391cf1ca105, type: 3}
   - {fileID: 6926070171032166298, guid: bc057e42fb8ccd84885486208c3cdcd5, type: 3}
   - {fileID: 7549737162546528918, guid: 57f9c09a11b86a348b5367375b6ce4b8, type: 3}
@@ -335,7 +333,7 @@ MonoBehaviour:
   - {fileID: 3847812849940439639, guid: 76c85b10c840f1c438f1df5957d6fa07, type: 3}
   - {fileID: 7021540436723501110, guid: c5aaf9854fe54584b99e658dfd7b34a3, type: 3}
   - {fileID: 3285724968899081718, guid: a81fc704138154d448f2e9f2b788437b, type: 3}
-  rotateSpeed: 100
+  _rotateSpeed: 50
 --- !u!1 &7050366770611869002
 GameObject:
   m_ObjectHideFlags: 0

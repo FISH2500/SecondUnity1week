@@ -9,20 +9,30 @@ public class SelectSoldier : MonoBehaviour
     Deck _deck;//カードのスポーンシステム
 
     [SerializeField]
+    Area _area;
+
     Vector3 _startCard;//カードスポーンの開始位置
 
+    GameObject _card;
 
     void Start()
     {
 
+        MeshRenderer _mesh=GetComponent<MeshRenderer>();
 
-        for(int i = 0; i < 6; i++) 
+        _mesh.enabled = false;//カードスポーンの開始位置をオブジェクトの位置に設定
+
+        _startCard = transform.position;//カードスポーンの開始位置をオブジェクトの位置に設定
+
+        for (int i = 0; i < 6; i++) 
         {
-            GameObject card= _deck.DrawCard(0);
-            //if(card==null) Debug.LogError("山札が空です。カードを引けません。");
+            _card= _deck.DrawCard(0);
+
+            _card.GetComponent<SetSoldier>().SetFront();//カードを表にする
+
             _startCard.x +=2.0f;//カードを横に並べるための位置
 
-            card.transform.position = _startCard;//カードを横に並べる
+            _card.transform.position = _startCard;//カードを横に並べる
 
         }
 
@@ -34,6 +44,17 @@ public class SelectSoldier : MonoBehaviour
     void Update()
     {
        
+    }
+
+    public void CardSet()//カードの向きをセットする関数
+    {
+        for(int i = 0; i < 6; i++) 
+        {
+            if (_area.CardObj[i].GetComponent<SetSoldier>().IsGeneral) continue;//将軍なら表
+
+            _area.CardObj[i].GetComponent<SetSoldier>().SetBack(0);//将軍以外裏面にする
+        }
+        
     }
 
     //選ばれた6枚をリストに格納する関数

@@ -15,6 +15,9 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 	[SerializeField]
 	Mouse _mouse;
 
+	[SerializeField]
+	SelectSoldier _selectSoldier;
+
     private Vector3 _scale;
 
 	void Awake()
@@ -32,7 +35,12 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 
 		_mouse.enabled = false;
 		attackTurnJudge.TurnJudge();
-	}
+
+		gameObject.SetActive(false);//ボタンを非表示
+
+		_selectSoldier.CardSet();
+		//for(int i=0;i<)
+    }
 
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)

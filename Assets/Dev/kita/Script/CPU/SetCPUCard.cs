@@ -16,6 +16,8 @@ public class SetCPUCard : MonoBehaviour
         {
             GameObject card= _deck.DrawCard(1);//CPUのカードを6枚引く
 
+            card.GetComponent<SetSoldier>().SetBack(1);//カードを裏にする
+
             card.transform.position = _cpuArea.CardPosition[i].position;
 			_cpuArea.CardObject[i] = card;
 

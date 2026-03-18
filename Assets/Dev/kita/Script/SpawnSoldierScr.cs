@@ -15,7 +15,7 @@ public class SpawnSoldierScr : MonoBehaviour
     float spawVel;//どれくらいの間隔で生成するか
 
     [SerializeField]
-    Vector3[] turnPos;//先攻、後攻を決めるためのカードの配置
+    Transform[] turnPos;//先攻、後攻を決めるためのカードの配置
 
     public void SpawnSelectSoldier(List<int> array)//6枚を選択してスポーンする関数 
     {
@@ -41,7 +41,7 @@ public class SpawnSoldierScr : MonoBehaviour
 
     public GameObject Spawn(int idx,int num)//インデックスを基にスポーン 
     {
-        GameObject soldier = Instantiate(soldierPrefab, turnPos[num], Quaternion.identity);
+        GameObject soldier = Instantiate(soldierPrefab, turnPos[num].position, Quaternion.identity);
 
         SetSoldier setSoldier = soldier.GetComponent<SetSoldier>();
 

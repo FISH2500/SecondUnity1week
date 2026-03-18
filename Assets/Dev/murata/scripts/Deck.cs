@@ -20,12 +20,14 @@ public class Deck : MonoBehaviour
 		}
 
 		// ƒVƒƒƒbƒtƒ‹
-		for (int i = 0; i < _deck.Count; i++)
+		for (int i = 0; i < _deck.Count * 2; i++)
 		{
-			int randomIndex = Random.Range(i, _deck.Count);
-			int tmp = _deck[i];
-			_deck[i] = _deck[randomIndex];
-			_deck[randomIndex] = tmp;
+			int idx1 = Random.Range(i, _deck.Count);
+			int idx2 = Random.Range(i, _deck.Count);
+
+			int tmp = _deck[idx1];
+			_deck[idx1] = _deck[idx2];
+			_deck[idx2] = tmp;
 		}
 	}
 

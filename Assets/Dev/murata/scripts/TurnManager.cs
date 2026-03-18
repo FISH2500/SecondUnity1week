@@ -10,13 +10,13 @@ public class TurnManager : MonoBehaviour
 	{
 		CurrentPlayer ^= 1;
 		useItem = false;
-		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
+		Debug.Log($"繝励Ξ繧､繝､繝ｼ{CurrentPlayer} 縺ｮ繧ｿ繝ｼ繝ｳ");
 	}
 
 	public void SetTurn(int player)
 	{
 		CurrentPlayer = player;
 		useItem = false;
-		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
+		Debug.Log($"繝励Ξ繧､繝､繝ｼ{CurrentPlayer} 縺ｮ繧ｿ繝ｼ繝ｳ");
 	}
 }

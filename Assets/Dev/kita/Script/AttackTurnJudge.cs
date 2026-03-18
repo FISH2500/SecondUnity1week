@@ -4,12 +4,14 @@ public class AttackTurnJudge : MonoBehaviour
 {
 
     [SerializeField]
-    Deck _spawnSoldierScr;//カードのスポーンシステム
+    SpawnSoldierScr _spawnSoldierScr;//カードのスポーンシステム
 
+    [SerializeField]
+    TurnManager _turnManager;//ターン管理システム
 
     void Start()
     {
-        TurnJudge();
+        //TurnJudge();
         //TurnJudge();//攻撃ターンの判定を行う関数
     }
 
@@ -35,16 +37,20 @@ public class AttackTurnJudge : MonoBehaviour
             }
 
         }
-        
 
-        Debug.Log("Player" + card[0]+" CPU" + card[1]);
+        _spawnSoldierScr.Spawn(card[0],0);//カードのインデックスを基に兵士をスポーンさせる
+        _spawnSoldierScr.Spawn(card[1],1);//カードのインデックスを基に兵士をスポーンさせる
+
+        Debug.Log("Player" + card[0]+1+" CPU" + card[1]+1);
 
         if (card[0] > card[1]) 
         {
+            _turnManager.SetTurn(0);//先攻をプレイヤーに設定
             Debug.Log("あなたは先攻です。");
         }
         else
         {
+            _turnManager.SetTurn(1);
             Debug.Log("あなたは後攻です。");
         }
 

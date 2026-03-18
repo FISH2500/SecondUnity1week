@@ -9,7 +9,7 @@ public class SelectSoldier : MonoBehaviour
     Deck _deck;//カードのスポーンシステム
 
     [SerializeField]
-    Vector3 startCard;//カードスポーンの開始位置
+    Vector3 _startCard;//カードスポーンの開始位置
 
 
     void Start()
@@ -20,9 +20,9 @@ public class SelectSoldier : MonoBehaviour
         {
             GameObject card= _deck.DrawCard(0);
             //if(card==null) Debug.LogError("山札が空です。カードを引けません。");
-            startCard.x +=2.0f;//カードを横に並べるための位置
+            _startCard.x +=2.0f;//カードを横に並べるための位置
 
-            card.transform.position = startCard;//カードを横に並べる
+            card.transform.position = _startCard;//カードを横に並べる
 
         }
 

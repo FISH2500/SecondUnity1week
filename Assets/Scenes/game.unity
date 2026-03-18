@@ -1041,7 +1041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1841576758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1054,7 +1054,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4a70d7c50e82b48beccb27b6ffb8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnSoldierScr: {fileID: 0}
+  _spawnSoldierScr: {fileID: 2144246410}
+  _turnManager: {fileID: 0}
 --- !u!4 &1841576759
 Transform:
   m_ObjectHideFlags: 0

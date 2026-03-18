@@ -9,6 +9,9 @@ public class AttackTurnJudge : MonoBehaviour
     [SerializeField]
     TurnManager _turnManager;//ターン管理システム
 
+    [SerializeField]
+    GameObject _backGround;
+
     void Start()
     {
         //TurnJudge();
@@ -23,6 +26,8 @@ public class AttackTurnJudge : MonoBehaviour
     //攻撃ターンの判定を行う関数
     public void TurnJudge() 
     {
+        _backGround.SetActive(true);//背景を消す
+
         int[] card = new int[2];//攻撃ターンの兵士のインデックスを格納する配列
         int setCard = 0;//セットされた兵士の数
         while (setCard<2) 
@@ -38,8 +43,23 @@ public class AttackTurnJudge : MonoBehaviour
 
         }
 
-        _spawnSoldierScr.Spawn(card[0],0);//カードのインデックスを基に兵士をスポーンさせる
-        _spawnSoldierScr.Spawn(card[1],1);//カードのインデックスを基に兵士をスポーンさせる
+        GameObject[] player = new GameObject[2];//PlayerとCPUのカードを格納する配列
+
+        OutPutAttack[] outPutAttack = new OutPutAttack[2];//PlayerとCPU用の3Dテキストスクリプトの配列を格納
+
+        for (int i = 0; i < 2; i++)
+        {
+            player[i] = _spawnSoldierScr.Spawn(card[i], i);//Player,CPUカードをスポーンさせる
+
+            outPutAttack[i] = player[i].GetComponent<OutPutAttack>();//カードから3Dテキストスクリプトを取得する
+
+            outPutAttack[i].IsShowText = false;//先攻、後攻のカードのため3D数字を非表示
+
+            CardMove(player,i);
+        }
+
+        //カードを裏から徐々に回転
+
 
         Debug.Log("Player" + card[0]+1+" CPU" + card[1]+1);
 
@@ -54,5 +74,12 @@ public class AttackTurnJudge : MonoBehaviour
             Debug.Log("あなたは後攻です。");
         }
 
+    }
+
+    void CardMove(GameObject[] player,int i) //カードに関する動作処理まとめ
+    {
+
+        //カードをズームさせる
+        player[i].transform.position = new Vector3(1.5f, 8.0f, 0.0f);//カードをズームさせるための位置
     }
 }

@@ -12,6 +12,8 @@ public class SetSoldier : MonoBehaviour
 
 	public bool IsGeneral; // 大将かどうか
 
+    public bool IsBack; // 裏か表か
+
     [SerializeField]
     private SoldierData _soldierData;//兵士のデータベース
 
@@ -33,6 +35,11 @@ public class SetSoldier : MonoBehaviour
         Debug.Log("兵士の攻撃力は" + SoldierAtk + "です。");
 
         SetSprite();
+    }
+
+    private void Update()
+    {
+        
     }
 
     void SetSprite() 

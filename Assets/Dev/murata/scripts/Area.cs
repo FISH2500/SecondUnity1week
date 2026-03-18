@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static CardManegar;
 
 public class Area : MonoBehaviour
 {
@@ -12,12 +13,21 @@ public class Area : MonoBehaviour
 	[SerializeField] private SoldierData _soldierData;//兵士のデータベース
 	[SerializeField] private int _generalIndex;
 
+	[SerializeField] public GameObject[] CardObj;
+
 	public bool AllSet = false;
 
 	void Start()
 	{
 		// _cardPositionの数に合わせて配列を初期化
 		_isSet = new bool[_cardPosition.Length];
+
+		CardObj = new GameObject[_cardPosition.Length];
+
+		for (int i = 0; i < CardObj.Length; i++)
+		{
+			CardObj[i] = null;
+		}
 	}
 
 	public void RemoveAria(GameObject card)
@@ -35,6 +45,7 @@ public class Area : MonoBehaviour
 			{
 				_isSet[i] = false;
 				AllSet = false;
+				CardObj[i] = null;
 				_decision.SetActive(false);
 				card.GetComponent<SetSoldier>().IsGeneral = false;
 				break;
@@ -96,6 +107,8 @@ public class Area : MonoBehaviour
 					break;
 				}
 			}
+
+			CardObj[nearestIndex] = card; // どの場所にどのカードがあるか保存
 
 			AllSet = checkAll;
 

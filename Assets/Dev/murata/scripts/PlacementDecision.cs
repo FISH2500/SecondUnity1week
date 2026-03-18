@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
@@ -10,6 +11,9 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 
 	[SerializeField]
 	AttackTurnJudge attackTurnJudge;//先攻,後攻の判定を行うスクリプト
+
+	[SerializeField]
+	Mouse _mouse;
 
     private Vector3 _scale;
 
@@ -26,8 +30,9 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 		//_onClicked?.Invoke();
 		//GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
 
+		_mouse.enabled = false;
 		attackTurnJudge.TurnJudge();
-  }
+	}
 
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)

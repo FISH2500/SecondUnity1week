@@ -36,13 +36,13 @@ public class Area : MonoBehaviour
 				_isSet[i] = false;
 				AllSet = false;
 				_decision.SetActive(false);
-				_soldierData.SoldierList[i].General = false;
+				card.GetComponent<SetSoldier>().IsGeneral = false;
 				break;
 			}
 		}
 	}
 
-	public void SetAria(GameObject card)
+	public bool SetAria(GameObject card)
 	{
 		float nearestPos = Mathf.Infinity; // 一番近い座標までの距離
 		int nearestIndex = -1; // 近い座標の配列番号
@@ -81,9 +81,8 @@ public class Area : MonoBehaviour
 			// 将軍にする
 			if (nearestIndex == _generalIndex)
 			{
-				int idx = card.GetComponent<SetSoldier>().CardIndex;
+				card.GetComponent<SetSoldier>().IsGeneral = true;
 
-				_soldierData.SoldierList[idx].General = true;
 				Debug.Log($"{card.name} が大将になりました");
 			}
 
@@ -100,13 +99,17 @@ public class Area : MonoBehaviour
 
 			AllSet = checkAll;
 
-			if(AllSet)
+			if (AllSet)
 			{
 				_decision.SetActive(true);
 			}
 
 			Debug.Log($"{card.name} を {nearestIndex} にセットしました");
 			if (AllSet) Debug.Log("すべてのカードがセットされました");
+
+			return true;
 		}
+		
+		return false;
 	}
 }

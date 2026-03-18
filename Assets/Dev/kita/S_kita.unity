@@ -358,7 +358,7 @@ Transform:
   m_GameObject: {fileID: 240886111}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 12, z: 0}
+  m_LocalPosition: {x: 0, y: 15.76, z: -1.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -510,7 +510,7 @@ Transform:
   m_GameObject: {fileID: 453211863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.47760776, y: -2.0776339, z: -6.32}
+  m_LocalPosition: {x: -0.47760776, y: -2.0776339, z: -8.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deck: {fileID: 807389655}
-  _cardPos: []
+  _startCard: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1107460149
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,12 +927,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPosition:
-  - {x: 4, y: 0, z: 0}
-  - {x: 2, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: -2, y: 0, z: 0}
-  - {x: -4, y: 0, z: 0}
-  - {x: -6, y: 0, z: 0}
+  - {fileID: 778851523}
+  - {fileID: 1489786211}
+  - {fileID: 188080595}
+  - {fileID: 184589228}
+  - {fileID: 1500902502}
+  - {fileID: 1360021338}
   _setDistance: 1.2
   _isSet: 
   _decision: {fileID: 1825331972}
@@ -1023,7 +1023,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.56, z: 0}
-  m_LocalScale: {x: 24.324457, y: 0.37354, z: 13.026}
+  m_LocalScale: {x: 65.79765, y: 0.37354, z: 39.687614}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 1407049809}
   - component: {fileID: 1407049808}
   m_Layer: 0
-  m_Name: CPUTable
+  m_Name: CPUSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1178,7 +1178,7 @@ GameObject:
   - component: {fileID: 1468377263}
   - component: {fileID: 1468377262}
   m_Layer: 0
-  m_Name: CPUArea
+  m_Name: CPUTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1327,7 +1327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1592771291
 MonoBehaviour:
   m_ObjectHideFlags: 0

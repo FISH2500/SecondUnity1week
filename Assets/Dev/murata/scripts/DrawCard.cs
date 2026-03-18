@@ -84,10 +84,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 		transform.localScale = _scale;
 	}
 
-	public void DrawCardCPU()
+	public GameObject DrawCardCPU()
 	{
-		Debug.Log($"{gameObject.name} がクリックされました");
-
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)
@@ -99,7 +97,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				Debug.Log($"ドローしました");
 
 				TurnManager.instance.IsAction = true;
-				//TurnManager.instance.ChangeTurn();
+
+				return obj;
 			}
 		}
 		else
@@ -113,8 +112,23 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				Debug.Log($"ドローしました");
 
 				TurnManager.instance.IsAction = true;
-				//_turnManager.ChangeTurn();
+
+				return obj;
 			}
+		}
+
+		return null;
+	}
+
+	public bool IsDraw()
+	{
+		if (TurnManager.instance.CurrentPlayer == 0)
+		{
+			return _drawCountPlayer1 < _drawCardNum;
+		}
+		else
+		{
+			return _drawCountPlayer2 < _drawCardNum;
 		}
 	}
 }

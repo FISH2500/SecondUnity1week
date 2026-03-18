@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public enum TurnState
-{
-	Player1Turn,
-	Player2Turn,
-}
-
 public class TurnManager : MonoBehaviour
 {
-	public static int CurrentTurn;
+	public int CurrentPlayer;
 
 	public bool useItem = false;
 
-	public void TurnChange()
+	public void ChangeTurn()
 	{
-		CurrentTurn ^= 1;
+		CurrentPlayer ^= 1;
 		useItem = false;
-		Debug.Log($"プレイヤー{CurrentTurn} のターン");
+		Debug.Log($"繝励Ξ繧､繝､繝ｼ{CurrentPlayer} 縺ｮ繧ｿ繝ｼ繝ｳ");
+	}
+
+	public void SetTurn(int player)
+	{
+		CurrentPlayer = player;
+		useItem = false;
+		Debug.Log($"繝励Ξ繧､繝､繝ｼ{CurrentPlayer} 縺ｮ繧ｿ繝ｼ繝ｳ");
 	}
 }

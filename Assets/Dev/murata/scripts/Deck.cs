@@ -22,8 +22,8 @@ public class Deck : MonoBehaviour
 		// ƒVƒƒƒbƒtƒ‹
 		for (int i = 0; i < _deck.Count * 2; i++)
 		{
-			int idx1 = Random.Range(i, _deck.Count);
-			int idx2 = Random.Range(i, _deck.Count);
+			int idx1 = Random.Range(0, _deck.Count);
+			int idx2 = Random.Range(0, _deck.Count);
 
 			int tmp = _deck[idx1];
 			_deck[idx1] = _deck[idx2];

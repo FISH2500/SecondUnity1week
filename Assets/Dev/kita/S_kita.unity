@@ -471,6 +471,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &807389654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807389656}
+  - component: {fileID: 807389655}
+  m_Layer: 0
+  m_Name: Deck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &807389655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807389654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40b5a7a2a8aeb54aae83f1ad94dfa0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardPrefab: {fileID: 6198287788953400632, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
+  _deck: 
+--- !u!4 &807389656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807389654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.9505563, y: 3.9939663, z: 1.5239223}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &881826356
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,7 +635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1022644274
 Transform:
   m_ObjectHideFlags: 0
@@ -617,8 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e07018e162857479abe90e3edf3b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
-  spawnSoldierScr: {fileID: 1818536876}
+  _deck: {fileID: 0}
+  startCard: {x: 0, y: 0, z: 0}
 --- !u!1 &1107460149
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +707,7 @@ MonoBehaviour:
   _setDistance: 1.2
   _isSet: 
   _decision: {fileID: 1825331972}
-  _soldierData: {fileID: 0}
+  _soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   _generalIndex: 0
   AllSet: 0
 --- !u!65 &1107460151
@@ -769,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1592771291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd124f0267681d46adb66198654d567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTurnJudge: {fileID: 0}
 --- !u!114 &1825331975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,3 +1133,4 @@ SceneRoots:
   - {fileID: 1592771292}
   - {fileID: 1107460154}
   - {fileID: 881826360}
+  - {fileID: 807389656}

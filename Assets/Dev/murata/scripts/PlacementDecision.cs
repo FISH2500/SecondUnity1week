@@ -8,7 +8,10 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 	// インスペクターから実行したいメソッドを指定できるようにする
 	//[SerializeField] private UnityEvent _onClicked;
 
-	private Vector3 _scale;
+	[SerializeField]
+	AttackTurnJudge attackTurnJudge;//先攻,後攻の判定を行うスクリプト
+
+    private Vector3 _scale;
 
 	void Awake()
 	{
@@ -22,7 +25,9 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 		// インスペクターで設定した処理を実行
 		//_onClicked?.Invoke();
 		GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
-	}
+
+		attackTurnJudge.TurnJudge();
+    }
 
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)

@@ -10,11 +10,11 @@ public class InitData : MonoBehaviour
     {
         foreach (var soldier in soldierData.SoldierList)//カードのデータの変更する部分をすべて初期化する
         {
-            soldier.CardArrangement = false;
-            soldier.CardDie = false;
-            soldier.CardBack = false;
-            soldier.CardPossession = false;
-            soldier.General = false;
+            //soldier.CardArrangement = false;
+            //soldier.CardDie = false;
+            //soldier.CardBack = false;
+            //soldier.CardPossession = false;
+            //soldier.General = false;
         }
     }
 

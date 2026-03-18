@@ -39,18 +39,18 @@ public class CardSelect : MonoBehaviour
                 {
                     if (!_player1Selected)
                         _player1Selected = true;
-<<<<<<< Updated upstream
-                    }
-                    BattleManegar.PlayerCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
-                }
-                if (hitObj.CompareTag("Player2Card") && _player1Selected)
-                {
-                    BattleManegar.EnemyCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
-                    BattleManegar battleManegar = GameObject.Find("BattleManegar").GetComponent<BattleManegar>();
-                    battleManegar.Battle();
-                    Debug.Log(BattleManegar.Result);
-                    _player1Selected = false;
-=======
+//<<<<<<< Updated upstream
+//                    }
+//                    BattleManegar.PlayerCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
+//                }
+//                if (hitObj.CompareTag("Player2Card") && _player1Selected)
+//                {
+//                    BattleManegar.EnemyCardPower = hitObj.GetComponent<SetSoldier>().CardIndex;
+//                    BattleManegar battleManegar = GameObject.Find("BattleManegar").GetComponent<BattleManegar>();
+//                    battleManegar.Battle();
+//                    Debug.Log(BattleManegar.Result);
+//                    _player1Selected = false;
+//=======
                     _player1Card = hitObj;
                 }
                 if (hitObj.CompareTag("Player2Card") && _player1Selected)
@@ -58,7 +58,7 @@ public class CardSelect : MonoBehaviour
                     if (!_player2Selected)
                         _player2Selected = true;
                     _player2Card = hitObj;
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
                 }
             }
         }

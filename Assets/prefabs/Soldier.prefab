@@ -287,6 +287,10 @@ MonoBehaviour:
   _soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   _frontImage: {fileID: 3261882522157365357}
   _backImage: {fileID: 8461504812913185378}
+  _DestroyObject:
+  - {fileID: 2066738169137544112}
+  - {fileID: 830967199025789612}
+  - {fileID: 7050366770611869002}
 --- !u!65 &1996183244342722178
 BoxCollider:
   m_ObjectHideFlags: 0

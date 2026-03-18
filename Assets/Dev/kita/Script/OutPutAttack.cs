@@ -97,9 +97,12 @@ public class OutPutAttack : MonoBehaviour
 
             Instantiate(numberObj[oneNum], pos, rot, parent.transform);
         }
-
-        
-
     }
 
+	private void OnDestroy()
+	{
+		Debug.Log("ƒJ[ƒh‚ª”j‰ó‚³‚ê‚Ü‚µ‚½");
+
+		Destroy(parent);
+	}
 }

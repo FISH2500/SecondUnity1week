@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField] private Deck _deck;
-	[SerializeField] private TurnManager _turnManager;
 
 	[SerializeField] private int _drawCardNum;
 
 	[SerializeField] private Vector3 _drawCardPosition;
+	[SerializeField] private DrawMouse _drawMouse;
 
 	private Vector3 _scale;
 
@@ -26,7 +26,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	private void Update()
 	{
-		bool isMyTurn = _turnManager.CurrentPlayer == 0;
+		bool isMyTurn = TurnManager.instance.CurrentPlayer == 0;
 
 		if (_image.enabled != isMyTurn)
 		{
@@ -38,30 +38,36 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
 
-		if (_turnManager.CurrentPlayer == 0)
+		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(_turnManager.CurrentPlayer);
+				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition;
 				_drawCountPlayer1++;
 
 				Debug.Log($"ドローしました");
 
-				_turnManager.ChangeTurn();
+				TurnManager.instance.IsAction = true;
+				_drawMouse.enabled = true;
+				_drawMouse.DrawObject = obj;
+				//TurnManager.instance.ChangeTurn();
 			}
 		}
 		else
 		{
 			if (_drawCountPlayer2 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(_turnManager.CurrentPlayer);
+				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition;
 				_drawCountPlayer2++;
 
 				Debug.Log($"ドローしました");
 
-				_turnManager.ChangeTurn();
+				TurnManager.instance.IsAction = true;
+				_drawMouse.enabled = true;
+				_drawMouse.DrawObject = obj;
+				//TurnManager.instance.ChangeTurn();
 			}
 		}
 	}
@@ -82,30 +88,32 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
 
-		if (_turnManager.CurrentPlayer == 0)
+		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(_turnManager.CurrentPlayer);
+				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition;
 				_drawCountPlayer1++;
 
 				Debug.Log($"ドローしました");
 
-				_turnManager.ChangeTurn();
+				TurnManager.instance.IsAction = true;
+				//TurnManager.instance.ChangeTurn();
 			}
 		}
 		else
 		{
 			if (_drawCountPlayer2 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(_turnManager.CurrentPlayer);
+				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition;
 				_drawCountPlayer2++;
 
 				Debug.Log($"ドローしました");
 
-				_turnManager.ChangeTurn();
+				TurnManager.instance.IsAction = true;
+				//_turnManager.ChangeTurn();
 			}
 		}
 	}

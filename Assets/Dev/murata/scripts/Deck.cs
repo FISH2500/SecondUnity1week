@@ -31,7 +31,7 @@ public class Deck : MonoBehaviour
 		}
 	}
 
-	public GameObject DrawCard()
+	public GameObject DrawCard(int ownerPlayer)
 	{
 		if (_deck.Count == 0) return null;
 

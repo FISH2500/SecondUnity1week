@@ -13,14 +13,11 @@ public class OutPutAttack : MonoBehaviour
     [SerializeField]
     float rotateSpeed;//回転速度
 
-    GameObject textObj;//テキストを表示するオブジェクト
-
     GameObject parent;//10,1の位をまとめる親オブジェクト
-
-    bool isTenNum=false;//10の位があるかどうか
 
     float y;
 
+    Vector3 textPos;//テキストの位置
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,12 +33,12 @@ public class OutPutAttack : MonoBehaviour
         soldierAtk =setSoldier.SoldierAtk;//SetCardスクリプトから兵士の攻撃力を取得する
 
         cardPos=setSoldier.transform.position;//カードの位置を取得する
-                                              // textMesh = GetComponent<TextMeshProUGUI>();//TextMeshProUGUIコンポーネントを取得する
+        // textMesh = GetComponent<TextMeshProUGUI>();//TextMeshProUGUIコンポーネントを取得する
 
-        //if (textMesh == null) 
-        //{
-        //    Debug.LogError("TextMeshProUGUIコンポーネントが見つかりません。");
-        //}
+        cardPos.y += 0.5f;//テキストをカードの上に表示するためにy座標を少し上げる
+
+        textPos = cardPos;
+
 
         OutPutText();//テキストに兵士の攻撃力を表示する関数
 
@@ -56,6 +53,11 @@ public class OutPutAttack : MonoBehaviour
 
         parent.transform.Rotate(0.0f,y,0.0f);//親オブジェクトをカードと同じ向きにするために回転させる
 
+        Vector3 pos = cardPos;
+
+        
+
+        parent.transform.position=new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z);
 
 
     }
@@ -77,7 +79,6 @@ public class OutPutAttack : MonoBehaviour
 
         if (tenNum > 0)//10の位があるならば
         {
-            isTenNum = true;
 
             parent=new GameObject("Number");//テキストをまとめる親オブジェクトを生成する
 
@@ -94,7 +95,7 @@ public class OutPutAttack : MonoBehaviour
             parent = new GameObject("Number");
             parent.transform.position = pos;
 
-            textObj = Instantiate(numberObj[oneNum], pos, rot, parent.transform);
+            Instantiate(numberObj[oneNum], pos, rot, parent.transform);
         }
 
         

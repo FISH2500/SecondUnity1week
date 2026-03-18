@@ -10,7 +10,6 @@ public class BattleManegar : MonoBehaviour
     Image _loseImage;
     int PlayerCardPower;
     int EnemyCardPower;
-    public static int TurnCount = 0;
 
     public enum BattleResult
     {
@@ -45,50 +44,49 @@ public class BattleManegar : MonoBehaviour
 
     public void Battle(GameObject playerCard, GameObject enemyCard, bool player)
     {
-        TurnCount++;
-        PlayerCardPower = playerCard.GetComponent<Soldier>().CardNum;
-        EnemyCardPower = enemyCard.GetComponent<Soldier>().CardNum;
+        PlayerCardPower = playerCard.GetComponent<SetSoldier>().SoldierAtk;
+        EnemyCardPower = enemyCard.GetComponent<SetSoldier>().SoldierAtk;
         if (PlayerCardPower > EnemyCardPower)
         {
             Result = BattleResult.Win;
-            //playerCard.GetComponent<Soldier>().CardBack = false;
-            //enemyCard.GetComponent<Soldier>().CardDie = true;
+            playerCard.GetComponent<SetSoldier>().IsBack = false;
+            Destroy(enemyCard);
         }
         else if (PlayerCardPower < EnemyCardPower)
         {
             Result = BattleResult.Lose;
-            //playerCard.GetComponent<Soldier>().CardDie = true;
-            //enemyCard.GetComponent<Soldier>().CardBack = false;
+            Destroy(playerCard);
+            enemyCard.GetComponent<SetSoldier>().IsBack = false;
         }
         else
         {
-            Result = BattleResult.Draw; 
-            //playerCard.GetComponent<Soldier>().CardDie = true;
-            //enemyCard.GetComponent<Soldier>().CardDie = true;
+            Result = BattleResult.Draw;
+            Destroy(playerCard);
+            Destroy(enemyCard);
         }
     }
 
     public void BattleVsGeneral(GameObject playerCard, GameObject enemyCard, bool player)
     {
-        TurnCount++;
-        // テスト用にカードの強さを固定する
-        PlayerCardPower = 6;
-        EnemyCardPower = 5;
-        //PlayerCardPower = playerCard.GetComponent<Soldier>().CardNum;
-        //EnemyCardPower = enemyCard.GetComponent<Soldier>().CardNum;
+        PlayerCardPower = playerCard.GetComponent<SetSoldier>().SoldierAtk;
+        EnemyCardPower = enemyCard.GetComponent<SetSoldier>().SoldierAtk;
+        //// テスト用にカードの強さを固定する
+        //PlayerCardPower = 6;
+        //EnemyCardPower = 5;
+        
         if (PlayerCardPower >= EnemyCardPower)
         {
             Result = BattleResult.Win;
-            //playerCard.GetComponent<Soldier>().CardBack = false;
-            //enemyCard.GetComponent<Soldier>().CardDie = true;
+            playerCard.GetComponent<SetSoldier>().IsBack = false;
+            Destroy(enemyCard);
             EndGame = true;
             _playerWin = player;
         }
         else if (PlayerCardPower < EnemyCardPower)
         {
             Result = BattleResult.Lose;
-            //playerCard.GetComponent<Soldier>().CardDie = true;
-            //enemyCard.GetComponent<Soldier>().CardNum -= playerCard.GetComponent<Soldier>().CardNum;
+            Destroy(playerCard);
+            enemyCard.GetComponent<SetSoldier>().SoldierAtk -= playerCard.GetComponent<SetSoldier>().SoldierAtk;
         }
     }
 }

@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Card
+  - Player1Card
+  - Player2Card
   layers:
   - Default
   - TransparentFX

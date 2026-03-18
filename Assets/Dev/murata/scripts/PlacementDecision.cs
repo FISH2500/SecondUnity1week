@@ -21,8 +21,15 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 
 		// インスペクターで設定した処理を実行
 		//_onClicked?.Invoke();
+<<<<<<< Updated upstream
 		GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
 	}
+=======
+		//GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
+
+		attackTurnJudge.TurnJudge();
+    }
+>>>>>>> Stashed changes
 
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)

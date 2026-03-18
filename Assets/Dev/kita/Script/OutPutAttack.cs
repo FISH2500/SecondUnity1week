@@ -19,8 +19,6 @@ public class OutPutAttack : MonoBehaviour
 
     float parentY;
 
-
-    Vector3 textPos;//テキストの位置
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,11 +36,13 @@ public class OutPutAttack : MonoBehaviour
         _cardPos=setSoldier.transform.position;//カードの位置を取得する
         // textMesh = GetComponent<TextMeshProUGUI>();//TextMeshProUGUIコンポーネントを取得する
 
-        _cardPos.y += 0.5f;//テキストをカードの上に表示するためにy座標を少し上げる
-
-        textPos = _cardPos;
 
 
+        _parent = new GameObject("Number");//テキストをまとめる親オブジェクトを生成する
+
+        
+
+        //if (IsShowText)
         OutPutText();//テキストに兵士の攻撃力を表示する関数
 
     }
@@ -52,6 +52,8 @@ public class OutPutAttack : MonoBehaviour
     {
         if (IsShowText)
         {
+            _parent.SetActive(true);
+
             parentY = _rotateSpeed * Time.deltaTime;//回転速度をフレームレートに依存させないようにする
                                                     //10の位がある場合、ない場合で回転させるオブジェクトを変える
 
@@ -88,9 +90,11 @@ public class OutPutAttack : MonoBehaviour
         if (tenNum > 0)//10の位があるならば
         {
 
-            _parent=new GameObject("Number");//テキストをまとめる親オブジェクトを生成する
+
+            _cardPos.y += 0.5f;//テキストをカードの上に表示するためにy座標を少し上げる
 
             _parent.transform.position = pos;//親オブジェクトの位置をテキストの位置にする
+
 
             pos.x -= 0.25f;//10の位のテキストを1の位の左側に表示するためにx座標を少し左にずらす
             Instantiate(_numberObj[tenNum],pos,rot,_parent.transform);//10の位のテキストを表示する
@@ -100,7 +104,6 @@ public class OutPutAttack : MonoBehaviour
         }
         else //10の位がないならば
         {
-            _parent = new GameObject("Number");
             _parent.transform.position = pos;
 
             Instantiate(_numberObj[oneNum], pos, rot, _parent.transform);

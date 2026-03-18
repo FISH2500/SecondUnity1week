@@ -49,4 +49,25 @@ public class SetSoldier : MonoBehaviour
 
         _backImage.sprite = _soldierData.SoldierBack;//兵士の裏の画像をセット
     }
+
+    public void SetBack(int OwnerPlayer)//裏面にする
+    {
+        transform.rotation=Quaternion.Euler(0, 0, 180);
+
+        if (OwnerPlayer == 1)//敵が裏面にした場合攻撃力を非表示
+        {
+            GetComponent<OutPutAttack>().IsShowText = false;
+        }
+        else 
+        {
+            GetComponent<OutPutAttack>().IsShowText = true;
+        }
+    }
+
+    public void SetFront() //表にする
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        GetComponent<OutPutAttack>().IsShowText = false;
+    }
 }

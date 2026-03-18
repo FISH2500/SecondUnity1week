@@ -8,7 +8,11 @@ public class Mouse : MonoBehaviour
 	private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
 	private float _zDistance = 0; // 選択した時のZ軸の位置
 
-	void Update()
+	[SerializeField]
+	private float _yPos;//カードのYの固定位置
+
+
+    void Update()
 	{
 		// クリックされた瞬間
 		if (Input.GetMouseButtonDown(0))
@@ -31,7 +35,9 @@ public class Mouse : MonoBehaviour
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);
-			}
+
+
+            }
 		}
 
 		if (_dragObj == null) return;
@@ -48,8 +54,12 @@ public class Mouse : MonoBehaviour
 			// ワールド座標に変換
 			Vector3 objPos = _camera.ScreenToWorldPoint(mousePos);
 
-			// 位置を移動させる
-			_dragObj.transform.position = objPos;
+			objPos.y = _yPos;
+
+            // 位置を移動させる
+            _dragObj.transform.position = objPos;
+
+
 		}
 
 		// 指を離した時
@@ -58,5 +68,7 @@ public class Mouse : MonoBehaviour
 			_area.SetAria(_dragObj);
 			_dragObj = null; // ドラッグしているオブジェクトをNULLに
 		}
-	}
+
+
+    }
 }

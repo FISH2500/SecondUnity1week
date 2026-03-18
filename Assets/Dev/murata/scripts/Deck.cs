@@ -7,7 +7,7 @@ public class Deck : MonoBehaviour
 
 	[SerializeField] private List<int> _deck;
 
-	void Start()
+	void Awake()
 	{
 		_deck.Clear(); // ˆê’U‹ó‚É‚·‚é
 

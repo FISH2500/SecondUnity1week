@@ -18,8 +18,8 @@ public class SelectSoldier : MonoBehaviour
 
         for(int i = 0; i < 6; i++) 
         {
-            GameObject card= _deck.DrawCard();
-
+            GameObject card= _deck.DrawCard(0);
+            //if(card==null) Debug.LogError("山札が空です。カードを引けません。");
             startCard.x +=2.0f;//カードを横に並べるための位置
 
             card.transform.position = startCard;//カードを横に並べる

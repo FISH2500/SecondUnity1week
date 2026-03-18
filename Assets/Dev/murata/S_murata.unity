@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &130819254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 130819255}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &130819255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130819254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.621736, y: -8.916488, z: 16.117062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447787875
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,15 +393,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPosition:
-  - {x: -5, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  - {x: 5, y: 0, z: 0}
+  - {x: -2, y: 0, z: 0}
+  - {x: -4, y: 0, z: 0}
   _setDistance: 2
   _isSet: 
   _decision: {fileID: 1683062707}
   _soldierData: {fileID: 0}
   _generalIndex: 0
   AllSet: 0
+--- !u!1 &642099807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 642099809}
+  - component: {fileID: 642099808}
+  - component: {fileID: 642099810}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &642099808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642099807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b308284574d9484ebbbe6b4e6d72524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soldierPrefab: {fileID: 6198287788953400632, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
+  spawPos: {x: 0, y: 0, z: 0}
+  spawVel: 2
+  turnPos: []
+--- !u!4 &642099809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642099807}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.578832, y: -15.703325, z: 2.230279}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &642099810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642099807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e07018e162857479abe90e3edf3b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deck: {fileID: 1980148184}
+  startCard: {x: 0, y: 2, z: 0}
 --- !u!1 &937560483
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +559,7 @@ GameObject:
   - component: {fileID: 973719298}
   - component: {fileID: 973719297}
   - component: {fileID: 973719296}
+  - component: {fileID: 973719299}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -502,9 +600,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deck: {fileID: 1980148184}
-  _turnManager: {fileID: 1637148784}
   _drawCardNum: 3
-  _drawCardPosition: {x: 0, y: 2, z: 0}
+  _drawCardPosition: {x: 2, y: 2, z: 2}
+  _drawMouse: {fileID: 973719299}
 --- !u!114 &973719297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +641,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973719294}
   m_CullTransparentMesh: 1
+--- !u!114 &973719299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973719294}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eeeb6dd189327b4282000af5f4cd16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 1664523054}
+  _area: {fileID: 599735380}
+  DrawObject: {fileID: 0}
 --- !u!1 &1259077369
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1643324740
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1343,3 +1456,5 @@ SceneRoots:
   - {fileID: 937560486}
   - {fileID: 1980148188}
   - {fileID: 1637148785}
+  - {fileID: 642099809}
+  - {fileID: 130819255}

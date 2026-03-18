@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Area : MonoBehaviour
 {
-	[SerializeField] private Vector3[] _cardPosition; // カードをセットする位置
+	[SerializeField] private Transform[] _cardPosition; // カードをセットする位置
 	[SerializeField] private float _setDistance = 1.0f; // セットを許容する最大距離
 
 	[SerializeField] private bool[] _isSet; // カードがセットされているかどうか 見るためにSerializeFieldに
@@ -28,7 +28,7 @@ public class Area : MonoBehaviour
 		for (int i = 0; i < _cardPosition.Length; i++)
 		{
 			// カードと現在の_cardPosition[i]の距離を計算
-			Vector3 areaPos = _cardPosition[i];
+			Vector3 areaPos = _cardPosition[i].position;
 			areaPos.y = 0;
 
 			if (cardPos == areaPos) // セットされているなら
@@ -52,7 +52,7 @@ public class Area : MonoBehaviour
 		for (int i = 0; i < _cardPosition.Length; i++)
 		{
 			// カードと現在の_cardPosition[i]の距離を計算
-			Vector3 diff = card.transform.position - _cardPosition[i];
+			Vector3 diff = card.transform.position - _cardPosition[i].position;
 			diff.y = 0; // yの差分を0に
 
 			float dis = diff.sqrMagnitude;
@@ -67,7 +67,7 @@ public class Area : MonoBehaviour
 		if (nearestIndex != -1 && nearestPos <= maxDistance && !_isSet[nearestIndex]) // 最も近い場所が_setDistance以内でまだセットされていないなら
 		{
 			// 一番近かったインデックスのワールド座標を取得
-			Vector3 setPos = _cardPosition[nearestIndex];
+			Vector3 setPos = _cardPosition[nearestIndex].position;
 
 			// Y座標は変更しない
 			setPos.y = card.transform.position.y;

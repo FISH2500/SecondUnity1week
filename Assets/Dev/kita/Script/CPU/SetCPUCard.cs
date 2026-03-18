@@ -9,19 +9,16 @@ public class SetCPUCard : MonoBehaviour
     CPUArea _cpuArea;
     void Start()
     {
-        for(int i = 0; i < 6; i++) 
+		_cpuArea.CardObject = new GameObject[6];
+		_cpuArea.CardNum = 6;
+
+		for (int i = 0; i < 6; i++) 
         {
-            GameObject _card= _deck.DrawCard(1);//CPUのカードを6枚引く
+            GameObject card= _deck.DrawCard(1);//CPUのカードを6枚引く
 
-            _card.transform.position = _cpuArea.CardPosition[i].position;
+            card.transform.position = _cpuArea.CardPosition[i].position;
+			_cpuArea.CardObject[i] = card;
 
-            _card.transform.rotation = _cpuArea.CardPosition[i].rotation;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+		}
     }
 }

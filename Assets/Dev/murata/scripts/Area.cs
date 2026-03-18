@@ -32,16 +32,9 @@ public class Area : MonoBehaviour
 
 	public void RemoveAria(GameObject card)
 	{
-		Vector3 cardPos = card.transform.position;
-		cardPos.y = 0;
-
-		for (int i = 0; i < _cardPosition.Length; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			// カードと現在の_cardPosition[i]の距離を計算
-			Vector3 areaPos = _cardPosition[i].position;
-			areaPos.y = 0;
-
-			if (cardPos == areaPos) // セットされているなら
+			if (card == CardObj[i]) // セットされているなら
 			{
 				_isSet[i] = false;
 				AllSet = false;

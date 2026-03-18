@@ -44,6 +44,8 @@ public class BattleManegar : MonoBehaviour
 
     public void Battle(GameObject playerCard, GameObject enemyCard, bool player)
     {
+        bool isPlayerGeneral = playerCard.GetComponent<SetSoldier>().IsGeneral;
+        bool isEnemyGeneral = enemyCard.GetComponent<SetSoldier>().IsGeneral;
         PlayerCardPower = playerCard.GetComponent<SetSoldier>().SoldierAtk;
         EnemyCardPower = enemyCard.GetComponent<SetSoldier>().SoldierAtk;
         if (PlayerCardPower > EnemyCardPower)
@@ -51,18 +53,33 @@ public class BattleManegar : MonoBehaviour
             Result = BattleResult.Win;
             playerCard.GetComponent<SetSoldier>().IsBack = false;
             Destroy(enemyCard);
+            if (isEnemyGeneral)
+            {
+                EndGame = true;
+                _playerWin = player;
+            }
         }
         else if (PlayerCardPower < EnemyCardPower)
         {
             Result = BattleResult.Lose;
             Destroy(playerCard);
             enemyCard.GetComponent<SetSoldier>().IsBack = false;
+            if (isPlayerGeneral)
+            {
+                EndGame = true;
+                _playerWin = !player;
+            }
         }
         else
         {
             Result = BattleResult.Draw;
             Destroy(playerCard);
             Destroy(enemyCard);
+            if (isPlayerGeneral || isEnemyGeneral)
+            {
+                EndGame = true;
+                _playerWin = true;
+            }
         }
     }
 

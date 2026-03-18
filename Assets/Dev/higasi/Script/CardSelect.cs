@@ -93,7 +93,7 @@ public class CardSelect : MonoBehaviour
                 return;
             }
             Debug.Log("大将が選択されました。バトル開始");
-            BattleManegar.BattleVsGeneral(_player1Card, _player2Card, true);
+            BattleManegar.Battle(_player1Card, _player2Card, true);
         }
         else if (!_player2Card.GetComponent<SetSoldier>().IsGeneral)
             BattleManegar.Battle(_player1Card, _player2Card, true);

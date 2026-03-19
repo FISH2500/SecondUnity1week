@@ -50,6 +50,7 @@ public class BattleManegar : MonoBehaviour
 		if (playerCard == null || enemyCard == null)
 		{
 			Debug.Log($"Battle’†Ž~");
+			TurnManager.instance.ChangeTurn();
 			return;
 		}
 
@@ -97,12 +98,23 @@ public class BattleManegar : MonoBehaviour
 			_cpuArea.RemoveCPUArea(enemyCard);
 			_playerArea.RemoveArea(playerCard);
 			Destroy(playerCard);
-            Destroy(enemyCard);
-            if (isPlayerGeneral || isEnemyGeneral)
-            {
-                EndGame = true;
-                _playerWin = true;
-            }
+			Destroy(enemyCard);
+
+			if (isPlayerGeneral && isEnemyGeneral)
+			{
+				EndGame = true;
+				_playerWin = true;
+			}
+			else if (isPlayerGeneral)
+			{
+				EndGame = true;
+				_playerWin = false;
+			}
+			else if (isEnemyGeneral)
+			{
+				EndGame = true;
+				_playerWin = true;
+			}
         }
 
 		TurnManager.instance.ChangeTurn();

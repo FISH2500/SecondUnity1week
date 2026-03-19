@@ -8,7 +8,6 @@ public class Mouse : MonoBehaviour
 	private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
 	private float _zDistance = 0; // 選択した時のZ軸の位置
 
-	[SerializeField]
 	private float _yPos;//カードのYの固定位置
 
 
@@ -28,10 +27,12 @@ public class Mouse : MonoBehaviour
 				// 選択したオブジェクトを保存
 				_dragObj = hit.collider.gameObject;
 
-				_area.RemoveAria(_dragObj);
+				_area.RemoveArea(_dragObj);
 
 				// Zの位置を保存
 				_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
+
+				_yPos = _dragObj.transform.position.y;
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);

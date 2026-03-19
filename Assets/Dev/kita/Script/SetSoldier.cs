@@ -54,7 +54,9 @@ public class SetSoldier : MonoBehaviour
     {
         transform.rotation=Quaternion.Euler(0, 0, 180);
 
-        if (OwnerPlayer == 1)//“G‚ª— –Ê‚É‚µ‚½ê‡UŒ‚—Í‚ğ”ñ•\¦
+		IsBack = true;
+
+		if (OwnerPlayer == 1)//“G‚ª— –Ê‚É‚µ‚½ê‡UŒ‚—Í‚ğ”ñ•\¦
         {
             GetComponent<OutPutAttack>().IsShowText = false;
         }
@@ -65,8 +67,10 @@ public class SetSoldier : MonoBehaviour
     }
 
     public void SetFront() //•\‚É‚·‚é
-    {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+	{
+		IsBack = false;
+
+		transform.rotation = Quaternion.Euler(0, 0, 0);
 
         GetComponent<OutPutAttack>().IsShowText = false;
     }

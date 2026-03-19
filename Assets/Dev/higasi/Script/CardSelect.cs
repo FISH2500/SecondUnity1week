@@ -21,22 +21,23 @@ public class CardSelect : MonoBehaviour
         if (_player1Selected && _player2Selected)
         {
             BattleStart();
+			enabled = false;
         }
 
         //====== テスト用 ======
-        if (Input.GetMouseButton(1))
-        {
-            Vector3 mousePos = Input.mousePosition;
-            Ray selectRay = Camera.main.ScreenPointToRay(mousePos);
-            RaycastHit hit;
+        //if (Input.GetMouseButton(1))
+        //{
+        //    Vector3 mousePos = Input.mousePosition;
+        //    Ray selectRay = Camera.main.ScreenPointToRay(mousePos);
+        //    RaycastHit hit;
 
-            if (Physics.Raycast(selectRay, out hit, 100.0f))
-            {
-                GameObject hitObj = hit.collider.gameObject;
-                hitObj.GetComponent<SetSoldier>().IsGeneral = true;
-                Debug.Log("右クリックで将軍に設定(テスト用)");
-            }
-        }
+        //    if (Physics.Raycast(selectRay, out hit, 100.0f))
+        //    {
+        //        GameObject hitObj = hit.collider.gameObject;
+        //        hitObj.GetComponent<SetSoldier>().IsGeneral = true;
+        //        Debug.Log("右クリックで将軍に設定(テスト用)");
+        //    }
+        //}
         // ===================
     }
 

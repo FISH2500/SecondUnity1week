@@ -19,6 +19,8 @@ public class Area : MonoBehaviour
 
 	public bool AllSet = false;
 
+	public bool HasOK = false;
+
 	void Start()
 	{
 		// _cardPositionの数に合わせて配列を初期化
@@ -34,8 +36,10 @@ public class Area : MonoBehaviour
 		}
 	}
 
-	public void RemoveAria(GameObject card)
+	public void RemoveArea(GameObject card)
 	{
+		Debug.Log($"RemoveAreaが実行されました : {card.name}");
+
 		for (int i = 0; i < 6; i++)
 		{
 			if (card == CardObj[i]) // セットされているなら
@@ -46,6 +50,8 @@ public class Area : MonoBehaviour
 				_decision.SetActive(false);
 				CardNum--;
 				card.GetComponent<SetSoldier>().IsGeneral = false;
+
+				Debug.Log($"{i} removeされました");
 				break;
 			}
 		}
@@ -110,7 +116,7 @@ public class Area : MonoBehaviour
 
 			AllSet = checkAll;
 
-			if (AllSet)
+			if (AllSet && !HasOK)
 			{
 				_decision.SetActive(true);
 			}

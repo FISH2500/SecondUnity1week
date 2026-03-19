@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,13 +29,7 @@ public class BattleManegar : MonoBehaviour
     public static BattleResult Result;
     public static bool EndGame = false;
     bool _playerWin = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-      
-    }
 
-    // Update is called once per frame
     void Update()
     {
        if (EndGame)
@@ -52,14 +47,23 @@ public class BattleManegar : MonoBehaviour
 
     public void Battle(GameObject playerCard, GameObject enemyCard, bool player)
     {
-        bool isPlayerGeneral = playerCard.GetComponent<SetSoldier>().IsGeneral;
-        bool isEnemyGeneral = enemyCard.GetComponent<SetSoldier>().IsGeneral;
-        PlayerCardPower = playerCard.GetComponent<SetSoldier>().SoldierAtk;
-        EnemyCardPower = enemyCard.GetComponent<SetSoldier>().SoldierAtk;
-        if (PlayerCardPower > EnemyCardPower)
+		Debug.Log($"Battle開始: PlayerCard={playerCard.name}, EnemyCard={enemyCard.name}");
+
+		SetSoldier solPlayer = playerCard.GetComponent<SetSoldier>();
+		SetSoldier solEnemy = enemyCard.GetComponent<SetSoldier>();
+
+		bool isPlayerGeneral = solPlayer.IsGeneral;
+        bool isEnemyGeneral = solEnemy.IsGeneral;
+        PlayerCardPower = solPlayer.SoldierAtk;
+        EnemyCardPower  = solEnemy.SoldierAtk;
+
+		solPlayer.SetFront();
+		solEnemy.SetFront();
+
+		if (PlayerCardPower > EnemyCardPower)
         {
-            Result = BattleResult.Win;
-            playerCard.GetComponent<SetSoldier>().IsBack = false;
+			Debug.Log("Player勝利");
+			Result = BattleResult.Win;
 			_cpuArea.RemoveCPUArea(enemyCard);
 			Destroy(enemyCard);
             if (isEnemyGeneral)
@@ -69,11 +73,11 @@ public class BattleManegar : MonoBehaviour
             }
         }
         else if (PlayerCardPower < EnemyCardPower)
-        {
-            Result = BattleResult.Lose;
-			_playerArea.RemoveAria(playerCard);
+		{
+			Debug.Log("Player敗北");
+			Result = BattleResult.Lose;
+			_playerArea.RemoveArea(playerCard);
             Destroy(playerCard);
-            enemyCard.GetComponent<SetSoldier>().IsBack = false;
             if (isPlayerGeneral)
             {
                 EndGame = true;
@@ -81,10 +85,11 @@ public class BattleManegar : MonoBehaviour
             }
         }
         else
-        {
-            Result = BattleResult.Draw;
+		{
+			Debug.Log("引き分け");
+			Result = BattleResult.Draw;
 			_cpuArea.RemoveCPUArea(enemyCard);
-			_playerArea.RemoveAria(playerCard);
+			_playerArea.RemoveArea(playerCard);
 			Destroy(playerCard);
             Destroy(enemyCard);
             if (isPlayerGeneral || isEnemyGeneral)
@@ -93,29 +98,7 @@ public class BattleManegar : MonoBehaviour
                 _playerWin = true;
             }
         }
-    }
 
-    public void BattleVsGeneral(GameObject playerCard, GameObject enemyCard, bool player)
-    {
-        PlayerCardPower = playerCard.GetComponent<SetSoldier>().SoldierAtk;
-        EnemyCardPower = enemyCard.GetComponent<SetSoldier>().SoldierAtk;
-        //// テスト用にカードの強さを固定する
-        //PlayerCardPower = 6;
-        //EnemyCardPower = 5;
-        
-        if (PlayerCardPower >= EnemyCardPower)
-        {
-            Result = BattleResult.Win;
-            playerCard.GetComponent<SetSoldier>().IsBack = false;
-            Destroy(enemyCard);
-            EndGame = true;
-            _playerWin = player;
-        }
-        else if (PlayerCardPower < EnemyCardPower)
-        {
-            Result = BattleResult.Lose;
-            Destroy(playerCard);
-            enemyCard.GetComponent<SetSoldier>().SoldierAtk -= playerCard.GetComponent<SetSoldier>().SoldierAtk;
-        }
+		TurnManager.instance.ChangeTurn();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ItemAction : MonoBehaviour
@@ -322,6 +323,17 @@ public class ItemAction : MonoBehaviour
                 Debug.Log("カードの選択に失敗しました");
                 return false;
             }
+        }
+    }
+
+    public IEnumerator OneMoreTurn()
+    {
+        int turn = TurnManager.instance.CurrentPlayer;
+        yield return new WaitUntil(() => turn != TurnManager.instance.CurrentPlayer);
+        if (BattleManegar.Result == BattleManegar.BattleResult.Win)
+        {
+            TextManegar.instance.SetText("もう一度攻撃できます");
+            TurnManager.instance.ChangeTurn();
         }
     }
 }

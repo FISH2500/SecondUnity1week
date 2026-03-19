@@ -7,6 +7,7 @@ TagManager:
   - Card
   - Player1Card
   - Player2Card
+  - Item
   layers:
   - Default
   - TransparentFX

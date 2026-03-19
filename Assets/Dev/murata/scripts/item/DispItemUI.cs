@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-//using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class DispItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-	[SerializeField] private CardSelect _cardSelect;
+	[SerializeField]
+	PlayerItem _playerItem;
 
 	private Vector3 _scale;
-
 
 	private void Awake()
 	{
@@ -17,7 +16,9 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		_cardSelect.enabled = true;
+		Debug.Log($"{gameObject.name} がクリックされました");
+
+		_playerItem.SelectItem(true);
 	}
 
 	// マウスが乗った時

@@ -17,9 +17,13 @@ public class Area : MonoBehaviour
 
 	[SerializeField] public int CardNum;
 
+	public Transform[] GetCardPositions() { return _cardPosition; }
+
 	public bool AllSet = false;
 
 	public bool HasOK = false;
+
+	public static Area Instance;
 
 	void Start()
 	{
@@ -27,6 +31,8 @@ public class Area : MonoBehaviour
 		_isSet = new bool[_cardPosition.Length];
 
 		CardNum = 0;
+		
+		Instance = this;
 
 		CardObj = new GameObject[_cardPosition.Length];
 

@@ -36,7 +36,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer1++;
 
-				Debug.Log($"ドローしました");
+                TextManegar.instance.SetText("札を引きました");
+                Debug.Log($"ドローしました");
 
 				TurnManager.instance.IsAction = true;
 				_drawMouse.enabled = true;
@@ -56,7 +57,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer2++;
-
+				
 				Debug.Log($"ドローしました");
 
 				TurnManager.instance.IsAction = true;

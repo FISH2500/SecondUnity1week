@@ -5,14 +5,11 @@ public class CardSelect : MonoBehaviour
     bool _click = false;
     bool _player1Selected = false; 
     bool _player2Selected = false;
-    BattleManegar BattleManegar;
     GameObject _player1Card;
     GameObject _player2Card;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        BattleManegar = GameObject.Find("BattleManegar").GetComponent<BattleManegar>();
-    }
+
+	[SerializeField]
+	BattleManegar _battleManegar;
 
     // Update is called once per frame
     void Update()
@@ -93,10 +90,10 @@ public class CardSelect : MonoBehaviour
                 return;
             }
             Debug.Log("大将が選択されました。バトル開始");
-            BattleManegar.Battle(_player1Card, _player2Card, true);
+			_battleManegar.Battle(_player1Card, _player2Card, true);
         }
         else if (!_player2Card.GetComponent<SetSoldier>().IsGeneral)
-            BattleManegar.Battle(_player1Card, _player2Card, true);
+			_battleManegar.Battle(_player1Card, _player2Card, true);
         else 
             return;
         _player1Selected = false;

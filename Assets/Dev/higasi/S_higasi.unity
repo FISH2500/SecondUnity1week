@@ -411,6 +411,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winImage: {fileID: 985747799}
   _loseImage: {fileID: 294776154}
+  _playerArea: {fileID: 0}
+  _cpuArea: {fileID: 0}
 --- !u!4 &766659098
 Transform:
   m_ObjectHideFlags: 0
@@ -755,6 +757,10 @@ PrefabInstance:
     - target: {fileID: 9030890359673164492, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
       propertyPath: CardIndex
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030890359673164492, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
+      propertyPath: IsGeneral
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1473,6 +1479,10 @@ PrefabInstance:
     - target: {fileID: 9030890359673164492, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
       propertyPath: CardIndex
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030890359673164492, guid: e530ae551a8efbf4a85082aa2ef79587, type: 3}
+      propertyPath: IsGeneral
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

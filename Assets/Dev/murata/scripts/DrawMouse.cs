@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DrawMouse : MonoBehaviour
@@ -8,7 +9,7 @@ public class DrawMouse : MonoBehaviour
 	private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
 	private float _zDistance = 0; // 選択した時のZ軸の位置
 
-	public GameObject DrawObject;
+	[NonSerialized] public GameObject DrawObject;
 
 	void Update()
 	{

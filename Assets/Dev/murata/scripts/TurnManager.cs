@@ -12,6 +12,8 @@ public class TurnManager : MonoBehaviour
 	private void Awake()
 	{
 		instance = this;
+
+		CurrentPlayer = -1;
 	}
 
 	public void ChangeTurn()

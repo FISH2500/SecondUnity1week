@@ -8,7 +8,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	[SerializeField] private int _drawCardNum;
 
-	[SerializeField] private Vector3 _drawCardPosition;
+	[SerializeField] private Transform _drawCardPosition;
 	[SerializeField] private DrawMouse _drawMouse;
 
 	private Vector3 _scale;
@@ -43,7 +43,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 			if (_drawCountPlayer1 < _drawCardNum)
 			{
 				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition;
+				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer1++;
 
 				Debug.Log($"ドローしました");
@@ -59,7 +59,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 			if (_drawCountPlayer2 < _drawCardNum)
 			{
 				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition;
+				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer2++;
 
 				Debug.Log($"ドローしました");
@@ -91,7 +91,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 			if (_drawCountPlayer1 < _drawCardNum)
 			{
 				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition;
+				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer1++;
 
 				Debug.Log($"ドローしました");
@@ -106,7 +106,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 			if (_drawCountPlayer2 < _drawCardNum)
 			{
 				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition;
+				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer2++;
 
 				Debug.Log($"ドローしました");

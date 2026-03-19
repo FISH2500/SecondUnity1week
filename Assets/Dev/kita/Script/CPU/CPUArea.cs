@@ -7,6 +7,8 @@ public class CPUArea : MonoBehaviour
     public Transform[] CardPosition; // カードをセットする位置
 	public GameObject[] CardObject; // 
 
+	[SerializeField] public int GeneralIndex;
+
 	public int CardNum;
 
 	public void RemoveCPUArea(GameObject obj)
@@ -29,6 +31,7 @@ public class CPUArea : MonoBehaviour
 			if (CardObject[i] == null)
 			{
 				CardObject[i] = obj;
+				CardObject[i].transform.position = CardPosition[i].position;
 				CardNum++;
 				break;
 			}

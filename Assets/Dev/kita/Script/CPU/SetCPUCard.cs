@@ -14,13 +14,22 @@ public class SetCPUCard : MonoBehaviour
 
 		for (int i = 0; i < 6; i++) 
         {
-            GameObject card= _deck.DrawCard(1);//CPUのカードを6枚引く
+            GameObject card = _deck.DrawCard(1);//CPUのカードを6枚引く
 
-            card.GetComponent<SetSoldier>().SetBack(1);//カードを裏にする
+			SetSoldier sol = card.GetComponent<SetSoldier>();
+
+			sol.SetBack(1);//カードを裏にする
 
             card.transform.position = _cpuArea.CardPosition[i].position;
 			_cpuArea.CardObject[i] = card;
 
+			card.tag = "Player2Card";
+
+			if (i == _cpuArea.GeneralIndex)
+			{
+				sol.IsGeneral = true;
+				sol.SetFront();
+			}
 		}
     }
 }

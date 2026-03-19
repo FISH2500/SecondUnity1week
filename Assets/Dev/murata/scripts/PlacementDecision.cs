@@ -13,6 +13,9 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 	AttackTurnJudge attackTurnJudge;//先攻,後攻の判定を行うスクリプト
 
 	[SerializeField]
+	private Area _area;
+
+	[SerializeField]
 	Mouse _mouse;
 
 	[SerializeField]
@@ -34,9 +37,12 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 		//GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
 
 		_mouse.enabled = false;
+
 		attackTurnJudge.TurnJudge();
 
 		gameObject.SetActive(false);//ボタンを非表示
+
+		_area.HasOK = true;
 
 		_selectSoldier.CardSet();
 		//for(int i=0;i<)

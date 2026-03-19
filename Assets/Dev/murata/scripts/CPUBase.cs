@@ -32,8 +32,8 @@ public class CPUBase : MonoBehaviour
 		// 攻撃はいつでもできるので追加
 		validActions.Add(0);
 
-		// カードが6枚未満ならドロー
-		if (_cpuArea.CardNum < 6)
+		// カードが6枚未満でまだドローできるなら
+		if (_cpuArea.CardNum < 6 && _drawCard.IsDraw())
 		{
 			validActions.Add(1);
 		}
@@ -62,6 +62,9 @@ public class CPUBase : MonoBehaviour
 				Draw();
 
 				TurnManager.instance.IsAction = true;
+
+				TurnManager.instance.ChangeTurn();
+
 				break;
 			case 2:
 				Debug.Log("CPUがアイテム使用");
@@ -75,7 +78,6 @@ public class CPUBase : MonoBehaviour
 
 		yield return new WaitForSeconds(1.0f);
 
-		TurnManager.instance.ChangeTurn();
 
 		_hasAction = false;
 	}
@@ -91,13 +93,13 @@ public class CPUBase : MonoBehaviour
 		int targetAtk = -1;
 		GameObject[] playerCard = _playerArea.CardObj;
 
-		for (int i = 0; i < 6; i++) // 所持カードの中から、最強のカードを選択e
+		for (int i = 0; i < 6; i++) // 所持カードの中から、最強のカードを選択
 		{
 			if (cpuCard[i] == null) continue;
 
 			SetSoldier soldier = cpuCard[i].GetComponent<SetSoldier>();
 
-			if (soldier.IsGeneral && _cpuArea.CardNum != 1) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
+			if (soldier.IsGeneral && _cpuArea.CardNum <= 2) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
 
 			if (soldier.SoldierAtk > strongestAtk)
 			{
@@ -145,7 +147,7 @@ public class CPUBase : MonoBehaviour
 		{
 			List<GameObject> candidates = new List<GameObject>();
 
-			for (int i = 0; i < playerCard.Length; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				if (playerCard[i] == null) continue;
 
@@ -162,7 +164,7 @@ public class CPUBase : MonoBehaviour
 			}
 		}
 
-		_battleManegar.Battle(strongestCard, targetCard, false);
+		_battleManegar.Battle(targetCard, strongestCard, false);
 	}
 
 	private void Draw()

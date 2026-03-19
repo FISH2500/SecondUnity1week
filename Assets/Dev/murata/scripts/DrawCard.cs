@@ -51,6 +51,11 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				TurnManager.instance.IsAction = true;
 				_drawMouse.enabled = true;
 				_drawMouse.DrawObject = obj;
+
+				SetSoldier sol = obj.GetComponent<SetSoldier>();
+
+				sol.SetBack(0);
+
 				//TurnManager.instance.ChangeTurn();
 			}
 		}
@@ -67,6 +72,11 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				TurnManager.instance.IsAction = true;
 				_drawMouse.enabled = true;
 				_drawMouse.DrawObject = obj;
+
+				SetSoldier sol = obj.GetComponent<SetSoldier>();
+
+				sol.SetBack(1);
+
 				//TurnManager.instance.ChangeTurn();
 			}
 		}
@@ -98,6 +108,12 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 				TurnManager.instance.IsAction = true;
 
+				obj.tag = "Player1Card";
+
+				SetSoldier sol = obj.GetComponent<SetSoldier>();
+
+				sol.SetBack(0);
+
 				return obj;
 			}
 		}
@@ -112,6 +128,12 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				Debug.Log($"ÉhÉçÅ[ÇµÇ‹ÇµÇΩ");
 
 				TurnManager.instance.IsAction = true;
+
+				obj.tag = "Player2Card";
+
+				SetSoldier sol = obj.GetComponent<SetSoldier>();
+
+				sol.SetBack(1);
 
 				return obj;
 			}

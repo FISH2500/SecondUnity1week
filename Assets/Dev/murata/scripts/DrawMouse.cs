@@ -11,6 +11,8 @@ public class DrawMouse : MonoBehaviour
 
 	[NonSerialized] public GameObject DrawObject;
 
+	private float _yPos;//カードのYの固定位置
+
 	void Update()
 	{
 		// クリックされた瞬間
@@ -32,10 +34,11 @@ public class DrawMouse : MonoBehaviour
 					_dragObj = obj;
 					// Zの位置を保存
 					_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
+					_yPos = obj.transform.position.y;
 				}
 				else
 				{
-					_area.RemoveAria(obj);
+					_area.RemoveArea(obj);
 					Destroy(obj);
 				}
 
@@ -57,6 +60,8 @@ public class DrawMouse : MonoBehaviour
 
 			// ワールド座標に変換
 			Vector3 objPos = _camera.ScreenToWorldPoint(mousePos);
+
+			objPos.y = _yPos;
 
 			// 位置を移動させる
 			_dragObj.transform.position = objPos;

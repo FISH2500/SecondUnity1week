@@ -11,7 +11,12 @@ public class CardSelect : MonoBehaviour
 	[SerializeField]
 	BattleManegar _battleManegar;
 
-    // Update is called once per frame
+	[SerializeField]
+	CPUArea _cpuArea;
+
+	[SerializeField]
+	Area _area;
+
     void Update()
     {
         // カードの選択
@@ -78,26 +83,33 @@ public class CardSelect : MonoBehaviour
 
     void BattleStart()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("Player2Card");
-        int count = objs.Length;// カードの残り枚数を取得
-                                //if (true) // テスト用に常に大将判定にする
-        if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
-        {  
-            Debug.Log("大将が選択されました。残り枚数: " + count);
-            if (count >= 2) // 大将以外のカードが残っていたら無効
-            {
-                _player2Selected = false;
-                Debug.Log("大将は最後の1枚でなければ選択できません。");
-                return;
-            }
-            Debug.Log("大将が選択されました。バトル開始");
-			_battleManegar.Battle(_player1Card, _player2Card, true);
-        }
-        else if (!_player2Card.GetComponent<SetSoldier>().IsGeneral)
-			_battleManegar.Battle(_player1Card, _player2Card, true);
-        else 
-            return;
-        _player1Selected = false;
+		if (_player1Card.GetComponent<SetSoldier>().IsGeneral)
+		{
+			Debug.Log("大将が選択されました。残り枚数: " + _area.CardNum);
+			if (_area.CardNum >= 2) // 大将以外のカードが残っていたら無効
+			{
+				_player1Selected = false;
+				Debug.Log("大将は最後の1枚でなければ選択できません。");
+				return;
+			}
+			Debug.Log("大将が選択されました。バトル開始");
+		}
+
+		if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
+		{
+			Debug.Log("大将が選択されました。残り枚数: " + _cpuArea.CardNum);
+			if (_cpuArea.CardNum >= 2) // 大将以外のカードが残っていたら無効
+			{
+				_player2Selected = false;
+				Debug.Log("大将は最後の1枚でなければ選択できません。");
+				return;
+			}
+			Debug.Log("大将が選択されました。バトル開始");
+		}
+
+		_battleManegar.Battle(_player1Card, _player2Card);
+
+		_player1Selected = false;
         _player2Selected = false;
         Debug.Log(BattleManegar.Result);
     }

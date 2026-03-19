@@ -45,7 +45,7 @@ public class BattleManegar : MonoBehaviour
        }
     }
 
-    public void Battle(GameObject playerCard, GameObject enemyCard, bool player)
+    public void Battle(GameObject playerCard, GameObject enemyCard)
     {
 		Debug.Log($"BattleŠJŽn: PlayerCard={playerCard.name}, EnemyCard={enemyCard.name}");
 
@@ -69,7 +69,7 @@ public class BattleManegar : MonoBehaviour
             if (isEnemyGeneral)
             {
                 EndGame = true;
-                _playerWin = player;
+                _playerWin = true;
             }
         }
         else if (PlayerCardPower < EnemyCardPower)
@@ -81,7 +81,7 @@ public class BattleManegar : MonoBehaviour
             if (isPlayerGeneral)
             {
                 EndGame = true;
-                _playerWin = !player;
+                _playerWin = false;
             }
         }
         else

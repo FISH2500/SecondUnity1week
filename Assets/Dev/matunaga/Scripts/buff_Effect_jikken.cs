@@ -13,6 +13,7 @@ public class buff_Effect_jikken : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             EffectManager.Instance.PlayEffect("Buff", transform.position);
+            SoundManager.Instance.PlaySE("BuffSE");
         }
         if (Input.GetKeyUp(KeyCode.B))
         {
@@ -22,6 +23,7 @@ public class buff_Effect_jikken : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             EffectManager.Instance.PlayEffect("DeBuff", transform.position);
+            SoundManager.Instance.PlaySE("DeBuffSE");
         }
         if (Input.GetKeyUp(KeyCode.D))
         {

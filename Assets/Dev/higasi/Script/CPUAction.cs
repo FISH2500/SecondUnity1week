@@ -83,6 +83,6 @@ public class CPUAction : MonoBehaviour
             }
         }
 
-        _bm.Battle(strongestCard, targetCard, false);
+        _bm.Battle(strongestCard, targetCard);
     }
 }

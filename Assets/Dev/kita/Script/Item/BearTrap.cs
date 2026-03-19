@@ -6,6 +6,9 @@ public class BearTrap : MonoBehaviour
     void Start()
     {
         
+=======
+        SetTrapFlag();
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame

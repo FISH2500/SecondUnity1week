@@ -65,6 +65,9 @@ public class CardSelect : MonoBehaviour
                     if (!_player1Selected)
                         _player1Selected = true;
                     _player1Card = hitObj;
+
+                    TextManegar.instance.SetText("UŒ‚‘ÎÛ‚ÌD‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢");
+
                 }
                 if (hitObj.CompareTag("Player2Card") && _player1Selected)
                 {

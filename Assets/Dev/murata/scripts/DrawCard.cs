@@ -18,10 +18,13 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	private Image _image;
 
+	public static DrawCard instance;
+
 	private void Awake()
 	{
 		_scale = transform.localScale;
 		_image = GetComponent<Image>();
+		instance = this;
 	}
 
 	private void Update()
@@ -151,6 +154,18 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 		else
 		{
 			return _drawCountPlayer2 < _drawCardNum;
+		}
+	}
+
+	public void AddDrawNum(int num)
+	{
+		if (TurnManager.instance.CurrentPlayer == 0)
+		{
+			_drawCountPlayer1 -= num;
+		}
+		else
+		{
+			_drawCountPlayer2 -= num;
 		}
 	}
 }

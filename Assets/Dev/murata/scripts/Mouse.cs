@@ -36,8 +36,6 @@ public class Mouse : MonoBehaviour
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);
-
-
             }
 		}
 
@@ -46,21 +44,16 @@ public class Mouse : MonoBehaviour
 		// ドラッグ中
 		if (Input.GetMouseButton(0))
 		{
-			// マウスの座標を取得
-			Vector3 mousePos = Input.mousePosition;
+			Plane plane = new Plane(Vector3.up, new Vector3(0, _yPos, 0));
 
-			// オブジェクトのZの位置と合わせる
-			mousePos.z = _zDistance;
+			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-			// ワールド座標に変換
-			Vector3 objPos = _camera.ScreenToWorldPoint(mousePos);
+			if (plane.Raycast(ray, out float enter))
+			{
+				Vector3 hitPoint = ray.GetPoint(enter);
 
-			objPos.y = _yPos;
-
-            // 位置を移動させる
-            _dragObj.transform.position = objPos;
-
-
+				_dragObj.transform.position = hitPoint;
+			}
 		}
 
 		// 指を離した時
@@ -69,7 +62,5 @@ public class Mouse : MonoBehaviour
 			_area.SetAria(_dragObj);
 			_dragObj = null; // ドラッグしているオブジェクトをNULLに
 		}
-
-
     }
 }

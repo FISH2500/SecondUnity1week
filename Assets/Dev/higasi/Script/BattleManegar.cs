@@ -6,8 +6,16 @@ public class BattleManegar : MonoBehaviour
 {
     [SerializeField]
     Image _winImage;
+
     [SerializeField]
     Image _loseImage;
+
+	[SerializeField]
+	private Area _playerArea;
+
+	[SerializeField]
+	private CPUArea _cpuArea;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -52,7 +60,8 @@ public class BattleManegar : MonoBehaviour
         {
             Result = BattleResult.Win;
             playerCard.GetComponent<SetSoldier>().IsBack = false;
-            Destroy(enemyCard);
+			_cpuArea.RemoveCPUArea(enemyCard);
+			Destroy(enemyCard);
             if (isEnemyGeneral)
             {
                 EndGame = true;
@@ -62,6 +71,7 @@ public class BattleManegar : MonoBehaviour
         else if (PlayerCardPower < EnemyCardPower)
         {
             Result = BattleResult.Lose;
+			_playerArea.RemoveAria(playerCard);
             Destroy(playerCard);
             enemyCard.GetComponent<SetSoldier>().IsBack = false;
             if (isPlayerGeneral)
@@ -73,7 +83,9 @@ public class BattleManegar : MonoBehaviour
         else
         {
             Result = BattleResult.Draw;
-            Destroy(playerCard);
+			_cpuArea.RemoveCPUArea(enemyCard);
+			_playerArea.RemoveAria(playerCard);
+			Destroy(playerCard);
             Destroy(enemyCard);
             if (isPlayerGeneral || isEnemyGeneral)
             {

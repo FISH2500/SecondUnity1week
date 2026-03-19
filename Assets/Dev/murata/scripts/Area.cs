@@ -15,12 +15,16 @@ public class Area : MonoBehaviour
 
 	[SerializeField] public GameObject[] CardObj;
 
+	[SerializeField] public int CardNum;
+
 	public bool AllSet = false;
 
 	void Start()
 	{
 		// _cardPositionの数に合わせて配列を初期化
 		_isSet = new bool[_cardPosition.Length];
+
+		CardNum = 0;
 
 		CardObj = new GameObject[_cardPosition.Length];
 
@@ -40,6 +44,7 @@ public class Area : MonoBehaviour
 				AllSet = false;
 				CardObj[i] = null;
 				_decision.SetActive(false);
+				CardNum--;
 				card.GetComponent<SetSoldier>().IsGeneral = false;
 				break;
 			}
@@ -109,6 +114,8 @@ public class Area : MonoBehaviour
 			{
 				_decision.SetActive(true);
 			}
+
+			CardNum++;
 
 			Debug.Log($"{card.name} を {nearestIndex} にセットしました");
 			if (AllSet) Debug.Log("すべてのカードがセットされました");

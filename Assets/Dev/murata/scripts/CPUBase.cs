@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CPUBase : MonoBehaviour
 {
 	[SerializeField] private CPUArea _cpuArea;
+	[SerializeField] private Area _playerArea;
 	[SerializeField] private DrawCard _drawCard;
+	[SerializeField] private BattleManegar _battleManegar;
 
 	private bool _hasAction = false;
 
 	private void Update()
 	{
-		if (TurnManager.instance.CurrentPlayer == 1) return;
+		if (TurnManager.instance.CurrentPlayer != 1) return;
 		if (TurnManager.instance.IsAction) return;
 		if (_hasAction) return;
 
@@ -65,7 +68,7 @@ public class CPUBase : MonoBehaviour
 				Item();
 
 				TurnManager.instance.UseItem = true;
-				StartCoroutine(SetAction());
+				StartCoroutine(SetAction()); // 再帰
 				yield break;
 				break;
 		}
@@ -79,7 +82,87 @@ public class CPUBase : MonoBehaviour
 
 	private void Attack()
 	{
+		// 攻撃の処理
+		GameObject strongestCard = null;
+		int strongestAtk = -1;
+		GameObject[] cpuCard = _cpuArea.CardObject;
 
+		GameObject targetCard = null;
+		int targetAtk = -1;
+		GameObject[] playerCard = _playerArea.CardObj;
+
+		for (int i = 0; i < 6; i++) // 所持カードの中から、最強のカードを選択e
+		{
+			if (cpuCard[i] == null) continue;
+
+			SetSoldier soldier = cpuCard[i].GetComponent<SetSoldier>();
+
+			if (soldier.IsGeneral && _cpuArea.CardNum != 1) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
+
+			if (soldier.SoldierAtk > strongestAtk)
+			{
+				strongestCard = cpuCard[i];
+				strongestAtk = soldier.SoldierAtk;
+			}
+		}
+
+		bool hasTarget = false;
+		// 表になっている相手のカードの中から、CPUのカードより攻撃力が低いカードの中で
+		// 一番攻撃力が高いカードを選択
+		// 表になっている相手のカードが全てCPUのカードより攻撃力が高い
+		// もしくは表になっている相手のカードがない場合は、裏のカードをランダムに選択する
+		for (int i = 0; i < 6; i++)
+		{
+			if (playerCard[i] == null) continue;
+
+			SetSoldier playerSoldier = playerCard[i].GetComponent<SetSoldier>();
+
+			if (playerSoldier.IsGeneral)
+			{
+				if (_playerArea.CardNum != 1) // 大将以外のカードが残っていたら無効
+				{
+					continue;
+				}
+				else // 大将のみの場合は攻撃可能
+				{
+					targetCard = playerCard[i];
+					targetAtk = playerSoldier.SoldierAtk;
+					hasTarget = true;
+					break;
+				}
+			}
+			if (playerSoldier.SoldierAtk > targetAtk && // 現在ターゲットになっているカードより強い
+				playerSoldier.SoldierAtk < strongestAtk && // CPUのカードより弱い
+				!playerSoldier.IsBack) // 表になっているカード
+			{
+				targetCard = playerCard[i];
+				targetAtk = playerSoldier.SoldierAtk;
+				hasTarget = true;
+			}
+		}
+
+		if (!hasTarget) // ターゲットがない場合のランダム処理
+		{
+			List<GameObject> candidates = new List<GameObject>();
+
+			for (int i = 0; i < playerCard.Length; i++)
+			{
+				if (playerCard[i] == null) continue;
+
+				var s = playerCard[i].GetComponent<SetSoldier>();
+
+				if (s.IsGeneral && _playerArea.CardNum >= 2) continue;
+
+				candidates.Add(playerCard[i]);
+			}
+
+			if (candidates.Count > 0)
+			{
+				targetCard = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+			}
+		}
+
+		_battleManegar.Battle(strongestCard, targetCard, false);
 	}
 
 	private void Draw()

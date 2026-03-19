@@ -47,6 +47,12 @@ public class BattleManegar : MonoBehaviour
 
     public void Battle(GameObject playerCard, GameObject enemyCard)
     {
+		if (playerCard == null || enemyCard == null)
+		{
+			Debug.Log($"Battle’†Ž~");
+			return;
+		}
+
 		Debug.Log($"BattleŠJŽn: PlayerCard={playerCard.name}, EnemyCard={enemyCard.name}");
 
 		SetSoldier solPlayer = playerCard.GetComponent<SetSoldier>();

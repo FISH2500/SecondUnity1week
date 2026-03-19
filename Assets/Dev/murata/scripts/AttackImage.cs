@@ -10,10 +10,21 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	private Vector3 _scale;
 	private Image _image;
 
+
 	private void Awake()
 	{
 		_scale = transform.localScale;
 		_image = GetComponent<Image>();
+	}
+
+	private void Update()
+	{
+		bool isMyTurn = TurnManager.instance.CurrentPlayer == 0;
+
+		if (_image.enabled != isMyTurn)
+		{
+			_image.enabled = isMyTurn;
+		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData)

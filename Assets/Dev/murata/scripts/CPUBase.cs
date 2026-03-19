@@ -164,7 +164,7 @@ public class CPUBase : MonoBehaviour
 			}
 		}
 
-		_battleManegar.Battle(targetCard, strongestCard, false);
+		_battleManegar.Battle(targetCard, strongestCard);
 	}
 
 	private void Draw()

@@ -99,7 +99,7 @@ public class CPUBase : MonoBehaviour
 
 			SetSoldier soldier = cpuCard[i].GetComponent<SetSoldier>();
 
-			if (soldier.IsGeneral && _cpuArea.CardNum <= 2) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
+			if (soldier.IsGeneral && _cpuArea.CardNum > 1) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
 
 			if (soldier.SoldierAtk > strongestAtk)
 			{
@@ -121,18 +121,13 @@ public class CPUBase : MonoBehaviour
 
 			if (playerSoldier.IsGeneral)
 			{
-				if (_playerArea.CardNum != 1) // 大将以外のカードが残っていたら無効
-				{
-					continue;
-				}
-				else // 大将のみの場合は攻撃可能
-				{
-					targetCard = playerCard[i];
-					targetAtk = playerSoldier.SoldierAtk;
-					hasTarget = true;
-					break;
-				}
+				if (_playerArea.CardNum > 1) continue;
+
+				targetCard = playerCard[i];
+				hasTarget = true;
+				break; // 大将が狙えるなら確定
 			}
+
 			if (playerSoldier.SoldierAtk > targetAtk && // 現在ターゲットになっているカードより強い
 				playerSoldier.SoldierAtk < strongestAtk && // CPUのカードより弱い
 				!playerSoldier.IsBack) // 表になっているカード
@@ -153,7 +148,7 @@ public class CPUBase : MonoBehaviour
 
 				var s = playerCard[i].GetComponent<SetSoldier>();
 
-				if (s.IsGeneral && _playerArea.CardNum >= 2) continue;
+				if (s.IsGeneral && _playerArea.CardNum > 1) continue;
 
 				candidates.Add(playerCard[i]);
 			}

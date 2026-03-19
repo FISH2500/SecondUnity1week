@@ -9,7 +9,14 @@ public class CPUArea : MonoBehaviour
 
 	[SerializeField] public int GeneralIndex;
 
+	public static CPUArea Instance;
+
 	public int CardNum;
+
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 	public void RemoveCPUArea(GameObject obj)
 	{

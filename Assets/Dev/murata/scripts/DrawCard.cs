@@ -16,25 +16,12 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 	private int _drawCountPlayer1 = 0;
 	private int _drawCountPlayer2 = 0;
 
-	private Image _image;
-
 	public static DrawCard instance;
 
 	private void Awake()
 	{
 		_scale = transform.localScale;
-		_image = GetComponent<Image>();
 		instance = this;
-	}
-
-	private void Update()
-	{
-		bool isMyTurn = TurnManager.instance.CurrentPlayer == 0;
-
-		if (_image.enabled != isMyTurn)
-		{
-			_image.enabled = isMyTurn;
-		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData)

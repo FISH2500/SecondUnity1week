@@ -21,6 +21,9 @@ public class TurnManager : MonoBehaviour
 		CurrentPlayer ^= 1;
 		UseItem = false;
 		IsAction = false;
+
+		DispUI.instance.Disp(CurrentPlayer == 0);
+
 		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
 	}
 
@@ -29,6 +32,9 @@ public class TurnManager : MonoBehaviour
 		CurrentPlayer = player;
 		UseItem = false;
 		IsAction = false;
+
+		DispUI.instance.Disp(CurrentPlayer == 0);
+
 		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
 	}
 }

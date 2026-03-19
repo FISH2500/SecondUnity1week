@@ -67,7 +67,23 @@ public class BattleManegar : MonoBehaviour
 		solPlayer.SetFront();
 		solEnemy.SetFront();
 
-		if (PlayerCardPower > EnemyCardPower)
+        bool isPlayerTrap = solPlayer.IsTrap;
+
+        
+
+        if (TurnManager.instance.CurrentPlayer == 1&&isPlayerTrap) //敵のターン,攻撃したカードが罠だった場合
+        {
+            Debug.Log("罠によりPlayer勝利");
+            Result = BattleResult.Win;
+            _cpuArea.RemoveCPUArea(enemyCard);
+            Destroy(enemyCard);
+            if (isEnemyGeneral)
+            {
+                EndGame = true;
+                _playerWin = true;
+            }
+        }
+        else if (PlayerCardPower > EnemyCardPower)
         {
 			Debug.Log("Player勝利");
 			Result = BattleResult.Win;

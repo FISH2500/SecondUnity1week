@@ -3,8 +3,9 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
 	public int CurrentPlayer;
+	public int TurnCount = 1;//ターン経過数
 
-	public bool UseItem = false;
+    public bool UseItem = false;
 	public bool IsAction = false;
 
 	public static TurnManager instance;
@@ -18,8 +19,16 @@ public class TurnManager : MonoBehaviour
 
 	public void ChangeTurn()
 	{
-		CurrentPlayer ^= 1;
-		UseItem = false;
+
+        CurrentPlayer ^= 1;
+
+        if (CurrentPlayer == 1)//自分のターンが来たらカウントする
+        {
+            TurnCount++;
+            Debug.Log($"ターン数 {TurnCount}");
+            
+        }
+        UseItem = false;
 		IsAction = false;
 
 		DispUI.instance.Disp(CurrentPlayer == 0);

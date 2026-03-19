@@ -52,14 +52,15 @@ public class CPUBase : MonoBehaviour
 		{
 			case 0:
 				Debug.Log("CPUが攻撃");
-				Attack();
-
-				TurnManager.instance.IsAction = true;
+                
+                Attack();
+                
+                TurnManager.instance.IsAction = true;
 				break;
 			case 1:
 				Debug.Log("CPUがドロー");
-
-				Draw();
+                TextManegar.instance.SetText("CPUが札を引きました");
+                Draw();
 
 				TurnManager.instance.IsAction = true;
 
@@ -68,7 +69,8 @@ public class CPUBase : MonoBehaviour
 				break;
 			case 2:
 				Debug.Log("CPUがアイテム使用");
-				Item();
+                TextManegar.instance.SetText("CPUがアイテムを使用");
+                Item();
 
 				TurnManager.instance.UseItem = true;
 				StartCoroutine(SetAction()); // 再帰
@@ -108,7 +110,10 @@ public class CPUBase : MonoBehaviour
 			}
 		}
 
-		bool hasTarget = false;
+		string log = $"{strongestAtk}でCPUの攻撃 ";
+
+        TextManegar.instance.SetText(log);
+        bool hasTarget = false;
 		// 表になっている相手のカードの中から、CPUのカードより攻撃力が低いカードの中で
 		// 一番攻撃力が高いカードを選択
 		// 表になっている相手のカードが全てCPUのカードより攻撃力が高い

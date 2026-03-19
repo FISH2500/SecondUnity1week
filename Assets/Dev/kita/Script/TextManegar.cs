@@ -17,10 +17,11 @@ public class TextManegar : MonoBehaviour
     void Awake() 
     {
         instance = this;
+        _actionText = GetComponent<TextMeshProUGUI>();
     }
     void Start()
     {
-        _actionText = GetComponent<TextMeshProUGUI>();
+        
     }
 
     // Update is called once per frame

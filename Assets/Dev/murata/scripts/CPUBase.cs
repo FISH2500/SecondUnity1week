@@ -12,17 +12,17 @@ public class CPUBase : MonoBehaviour
 
 	private bool _hasAction = false;
 
-	private void Update()
-	{
-		if (TurnManager.instance.CurrentPlayer != 1) return;
-		if (TurnManager.instance.IsAction) return;
-		if (_hasAction) return;
+	//private void Update()
+	//{
+	//	if (TurnManager.instance.CurrentPlayer != 1) return;
+	//	if (TurnManager.instance.IsAction) return;
+	//	if (_hasAction) return;
 
-		_hasAction = true;
-		StartCoroutine(SetAction());
-	}
+	//	_hasAction = true;
+	//	StartCoroutine(SetAction());
+	//}
 
-	private IEnumerator SetAction()
+	public IEnumerator SetAction()
 	{
 		yield return new WaitForSeconds(1.0f);
 
@@ -33,7 +33,7 @@ public class CPUBase : MonoBehaviour
 		validActions.Add(0);
 
 		// カードが6枚未満でまだドローできるなら
-		if (_cpuArea.CardNum < 6 && _drawCard.IsDraw())
+		if (_cpuArea.CardNum < 6 && _drawCard.IsDraw() && !TurnManager.instance.IsDraw)
 		{
 			validActions.Add(1);
 		}
@@ -52,16 +52,19 @@ public class CPUBase : MonoBehaviour
 		{
 			case 0:
 				Debug.Log("CPUが攻撃");
+<<<<<<< Updated upstream
 				Attack();
 
 				TurnManager.instance.IsAction = true;
+=======
+                
+                Attack();
+>>>>>>> Stashed changes
 				break;
 			case 1:
 				Debug.Log("CPUがドロー");
 
 				Draw();
-
-				TurnManager.instance.IsAction = true;
 
 				TurnManager.instance.ChangeTurn();
 
@@ -73,7 +76,6 @@ public class CPUBase : MonoBehaviour
 				TurnManager.instance.UseItem = true;
 				StartCoroutine(SetAction()); // 再帰
 				yield break;
-				break;
 		}
 
 		yield return new WaitForSeconds(1.0f);

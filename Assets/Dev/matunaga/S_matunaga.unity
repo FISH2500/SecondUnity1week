@@ -327,7 +327,7 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 188d8cf32034ca544824d034e122f4c8, type: 3}
     Volume: 3
   - Name: BossBGM
-    Clip: {fileID: 8300000, guid: 392b5f8a57cca954d8cb995fd2c1db98, type: 3}
+    Clip: {fileID: 8300000, guid: 96f04a3b23da75a479eff7d79b65f324, type: 3}
     Volume: 0.1
   _bgmSource: {fileID: 1660413157}
   _seSource: {fileID: 1660413157}

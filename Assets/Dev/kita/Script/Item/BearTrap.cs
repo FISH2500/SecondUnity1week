@@ -3,74 +3,66 @@ using UnityEngine;
 public class BearTrap : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _trapPrefab;//㩂̃v���n�u
+    private GameObject _trapPrefab;//トラップのプレハブ
 
-    private int _spawnTurn;//�������ꂽ�^�[��
+    private int _spawnTurn;//設置したときのターン
 
-    public bool _isCanTrapSet = false;//㩂��Z�b�g���ł���ǂ����̃t���O
+    public bool _isCanTrapSet = false;//トラップが設置できる
 
-    private GameObject _card;//�N���b�N�����J�[�h�̃I�u�W�F�N�g
+    private GameObject _card;//選択したカード
 
-    private GameObject _trapInstance;//�������ꂽ㩂̃I�u�W�F�N�g
+    private GameObject _trapInstance;//生成したトラップのインスタンス
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         SetTrapFlag();
-//>>>>>>> Stashed changes
-//=======
-        //SetTrap();
-//>>>>>>> 2b3865e25148541241e6c50271f141be880b6f35
     }
 
     // Update is called once per frame
     void Update()
     {
-        //㩂��������ꂽ�^�[������1�^�[���o�߂�����㩂�j������
+        //設置してからターンが経過したらトラップを解除する
         if (TurnManager.instance.TurnCount > _spawnTurn)
         {
-            _isCanTrapSet = false;//㩂̃Z�b�g���ł��Ȃ��悤�ɂ���
-            _card.GetComponent<SetSoldier>().IsTrap = false;//�N���b�N�����J�[�h��㩂̃t���O�����Z�b�g
-            Debug.Log("㩂��j������܂���");
+            _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
+            Debug.Log("罠破棄");
             EndTask();
         }
 
-        if (_isCanTrapSet)//㩂��Z�b�g�ł���
+        if (_isCanTrapSet)//トラップの設置処理
         SetTrapCard();
     }
 
-    //�g���b�v�̃Z�b�g�������鏈��
+    //罠の設置フラグを立てる
     public void SetTrapFlag() 
     {
-        TextManegar.instance.SetText("㩂��ǂ��ɐݒu���܂����H");
-        _isCanTrapSet = true;//㩂��Z�b�g�ł���悤�ɂȂ�
-        _spawnTurn = TurnManager.instance.TurnCount;//�������ꂽ�^�[�����L�^
+        TextManegar.instance.SetText("罠を設置する場所を決めてください");
+        _isCanTrapSet = true;//トラップが設置できる
+        _spawnTurn = TurnManager.instance.TurnCount;//設置時のターン
     }
 
-    //�I�u�W�F�N�g�Ƀg���b�v��ݒu���鏈��
+    //罠を設置する場所を決める
     void SetTrapCard() 
     {
         if (Input.GetMouseButton(0))
         {
-            _card = ClickObject();//�N���b�N�����J�[�h�𒲂ׂ�
+            _card = ClickObject();//選択したカードを取得
 
-            if (_card == null) return;
+            if (_card == null) return;//押していない場合処理しない
 
             bool isGeneral= _card.GetComponent<SetSoldier>().IsGeneral;
 
-            if (isGeneral) return;//���R�ɂ�㩂��Z�b�g�ł��Ȃ�
+            if (isGeneral) return;//大将の場合設置できない
 
-            _card.GetComponent<SetSoldier>().IsTrap = true;//�N���b�N�����J�[�h��㩂̃t���O�𗧂Ă�
+            _card.GetComponent<SetSoldier>().IsTrap = true;//トラップフラグをたてる
 
-            _isCanTrapSet = true;//㩂��Z�b�g���ꂽ
+            Vector3 trapPosition = _card.transform.position;//クリックしたカードの位置を取得
 
-            Vector3 trapPosition = _card.transform.position;//�N���b�N�����J�[�h�̈ʒu���擾
+            trapPosition.y += 0.2f;//トラップをカードの上に配置
 
-            trapPosition.y += 0.2f;//㩂��J�[�h�̏�ɕ\�������悤��Y���W�������グ��
+            _trapInstance= Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//トラップの生成
 
-            _trapInstance= Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//㩂��N���b�N�����J�[�h�̈ʒu�ɐ���
-
-            _isCanTrapSet = false;//㩂̃Z�b�g�����������̂Ńt���O�����Z�b�g
+            _isCanTrapSet = false;//トラップ設置完了
         }
     }
 
@@ -89,16 +81,16 @@ public class BearTrap : MonoBehaviour
 
                 if (hitObj.CompareTag("Card"))
                 {
-                    return hitObj;//�N���b�N�����J�[�h�̃I�u�W�F�N�g��Ԃ�
+                    return hitObj;//なんのカードを押したかチェック
                 }
             }
         }
 
-        return null;//�N���b�N�����I�u�W�F�N�g���J�[�h�łȂ��ꍇ��null��Ԃ�
+        return null;//カードをクリックしていない
 
     }
 
-    //�^�[���I�����ɔj��
+    //トラップ機能の終了
     void EndTask()
     {
         Destroy(_trapInstance);

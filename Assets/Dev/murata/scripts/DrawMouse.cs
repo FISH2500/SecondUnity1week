@@ -36,9 +36,9 @@ public class DrawMouse : MonoBehaviour
 					_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
 					_yPos = obj.transform.position.y;
 				}
-				else
+				else if(_area.AllSet)
 				{
-					_area.RemoveArea(obj);
+					_area.RemoveArea(obj);//破棄するカードを選択
 					Destroy(obj);
 				}
 

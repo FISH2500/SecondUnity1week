@@ -74,9 +74,6 @@ public class CPUBase : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds(1.0f);
-
-
-		_hasAction = false;
 	}
 
 	private void Attack()

@@ -9,9 +9,13 @@ public class CPUItem : MonoBehaviour
 	[SerializeField] private List<int> _myItems = new List<int>();
 
 	private ItemBase _itemBase;
+
+	public static CPUItem Instance;
 	
 	private void Start()
 	{
+		Instance = this;
+
 		_itemBase = GetComponent<ItemBase>();
 
 		for (int i = 0; i < 3; i++)
@@ -28,5 +32,15 @@ public class CPUItem : MonoBehaviour
 
 		_itemBase.ItemID = id;
 		_itemBase.Use();
+	}
+
+	public int GetFirstItemID()
+	{
+		return _myItems.Count > 0 ? _myItems[0] : -1;
+	}
+
+	public void ReplaceFirstItem(int newID)
+	{
+		if (_myItems.Count > 0) _myItems[0] = newID;
 	}
 }

@@ -73,7 +73,7 @@ public class CPUBase : MonoBehaviour
                 TextManegar.instance.SetText("CPUがアイテムを使用");
                 Item();
 
-				TurnManager.instance.UseItem = true;
+				TurnManager.instance.UseItemFlag();
 				StartCoroutine(SetAction()); // 再帰
 				yield break;
 				break;

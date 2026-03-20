@@ -20,7 +20,7 @@ public class SetOutLine : MonoBehaviour
     }
 
     //アウトラインをつける関数
-    public void SetOutline() 
+    public void SetOutline(float thickness) 
     {
         if (!_isSetOutLine) 
         {
@@ -28,7 +28,7 @@ public class SetOutLine : MonoBehaviour
 
             Material material= meshRenderer.materials[1];
 
-            material.SetFloat("_OutLineThickness", 0.01f);
+            material.SetFloat("_OutLineThickness", thickness);
 
             _isSetOutLine = true;//アウトラインフラグ
         }

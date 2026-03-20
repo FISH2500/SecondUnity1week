@@ -7,18 +7,23 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 {
 	[SerializeField] private CardSelect _cardSelect;
 
+	private ActionButton _actionButton;
 
-	private Vector3 _scale;
+    private Vector3 _scale;
 
 
 	private void Awake()
 	{
 		_scale = transform.localScale;
-	}
+        _actionButton = GetComponent<ActionButton>();
+
+    }
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		TextManegar.instance.SetText("攻撃に使う札を選択してください");
+
+		_actionButton.ActionButtonDown();//アクションボタンの関数を呼び出す
 
         _cardSelect.enabled = true;//カードを選択するスクリプトを有効に
 	}

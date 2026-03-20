@@ -93,7 +93,7 @@ public class DrawMouse : MonoBehaviour
 	{
         for (int i = 0; i < _area.CardObj.Length; i++)
         {
-            _area.CardObj[i].GetComponent<SetOutLine>().SetOutline();//セットされているすべてのカードにアウトラインをつける
+            _area.CardObj[i].GetComponent<SetOutLine>().SetOutline(0.03f);//セットされているすべてのカードにアウトラインをつける
         }
 
         _selectDestroyCardUI.SetActive(true);

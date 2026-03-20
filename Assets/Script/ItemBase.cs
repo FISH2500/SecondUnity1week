@@ -52,8 +52,14 @@ public class ItemBase : MonoBehaviour
 
 	public void Highlight(bool highlight)
 	{
-		_highlight.enabled = highlight;
-	}
+		//_highlight.enabled = highlight;
+		if(highlight)
+		gameObject.GetComponent<SetOutLine>().SetOutline(0.03f);
+
+        else
+			gameObject.GetComponent<SetOutLine>().ReSetOutline();
+
+    }
 
 	public void SetBack()//— –Ê‚É‚·‚é
 	{

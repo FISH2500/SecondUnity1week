@@ -20,6 +20,8 @@ public class AttackTurnJudge : MonoBehaviour
 
     [SerializeField]
     float _rotateSpeed;//回転速度
+
+    int[] card = new int[2];//攻撃ターンの兵士のインデックスを格納する配列
     void Start()
     {
         //TurnJudge();
@@ -57,7 +59,7 @@ public class AttackTurnJudge : MonoBehaviour
     {
         _backGround.SetActive(true);//背景を消す
 
-        int[] card = new int[2];//攻撃ターンの兵士のインデックスを格納する配列
+        
         int setCard = 0;//セットされた兵士の数
         while (setCard<2) 
         {
@@ -97,16 +99,7 @@ public class AttackTurnJudge : MonoBehaviour
 
         Debug.Log("Player : " + (int)(card[0] + 1) +" CPU : " + (int)(card[1] + 1));
 
-        if (card[0] > card[1]) 
-        {
-            TurnManager.instance.SetTurn(0);//先攻をプレイヤーに設定
-            Debug.Log("あなたは先攻です。");
-        }
-        else
-        {
-            TurnManager.instance.SetTurn(1);
-            Debug.Log("あなたは後攻です。");
-        }
+
 
     }
 
@@ -117,5 +110,18 @@ public class AttackTurnJudge : MonoBehaviour
         {
             Destroy(player[i]);//カードを消す
         }
+
+        if (card[0] > card[1])
+        {
+            TurnManager.instance.SetTurn(0);//先攻をプレイヤーに設定
+            Debug.Log("あなたは先攻です。");
+        }
+        else
+        {
+            TurnManager.instance.SetTurn(1);
+            Debug.Log("あなたは後攻です。");
+        }
+
+        //DispUI.instance.Disp(true);//UIを表示する
     }
 }

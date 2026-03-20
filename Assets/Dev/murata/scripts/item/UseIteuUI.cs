@@ -16,8 +16,8 @@ public class UseIteuUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
-
-		_playerItem.UseItem();
+        GetComponent<ActionButton>().ActionButtonDown();
+        _playerItem.UseItem();
 	}
 
 	// マウスが乗った時

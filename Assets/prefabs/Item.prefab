@@ -397,6 +397,7 @@ MonoBehaviour:
   _backImage: {fileID: 8461504812913185378}
   _highlight: {fileID: 7950382375378419662}
   IsCPU: 0
+  _trap: {fileID: 4664631847476407139, guid: f869faf9b0cd96e4289a3dbf6d60973c, type: 3}
   _swapCard: {fileID: 543100656070510685}
   _openCard: {fileID: 3412981559666392188}
   item_RedrawTarget: {fileID: 8625104287500226279}
@@ -426,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1770ae50ee61abd4db1b26e18ca202f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstSelected: {fileID: 0}
 --- !u!114 &8625104287500226279
 MonoBehaviour:
   m_ObjectHideFlags: 0

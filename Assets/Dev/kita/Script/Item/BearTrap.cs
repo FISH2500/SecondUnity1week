@@ -15,6 +15,7 @@ public class BearTrap : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+<<<<<<< Updated upstream
 
         SetTrapFlag();
 //>>>>>>> Stashed changes
@@ -22,6 +23,20 @@ public class BearTrap : MonoBehaviour
         //SetTrap();
 //>>>>>>> 2b3865e25148541241e6c50271f141be880b6f35
     }
+=======
+		if (TurnManager.instance.CurrentPlayer == 0)
+		{
+			SetTrapFlag();
+			DispUI.instance.Disp(false);
+		}
+		else
+		{
+			_isCanTrapSet = false;
+			_spawnTurn = TurnManager.instance.TurnCount;
+			ExecuteCPUTrap();
+		}
+	}
+>>>>>>> Stashed changes
 
     // Update is called once per frame
     void Update()
@@ -35,8 +50,13 @@ public class BearTrap : MonoBehaviour
             EndTask();
         }
 
+<<<<<<< Updated upstream
         if (_isCanTrapSet)//㩂��Z�b�g�ł���
         SetTrapCard();
+=======
+        if (_isCanTrapSet)//トラップの設置処理
+			SetTrapCard();
+>>>>>>> Stashed changes
     }
 
     //�g���b�v�̃Z�b�g�������鏈��
@@ -68,10 +88,16 @@ public class BearTrap : MonoBehaviour
 
             trapPosition.y += 0.2f;//㩂��J�[�h�̏�ɕ\�������悤��Y���W�������グ��
 
+<<<<<<< Updated upstream
             _trapInstance= Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//㩂��N���b�N�����J�[�h�̈ʒu�ɐ���
 
             _isCanTrapSet = false;//㩂̃Z�b�g�����������̂Ńt���O�����Z�b�g
         }
+=======
+            _isCanTrapSet = false;//トラップ設置完了
+			DispUI.instance.Disp(true);
+		}
+>>>>>>> Stashed changes
     }
 
     GameObject ClickObject() 
@@ -80,17 +106,21 @@ public class BearTrap : MonoBehaviour
         Ray selectRay = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
 
-        
+        if (Physics.Raycast(selectRay, out hit, 100.0f))
         {
-            if (Physics.Raycast(selectRay, out hit, 100.0f))
-            {
-                Debug.Log("hit");
-                GameObject hitObj = hit.collider.gameObject;
+            Debug.Log("hit");
+            GameObject hitObj = hit.collider.gameObject;
 
+<<<<<<< Updated upstream
                 if (hitObj.CompareTag("Card"))
                 {
                     return hitObj;//�N���b�N�����J�[�h�̃I�u�W�F�N�g��Ԃ�
                 }
+=======
+            if (hitObj.CompareTag("Card"))
+            {
+                return hitObj;//なんのカードを押したかチェック
+>>>>>>> Stashed changes
             }
         }
 
@@ -104,4 +134,24 @@ public class BearTrap : MonoBehaviour
         Destroy(_trapInstance);
         Destroy(gameObject);
     }
+
+	private void ExecuteCPUTrap()
+	{
+		GameObject[] cpuCards = CPUArea.Instance.CardObject;
+		System.Collections.Generic.List<GameObject> candidates = new System.Collections.Generic.List<GameObject>();
+
+		foreach (var obj in cpuCards)
+		{
+			if (obj != null && !obj.GetComponent<SetSoldier>().IsGeneral)
+				candidates.Add(obj);
+		}
+
+		if (candidates.Count > 0)
+		{
+			_card = candidates[Random.Range(0, candidates.Count)];
+			_card.GetComponent<SetSoldier>().IsTrap = true;
+
+			Debug.Log($"{_card.name}に罠を設置しました");
+		}
+	}
 }

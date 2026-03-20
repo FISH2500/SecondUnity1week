@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class buff_Effect_jikken : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SoundManager.Instance.PlayBGM("BossBGM");
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            SoundManager.Instance.StopBGM();
+        }
+
         if (Input.GetKeyDown(KeyCode.B))
         {
             EffectManager.Instance.PlayEffect("Buff", transform.position);

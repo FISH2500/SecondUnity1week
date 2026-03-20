@@ -14,6 +14,8 @@ public class SetSoldier : MonoBehaviour
 
     public bool IsBack; // 裏か表か
 
+    public bool IsTrap; // 罠カードかどうか
+
     [SerializeField]
     private SoldierData _soldierData;//兵士のデータベース
 

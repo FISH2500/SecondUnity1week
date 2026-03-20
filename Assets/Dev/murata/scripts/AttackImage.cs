@@ -7,6 +7,7 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 {
 	[SerializeField] private CardSelect _cardSelect;
 
+
 	private Vector3 _scale;
 
 
@@ -17,7 +18,9 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		_cardSelect.enabled = true;
+		TextManegar.instance.SetText("攻撃に使う札を選択してください");
+
+        _cardSelect.enabled = true;//カードを選択するスクリプトを有効に
 	}
 
 	// マウスが乗った時

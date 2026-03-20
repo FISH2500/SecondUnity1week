@@ -16,11 +16,15 @@ public class PlayerItem : MonoBehaviour
 
 	private GameObject UsingItem = null;
 
+	public static PlayerItem Instance;
+
 	private void Start()
 	{
+		Instance = this;
+
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject obj = _itemDeck.DrawItem(i);
+			GameObject obj = _itemDeck.DrawItem();
 
 			obj.SetActive(false);
 			obj.transform.position = _Position[i].position;
@@ -86,6 +90,8 @@ public class PlayerItem : MonoBehaviour
 
 		_selectItem = false;
 
+		TurnManager.instance.UseItemFlag();
+
 		HideAllItems();
 	}
 
@@ -104,11 +110,24 @@ public class PlayerItem : MonoBehaviour
 		}
 	}
 
+	public void DispItem(bool disp)
+	{
+		foreach (var item in _myItems)
+		{
+			item.SetActive(disp);
+		}
+	}
+
 	private void HideAllItems()
 	{
 		foreach (var item in _myItems)
 		{
 			if (item != null) item.SetActive(false);
 		}
+	}
+
+	public List<GameObject> GetMyItems()
+	{
+		return _myItems;
 	}
 }

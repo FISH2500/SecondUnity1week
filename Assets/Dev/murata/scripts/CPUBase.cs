@@ -155,8 +155,8 @@ public class CPUBase : MonoBehaviour
 				targetCard = candidates[UnityEngine.Random.Range(0, candidates.Count)];
 			}
 		}
+		StartCoroutine(AtkMotion(strongestCard, targetCard));
 
-		_battleManegar.Battle(targetCard, strongestCard);
 	}
 
 	private void Draw()
@@ -173,4 +173,43 @@ public class CPUBase : MonoBehaviour
 	{
 		_cpuItem.CPUUseItem();
 	}
+
+	private IEnumerator AtkMotion(GameObject cpuCard, GameObject playerCard)
+	{
+        Vector3 cardOriginPos = cpuCard.transform.position;
+        float speed = 40.0f;
+		while (true)
+		{
+			yield return null;
+			cpuCard.transform.position = Vector3.MoveTowards(
+											cpuCard.transform.position,
+											playerCard.transform.position,
+											speed * Time.deltaTime);
+			if (cpuCard.transform.position == playerCard.transform.position )
+				break;
+		}
+        _battleManegar.Battle(playerCard, cpuCard);
+		StartCoroutine(ReturnMotion(cpuCard, cardOriginPos));
+    }
+
+	private IEnumerator ReturnMotion(GameObject cpuCard, Vector3 originPos)
+	{
+		yield return null;
+		if (cpuCard != null)
+		{
+			Debug.Log(cpuCard);
+			float speed = 40.0f;
+			while (true)
+			{
+				yield return null;
+				cpuCard.transform.position = Vector3.MoveTowards(
+												cpuCard.transform.position,
+												originPos,
+												speed * Time.deltaTime);
+				if (cpuCard.transform.position == originPos)
+					break;
+			}
+		}
+    }
+
 }

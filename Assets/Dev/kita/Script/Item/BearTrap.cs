@@ -12,7 +12,7 @@ public class BearTrap : MonoBehaviour
     private GameObject _card;//選択したカード
 
     private GameObject _trapInstance;//生成したトラップのインスタンス
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
 		if (TurnManager.instance.CurrentPlayer == 0)
@@ -85,10 +85,9 @@ public class BearTrap : MonoBehaviour
             Debug.Log("hit");
             GameObject hitObj = hit.collider.gameObject;
 
-                if (hitObj.CompareTag("Card"))
-                {
-                    return hitObj;//なんのカードを押したかチェック
-                }
+            if (hitObj.CompareTag("Card"))
+            {
+                return hitObj;//なんのカードを押したかチェック
             }
         }
 

@@ -187,7 +187,7 @@ public class ItemBase : MonoBehaviour
 
 	private void StrengthInversion()
 	{
-
+		TurnManager.instance.SetRevolution();
 	}
 
 	private void SwapCard()

@@ -35,21 +35,21 @@ public class BattleManegar : MonoBehaviour
 
     void Update()
     {
-       if (EndGame)
-       {
-            _winImage.gameObject.SetActive(_playerWin);
-            _loseImage.gameObject.SetActive(!_playerWin);
-            Debug.Log("ゲーム終了");
-       }
-       else
-       {
-                _winImage.gameObject.SetActive(false);
-                _loseImage.gameObject.SetActive(false);
-       }
+		if (EndGame)
+		{
+			_winImage.gameObject.SetActive(_playerWin);
+			_loseImage.gameObject.SetActive(!_playerWin);
+			Debug.Log("ゲーム終了");
+		}
+		else
+		{
+			_winImage.gameObject.SetActive(false);
+			_loseImage.gameObject.SetActive(false);
+		}
     }
 
-    public void Battle(GameObject playerCard, GameObject enemyCard)
-    {
+	public void Battle(GameObject playerCard, GameObject enemyCard)
+	{
 		if (playerCard == null || enemyCard == null)
 		{
 			Debug.Log($"Battle中止");
@@ -57,85 +57,110 @@ public class BattleManegar : MonoBehaviour
 			return;
 		}
 
-		Debug.Log($"Battle開始: PlayerCard={playerCard.name}, EnemyCard={enemyCard.name}");
-
 		SetSoldier solPlayer = playerCard.GetComponent<SetSoldier>();
 		SetSoldier solEnemy = enemyCard.GetComponent<SetSoldier>();
 
 		bool isPlayerGeneral = solPlayer.IsGeneral;
-        bool isEnemyGeneral = solEnemy.IsGeneral;
-        PlayerCardPower = solPlayer.SoldierAtk;
-        EnemyCardPower  = solEnemy.SoldierAtk;
+		bool isEnemyGeneral = solEnemy.IsGeneral;
+		PlayerCardPower = solPlayer.SoldierAtk;
+		EnemyCardPower = solEnemy.SoldierAtk;
 
 		solPlayer.SetFront();
 		solEnemy.SetFront();
 
-        bool isPlayerTrap = solPlayer.IsTrap;
+		// --- 1. 罠(Trap)の判定 ---
+		// 現在のターンプレイヤーが、罠の設置されたカードを攻撃してしまった場合
+		bool isTrapped = (TurnManager.instance.CurrentPlayer == 0 && solEnemy.IsTrap) ||
+						 (TurnManager.instance.CurrentPlayer == 1 && solPlayer.IsTrap);
 
-        
-
-        if (TurnManager.instance.CurrentPlayer == 1&&isPlayerTrap) //敵のターン,攻撃したカードが罠だった場合
-        {
-            Debug.Log("罠によりPlayer勝利");
-            Result = BattleResult.Win;
-            _cpuArea.RemoveCPUArea(enemyCard);
-            Destroy(enemyCard);
-            if (isEnemyGeneral)
-            {
-                EndGame = true;
-                _playerWin = true;
-            }
-        }
-        else if (PlayerCardPower > EnemyCardPower)
-        {
-			Debug.Log("Player勝利");
-			Result = BattleResult.Win;
-			_cpuArea.RemoveCPUArea(enemyCard);
-			Destroy(enemyCard);
-            if (isEnemyGeneral)
-            {
-                EndGame = true;
-                _playerWin = true;
-            }
-        }
-        else if (PlayerCardPower < EnemyCardPower)
+		if (isTrapped)
 		{
-			Debug.Log("Player敗北");
-			Result = BattleResult.Lose;
-			_playerArea.RemoveArea(playerCard);
-            Destroy(playerCard);
-            if (isPlayerGeneral)
-            {
-                EndGame = true;
-                _playerWin = false;
-            }
-        }
-        else
+			Debug.Log("罠発動！攻撃側が破壊されました");
+			if (TurnManager.instance.CurrentPlayer == 0) // プレイヤーが罠を踏んだ
+			{
+				ProcessDefeat(playerCard, isPlayerGeneral, false);
+			}
+			else // CPUが罠を踏んだ
+			{
+				ProcessVictory(enemyCard, isEnemyGeneral);
+			}
+		}
+		// --- 2. 通常の数値バトル (革命対応) ---
+		else
 		{
-			Debug.Log("引き分け");
-			Result = BattleResult.Draw;
-			_cpuArea.RemoveCPUArea(enemyCard);
-			_playerArea.RemoveArea(playerCard);
-			Destroy(playerCard);
-			Destroy(enemyCard);
+			// 革命フラグを取得
+			bool isRev = TurnManager.instance.Revolution;
 
-			if (isPlayerGeneral && isEnemyGeneral)
-			{
-				EndGame = true;
-				_playerWin = true;
-			}
-			else if (isPlayerGeneral)
-			{
-				EndGame = true;
-				_playerWin = false;
-			}
-			else if (isEnemyGeneral)
-			{
-				EndGame = true;
-				_playerWin = true;
-			}
-        }
+			// 勝利・敗北の条件式を革命フラグで分岐
+			bool winCondition = isRev ? (PlayerCardPower < EnemyCardPower) : (PlayerCardPower > EnemyCardPower);
+			bool loseCondition = isRev ? (PlayerCardPower > EnemyCardPower) : (PlayerCardPower < EnemyCardPower);
 
+			if (winCondition)
+			{
+				Debug.Log(isRev ? "革命中：Player勝利" : "Player勝利");
+				ProcessVictory(enemyCard, isEnemyGeneral);
+			}
+			else if (loseCondition)
+			{
+				Debug.Log(isRev ? "革命中：Player敗北" : "Player敗北");
+				ProcessDefeat(playerCard, isPlayerGeneral, false);
+			}
+			else
+			{
+				Debug.Log("引き分け");
+				ProcessDraw(playerCard, enemyCard, isPlayerGeneral, isEnemyGeneral);
+			}
+		}
+
+		// --- 3. ターン終了・再行動処理 ---
+		HandleTurnEnd();
+	}
+
+	// 勝利時の共通処理
+	private void ProcessVictory(GameObject enemyCard, bool isEnemyGeneral)
+	{
+		Result = BattleResult.Win;
+		_cpuArea.RemoveCPUArea(enemyCard);
+		Destroy(enemyCard);
+		if (isEnemyGeneral)
+		{
+			EndGame = true;
+			_playerWin = true;
+		}
+	}
+
+	// 敗北時の共通処理
+	private void ProcessDefeat(GameObject playerCard, bool isPlayerGeneral, bool playerWinsGame)
+	{
+		Result = BattleResult.Lose;
+		_playerArea.RemoveArea(playerCard);
+		Destroy(playerCard);
+		if (isPlayerGeneral)
+		{
+			EndGame = true;
+			_playerWin = playerWinsGame;
+		}
+	}
+
+	// 引き分け時の共通処理
+	private void ProcessDraw(GameObject pCard, GameObject eCard, bool pGen, bool eGen)
+	{
+		Result = BattleResult.Draw;
+		_cpuArea.RemoveCPUArea(eCard);
+		_playerArea.RemoveArea(pCard);
+		Destroy(pCard);
+		Destroy(eCard);
+
+		if (pGen || eGen)
+		{
+			EndGame = true;
+			_playerWin = eGen; // 両方落ちた場合や大将が落ちた場合の判定
+		}
+	}
+
+	// ターン終了の管理
+	private void HandleTurnEnd()
+	{
 		if (TurnManager.instance.DoubleAttackSimasuka())
 		{
 			TurnManager.instance.IsDraw = true;
@@ -146,5 +171,5 @@ public class BattleManegar : MonoBehaviour
 			TurnManager.instance.IsAction = true;
 			TurnManager.instance.ChangeTurn();
 		}
-    }
+	}
 }

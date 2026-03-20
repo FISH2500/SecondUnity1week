@@ -30,7 +30,9 @@ public class SelectSoldier : MonoBehaviour
 
             _card.GetComponent<SetSoldier>().SetFront();//カードを表にする
 
-            _startCard.x +=2.0f;//カードを横に並べるための位置
+			_card.GetComponent<SetSoldier>().OwnerPlayer = 0;
+
+			_startCard.x +=2.0f;//カードを横に並べるための位置
 
             _card.transform.position = _startCard;//カードを横に並べる
 

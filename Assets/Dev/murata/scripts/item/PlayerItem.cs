@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 
 public class PlayerItem : MonoBehaviour
@@ -26,14 +27,14 @@ public class PlayerItem : MonoBehaviour
 		{
 			GameObject obj = _itemDeck.DrawItem();
 
-			obj.SetActive(false);
 			obj.transform.position = _Position[i].position;
 			obj.transform.rotation = _Position[i].rotation;
 
 			AddItem(obj);
 		}
-	}
 
+		DispItem(false);
+	}
 
 	void Update()
 	{
@@ -86,7 +87,13 @@ public class PlayerItem : MonoBehaviour
 
 		item.GetComponent<ItemBase>().Highlight(false);
 
-		Destroy(item);
+		Vector3 pos = item.transform.position;
+
+		pos.y += 10;
+
+		item.transform.position = pos;
+
+		//Destroy(item);
 
 		UsingItem = null;
 
@@ -106,15 +113,33 @@ public class PlayerItem : MonoBehaviour
 
 		foreach (var item in _myItems)
 		{
-			item.SetActive(select);
+			DispItem(select);
 		}
 	}
 
 	public void DispItem(bool disp)
 	{
-		foreach (var item in _myItems)
+		if (disp)
 		{
-			item.SetActive(disp);
+			foreach (var item in _myItems)
+			{
+				Vector3 pos = item.transform.position;
+
+				pos.y = _Position[0].position.y;
+
+				item.transform.position = pos;
+			}
+		}
+		else
+		{
+			foreach (var item in _myItems)
+			{
+				Vector3 pos = item.transform.position;
+
+				pos.y += 10;
+
+				item.transform.position = pos;
+			}
 		}
 	}
 
@@ -122,7 +147,11 @@ public class PlayerItem : MonoBehaviour
 	{
 		foreach (var item in _myItems)
 		{
-			if (item != null) item.SetActive(false);
+			Vector3 pos = item.transform.position;
+
+			pos.y += 10;
+
+			item.transform.position = pos;
 		}
 	}
 

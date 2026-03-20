@@ -336,4 +336,9 @@ public class ItemAction : MonoBehaviour
             TurnManager.instance.ChangeTurn();
         }
     }
+
+    public void Trap()
+    {
+
+    }
 }

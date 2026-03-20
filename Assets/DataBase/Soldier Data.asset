@@ -12,94 +12,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3ee3f2bdd460848b3c3df6a0ef762b, type: 3}
   m_Name: Soldier Data
   m_EditorClassIdentifier: 
-  SoldierBack: {fileID: -2065550583, guid: bdb0dd1eb833a9c47bf96b831e13f24b, type: 3}
+  SoldierBack: {fileID: 21300000, guid: fa292564256979c4dbf2e4e2fb608a19, type: 3}
   SoldierList:
   - CardNum: 1
-    CardSprite: {fileID: -244679614, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: e744a8410e7166347861845290109d43, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 2
-    CardSprite: {fileID: -1089323269, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 775034159ae18864d9d4cd812348c167, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 3
-    CardSprite: {fileID: -318101441, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 5c09ba1a1dc9f4a478a12acec1e83353, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 4
-    CardSprite: {fileID: -1477348101, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 9f5365d093263c641ab629790ee7bdee, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 5
-    CardSprite: {fileID: -51745396, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 60f056730844b1c49ab45c4edb6cfb66, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 6
-    CardSprite: {fileID: -587957782, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 25d420c7bd9531b48a04b743eabc2ab6, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 7
-    CardSprite: {fileID: -203338016, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: dbca55bbc8feeac428223601bc6be054, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 8
-    CardSprite: {fileID: 1821168265, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 96665bc2f64058d4c904009efee4a689, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 9
-    CardSprite: {fileID: -570917804, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: e79204f912a704c43a2c3ac21faa6323, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 10
-    CardSprite: {fileID: 1878540199, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 0d3a154952127ea42a13ee2b10d58fd6, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 11
-    CardSprite: {fileID: -357982324, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 3fbf9b7756fa25c44a87635f7fbd182d, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 12
-    CardSprite: {fileID: 1714080136, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 37b589deea77b2a498bc0264ef51b48d, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0
     CardArrangement: 0
     General: 0
   - CardNum: 13
-    CardSprite: {fileID: -274162782, guid: 25f983de45ebb9b468c1ad839461b430, type: 3}
+    CardSprite: {fileID: 21300000, guid: 024fdc62cc338e346a6a863ea210d9b9, type: 3}
     CardPossession: 0
     CardBack: 0
     CardDie: 0

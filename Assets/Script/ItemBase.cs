@@ -21,16 +21,19 @@ public class ItemBase : MonoBehaviour
 	private bool IsCPU;
 
 	[SerializeField]
-	SwapCard _swapCard;
+	private GameObject _trap;
 
 	[SerializeField]
-	OpenCard _openCard;
+	private SwapCard _swapCard;
 
 	[SerializeField]
-	Item_RedrawTarget item_RedrawTarget;
+	private OpenCard _openCard;
 
 	[SerializeField]
-	Item_SwapItem _item_SwapItem;
+	private Item_RedrawTarget item_RedrawTarget;
+
+	[SerializeField]
+	private Item_SwapItem _item_SwapItem;
 
 	public bool IsBack;
 
@@ -168,7 +171,7 @@ public class ItemBase : MonoBehaviour
 
 	private void Trap()
 	{
-
+		Instantiate(_trap);
 	}
 
 	private void Reverse()

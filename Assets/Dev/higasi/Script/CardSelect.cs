@@ -57,13 +57,6 @@ public class CardSelect : MonoBehaviour
                     TextManegar.instance.SetText("UŒ‚‘ÎÛ‚ÌD‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢");
 
                 }
-                //if (hitObj.CompareTag("Player2Card") && _player1Selected)//“G‚ÌƒJ[ƒh‚ğ‘I‘ğ
-                //{
-                //    if (!_player2Selected)
-                //        _player2Selected = true;
-                //    _player2Card = hitObj;
-                //    TextManegar.instance.SetText("");
-                //}
             }
         }
         else if (!Input.GetMouseButton(0) && _click)

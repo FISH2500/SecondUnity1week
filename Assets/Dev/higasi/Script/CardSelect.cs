@@ -29,13 +29,6 @@ public class CardSelect : MonoBehaviour
         // カードの選択
         Select();
         Drag();
-
-        // カードが2枚選択されるとバトル開始
-        if (_player1Selected && _player2Selected)
-        {
-            BattleStart();
-			enabled = false;
-        }
     }
 
     void Select()
@@ -52,13 +45,14 @@ public class CardSelect : MonoBehaviour
             {
                 Debug.Log("hit");
                 GameObject hitObj = hit.collider.gameObject;
-                _cardOriginPos = hitObj.transform.position;
+                
 
                 if (hitObj.CompareTag("Card"))
                 {
                     if (!_player1Selected)
                         _player1Selected = true;
                     _player1Card = hitObj;
+                    _cardOriginPos = hitObj.transform.position;
 
                     TextManegar.instance.SetText("攻撃対象の札を選択してください");
 
@@ -99,13 +93,18 @@ public class CardSelect : MonoBehaviour
         }
 
         // 離したら解除
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && _player1Selected)
         {
+            StartCoroutine(ReturnCard(_player1Card));
             if (!_player1Selected) return;
             GameObject targetObj = null;
             float minDistance = float.MaxValue;
-            for (int i = 0; i < _cpuArea.CardNum; i++)
+            for (int i = 0; i < _cpuArea.CardObject.Length; i++)
             {
+                Debug.Log(_player1Card);
+                Debug.Log(_cpuArea);
+                Debug.Log(_cpuArea.CardObject[i]);
+                if (_cpuArea.CardObject[i] == null) continue;
                 float distance = Vector3.Distance(_player1Card.transform.position, _cpuArea.CardObject[i].transform.position);
                 if (distance < minDistance)
                 {
@@ -118,11 +117,26 @@ public class CardSelect : MonoBehaviour
                 _player2Card = targetObj;
                 _player2Selected = true;
             }
-            StartCoroutine(ReturnCard());
+            // カードが2枚選択されるとバトル開始
+            if (_player1Selected && _player2Selected)
+            {
+                if (BattleStart())
+                {
+                    if (BattleManegar.Result == BattleManegar.BattleResult.Lose)
+                    {
+                        StopCoroutine(ReturnCard(_player1Card));
+                    }
+                    enabled = false;
+                }
+            }
+            _player1Selected = false;
+            _player2Selected = false;
+            _player1Card = null;
+            _player2Card = null;
         }
     }
 
-    void BattleStart()
+    bool BattleStart()
     {
 		if (_player1Card.GetComponent<SetSoldier>().IsGeneral)
 		{
@@ -130,10 +144,11 @@ public class CardSelect : MonoBehaviour
 			if (_area.CardNum >= 2) // 大将以外のカードが残っていたら無効
 			{
 				_player1Selected = false;
+                _player2Selected = false;
 				Debug.Log("大将は最後の1枚でなければ選択できません。");
-				return;
 			}
-			Debug.Log("大将が選択されました。バトル開始");
+            else
+                Debug.Log("大将が選択されました。バトル開始");
 		}
 
 		if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
@@ -141,31 +156,35 @@ public class CardSelect : MonoBehaviour
 			Debug.Log("大将が選択されました。残り枚数: " + _cpuArea.CardNum);
 			if (_cpuArea.CardNum >= 2) // 大将以外のカードが残っていたら無効
 			{
+                _player1Selected = false;
 				_player2Selected = false;
 				Debug.Log("大将は最後の1枚でなければ選択できません。");
-				return;
 			}
-			Debug.Log("大将が選択されました。バトル開始");
+            else
+                Debug.Log("大将が選択されました。バトル開始");
 		}
 
-		_battleManegar.Battle(_player1Card, _player2Card);
+        if (!_player1Selected || !_player2Selected) return false;
+        _battleManegar.Battle(_player1Card, _player2Card);
 
 		_player1Selected = false;
         _player2Selected = false;
         Debug.Log(BattleManegar.Result);
+        return true;
     }
 
-    private IEnumerator ReturnCard()
+    private IEnumerator ReturnCard(GameObject moveCard)
     {
         while (true)
         {
             yield return null;
+            if (moveCard == null) yield break;
             float speed = 40.0f;
-            _player1Card.transform.position = Vector3.MoveTowards(
-                _player1Card.transform.position,
+            moveCard.transform.position = Vector3.MoveTowards(
+                moveCard.transform.position,
                 _cardOriginPos,
                 speed * Time.deltaTime);
-            if (_player1Card.transform.position == _cardOriginPos)
+            if (moveCard.transform.position == _cardOriginPos)
             {
                 yield break;
             }

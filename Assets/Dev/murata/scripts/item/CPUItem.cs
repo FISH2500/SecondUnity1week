@@ -26,6 +26,8 @@ public class CPUItem : MonoBehaviour
 
 	public void CPUUseItem()
 	{
+		Debug.Log($"CPUがアイテム使用 : {_myItems[0]}");
+
 		int id = _myItems[0];
 
 		_myItems.RemoveAt(0);
@@ -42,5 +44,10 @@ public class CPUItem : MonoBehaviour
 	public void ReplaceFirstItem(int newID)
 	{
 		if (_myItems.Count > 0) _myItems[0] = newID;
+	}
+
+	public int GetItemCount()
+	{
+		return _myItems.Count;
 	}
 }

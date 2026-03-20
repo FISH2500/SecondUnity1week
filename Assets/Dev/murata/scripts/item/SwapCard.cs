@@ -3,8 +3,6 @@
 public class SwapCard : MonoBehaviour
 {
 	private Camera _camera;
-	private Area _playerArea;
-	private CPUArea _cpuArea;
 
 	private GameObject _firstSelected = null;
 	private bool _isSwapping = false;
@@ -12,8 +10,6 @@ public class SwapCard : MonoBehaviour
 	private void Awake()
 	{
 		_camera = Camera.main;
-		_playerArea = Area.Instance;
-		_cpuArea = CPUArea.Instance;
 	}
 
 	public void StartSwapMode()
@@ -102,7 +98,7 @@ public class SwapCard : MonoBehaviour
 		int maxAtk = -1;
 
 		// 1. CPU(自分)の最も弱いカードを探す（大将以外）
-		foreach (GameObject obj in _cpuArea.CardObject)
+		foreach (GameObject obj in CPUArea.Instance.CardObject)
 		{
 			if (obj == null) continue;
 			SetSoldier s = obj.GetComponent<SetSoldier>();
@@ -116,7 +112,7 @@ public class SwapCard : MonoBehaviour
 		}
 
 		// 2. プレイヤー(相手)の最も強いカードを探す（大将以外、かつ表向きのもの優先）
-		foreach (GameObject obj in _playerArea.CardObj)
+		foreach (GameObject obj in Area.Instance.CardObj)
 		{
 			if (obj == null) continue;
 			SetSoldier s = obj.GetComponent<SetSoldier>();
@@ -134,7 +130,7 @@ public class SwapCard : MonoBehaviour
 		if (targetStrongest == null)
 		{
 			System.Collections.Generic.List<GameObject> backCards = new System.Collections.Generic.List<GameObject>();
-			foreach (GameObject obj in _playerArea.CardObj)
+			foreach (GameObject obj in Area.Instance.CardObj)
 			{
 				if (obj != null && !obj.GetComponent<SetSoldier>().IsGeneral) backCards.Add(obj);
 			}

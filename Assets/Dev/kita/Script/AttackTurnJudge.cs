@@ -95,7 +95,7 @@ public class AttackTurnJudge : MonoBehaviour
         
         _isRoate = true;
 
-        Debug.Log("Player" + card[0]+1+" CPU" + card[1]+1);
+        Debug.Log("Player : " + (int)(card[0] + 1) +" CPU : " + (int)(card[1] + 1));
 
         if (card[0] > card[1]) 
         {

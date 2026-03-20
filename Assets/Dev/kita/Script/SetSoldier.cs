@@ -34,14 +34,9 @@ public class SetSoldier : MonoBehaviour
 
         SoldierAtk = _soldierData.SoldierList[CardIndex].CardNum;//•ºm‚ÌƒŒƒxƒ‹‚ğƒZƒbƒg
 
-        Debug.Log("•ºm‚ÌUŒ‚—Í‚Í" + SoldierAtk + "‚Å‚·B");
+        //Debug.Log("•ºm‚ÌUŒ‚—Í‚Í" + SoldierAtk + "‚Å‚·B");
 
         SetSprite();
-    }
-
-    private void Update()
-    {
-        
     }
 
     void SetSprite() 

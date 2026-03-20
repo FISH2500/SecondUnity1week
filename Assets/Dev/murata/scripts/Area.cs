@@ -44,7 +44,7 @@ public class Area : MonoBehaviour
 
 	public void RemoveArea(GameObject card)
 	{
-		Debug.Log($"RemoveArea‚ªÀs‚³‚ê‚Ü‚µ‚½ : {card.name}");
+		//Debug.Log($"RemoveArea‚ªÀs‚³‚ê‚Ü‚µ‚½ : {card.name}");
 
 		for (int i = 0; i < 6; i++)
 		{
@@ -57,7 +57,7 @@ public class Area : MonoBehaviour
 				CardNum--;
 				card.GetComponent<SetSoldier>().IsGeneral = false;
 
-				Debug.Log($"{i} remove‚³‚ê‚Ü‚µ‚½");
+				//Debug.Log($"{i} remove‚³‚ê‚Ü‚µ‚½");
 				break;
 			}
 		}

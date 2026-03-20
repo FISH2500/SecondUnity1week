@@ -4,18 +4,12 @@ using System.Collections.Generic;
 public class Item_RedrawTarget : MonoBehaviour
 {
 	private Camera _camera;
-	private Area _playerArea;
-	private CPUArea _cpuArea;
-	private Deck _deck;
 
 	private bool _isChoosingEnemyCard = false;
 
 	private void Awake()
 	{
 		_camera = Camera.main;
-		_playerArea = Area.Instance;
-		_cpuArea = CPUArea.Instance;
-		_deck = Deck.Instance;
 	}
 
 	public void StartRedraw()
@@ -23,6 +17,7 @@ public class Item_RedrawTarget : MonoBehaviour
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			_isChoosingEnemyCard = true;
+			DispUI.instance.Disp(false);
 			Debug.Log("引き直させる相手のカードを選択してください");
 		}
 		else
@@ -64,7 +59,7 @@ public class Item_RedrawTarget : MonoBehaviour
 		int maxAtk = -1;
 
 		// プレイヤーの場を解析
-		foreach (GameObject obj in _playerArea.CardObj)
+		foreach (GameObject obj in Area.Instance.CardObj)
 		{
 			if (obj == null) continue;
 			SetSoldier s = obj.GetComponent<SetSoldier>();
@@ -107,7 +102,7 @@ public class Item_RedrawTarget : MonoBehaviour
 	private void ReplaceCardData(GameObject oldCard)
 	{
 		// 山札から新しいカードの「データ」だけをもらうために1枚生成
-		GameObject newCardTemp = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
+		GameObject newCardTemp = Deck.Instance.DrawCard(TurnManager.instance.CurrentPlayer);
 		if (newCardTemp == null) return;
 
 		SetSoldier oldS = oldCard.GetComponent<SetSoldier>();

@@ -73,7 +73,9 @@ public class PlayerItem : MonoBehaviour
 	}
 
 	public void UseItem()
-	{
+	{ 
+		HideAllItems();
+
 		GameObject item = UsingItem;
 
 		_itemCanvas.enabled = false;
@@ -91,8 +93,6 @@ public class PlayerItem : MonoBehaviour
 		_selectItem = false;
 
 		TurnManager.instance.UseItemFlag();
-
-		HideAllItems();
 	}
 
 	public void SelectItem(bool select)

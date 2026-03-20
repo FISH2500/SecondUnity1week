@@ -38,7 +38,7 @@ public class CPUBase : MonoBehaviour
 		}
 
 		// アイテムを持っていて、まだ使っていないなら
-		if (!TurnManager.instance.UseItem /* && アイテムを持っているなら */)
+		if (!TurnManager.instance.UseItem && _cpuItem.GetItemCount() > 0)
 		{
 			validActions.Add(2);
 		}

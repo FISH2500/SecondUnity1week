@@ -112,7 +112,7 @@ public class OutPutAttack : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		Debug.Log("カードが破壊されました");
+		//Debug.Log("カードが破壊されました");
 
 		Destroy(_parent);
 	}

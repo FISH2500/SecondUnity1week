@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UI;
 
-// abstractを付けることで「これ単体では実体化できない」親クラスになります
 public class ItemBase : MonoBehaviour
 {
 	public int ItemID;        // 識別ID
@@ -197,7 +194,7 @@ public class ItemBase : MonoBehaviour
 
 	private void AdditionalAttack()
 	{
-
+		TurnManager.instance.SetDoubleAttack();
 	}
 
 	private void SwapItem()

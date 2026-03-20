@@ -7,8 +7,8 @@ public class OpenCard : MonoBehaviour
 
 	public bool RunOpenCard()
 	{
-		Area playerArea = GameObject.FindGameObjectWithTag("PlayerArea").GetComponent<Area>();
-		CPUArea cpuArea = GameObject.FindGameObjectWithTag("CPUArea").GetComponent<CPUArea>();
+		Area playerArea = Area.Instance;
+		CPUArea cpuArea = CPUArea.Instance;
 
 		if (TurnManager.instance.CurrentPlayer == 0) // プレイヤーのターン
 		{

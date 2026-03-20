@@ -30,7 +30,14 @@ public class TurnManager : MonoBehaviour
 	{
         CurrentPlayer ^= 1;
 
-        if (CurrentPlayer == 1)//自分のターンが来たらカウントする
+		UseItem = false;
+		IsAction = false;
+		UnlimitedItem = false;
+		Revolution = false;
+		DoubleAttack = false;
+		IsDraw = false;
+
+		if (CurrentPlayer == 0)//自分のターンが来たらカウントする
         {
             TurnCount++;
             Debug.Log($"ターン数 {TurnCount}");
@@ -39,13 +46,6 @@ public class TurnManager : MonoBehaviour
 		{
 			StartCoroutine(_cpuBase.SetAction());
 		}
-
-		UseItem = false;
-		IsAction = false;
-		UnlimitedItem = false;
-		Revolution = false;
-		DoubleAttack = false;
-		IsDraw = false;
 
 		DispUI.instance.Disp(CurrentPlayer == 0);
 

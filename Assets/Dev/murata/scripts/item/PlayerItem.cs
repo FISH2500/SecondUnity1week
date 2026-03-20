@@ -20,7 +20,7 @@ public class PlayerItem : MonoBehaviour
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject obj = _itemDeck.DrawItem(i);
+			GameObject obj = _itemDeck.DrawItem();
 
 			obj.SetActive(false);
 			obj.transform.position = _Position[i].position;

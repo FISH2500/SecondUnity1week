@@ -7,8 +7,12 @@ public class Deck : MonoBehaviour
 
 	[SerializeField] private List<int> _deck;
 
+	public static Deck Instance;
+
 	void Awake()
 	{
+		Instance = this;
+
 		_deck.Clear(); // ˆê’U‹ó‚É‚·‚é
 
 		// 0‚©‚ç12‚Ü‚Å‚ğƒ‹[ƒv

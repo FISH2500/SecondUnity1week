@@ -8,6 +8,8 @@ public class TurnManager : MonoBehaviour
     public bool UseItem = false;
 	public bool IsAction = false;
 
+	public bool UnlimitedItem = false;
+
 	public static TurnManager instance;
 
 	private void Awake()
@@ -30,6 +32,7 @@ public class TurnManager : MonoBehaviour
         }
         UseItem = false;
 		IsAction = false;
+		UnlimitedItem = false;
 
 		DispUI.instance.Disp(CurrentPlayer == 0);
 
@@ -41,9 +44,22 @@ public class TurnManager : MonoBehaviour
 		CurrentPlayer = player;
 		UseItem = false;
 		IsAction = false;
+		UnlimitedItem = false;
 
 		DispUI.instance.Disp(CurrentPlayer == 0);
 
 		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
+	}
+
+	public void SetUnlimitedItem()
+	{
+		UnlimitedItem = true;
+
+		UseItem = false;
+	}
+
+	public void UseItemFlag()
+	{
+		if (!UnlimitedItem) UseItem = true;
 	}
 }

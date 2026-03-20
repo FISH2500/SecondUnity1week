@@ -18,6 +18,7 @@ public class DispUI : MonoBehaviour
 
 	public void Disp(bool disp)
 	{
-		_canvas.enabled = disp;
+		if (TurnManager.instance.CurrentPlayer == 0 && disp) _canvas.enabled = true;
+		else if (TurnManager.instance.CurrentPlayer!= 0 && !disp) _canvas.enabled = false;
 	}
 }

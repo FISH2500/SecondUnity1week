@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,12 +20,27 @@ public class ItemBase : MonoBehaviour
 	[SerializeField]
 	private MeshRenderer _highlight;
 
+	[SerializeField]
+	private bool IsCPU;
+
+	[SerializeField]
+	SwapCard _swapCard;
+
+	[SerializeField]
+	OpenCard _openCard;
+
+	[SerializeField]
+	Item_RedrawTarget item_RedrawTarget;
+
+	[SerializeField]
+	Item_SwapItem _item_SwapItem;
+
 	public bool IsBack;
 
 	private void Start()
 	{
-		SetSprite();
-		Highlight(false);
+		if (!IsCPU) SetSprite();
+		if (!IsCPU) Highlight(false);
 	}
 
 	void SetSprite()
@@ -56,31 +73,37 @@ public class ItemBase : MonoBehaviour
 	{
 		switch (ItemID)
 		{
-			case 0:
+			case 0: // ①大将以外のカードを裏にして、シャッフルする
 				Shuffle();
 				break;
-			case 1:
+			case 1: // ②選んだ自分のカードに罠を張る
+				Trap();
 				break;
-			case 2:
+			case 2: // ③相手に表にさせるカードを選ばせる
+				Reverse();
 				break;
-			case 3:
+			case 3: // ④カードの引ける枚数を+1する
 				AddDraw();
 				break;
-			case 4:
+			case 4: // ⑤このターンのみカードの強さを逆転させる
+				StrengthInversion();
 				break;
-			case 5:
+			case 5: // ⑥1枚だけ相手のカードと自分のカードを交換する
+				SwapCard();
 				break;
-			case 6:
+			case 6: // ⑦数値勝負に勝つと、もう一回攻撃できる
+				AdditionalAttack();
 				break;
-			case 7:
+			case 7: // ⑧1枚だけ相手のアイテムカードと自分のを交換する
+				SwapItem();
 				break;
-			case 8:
+			case 8: // ⑨このターン中、アイテムの使用制限がなくなる
+				UnlimitedItem();
 				break;
-			case 9:
+			case 9: // ⑩相手のカードを一枚選んで、カードを引き直させる
+				ReDrawTarget();
 				break;
 		}
-
-		DispUI.instance.Disp(true);
 	}
 
 	public void Shuffle()
@@ -142,10 +165,53 @@ public class ItemBase : MonoBehaviour
 				targetCards[oldIdx].transform.position = newPos;
 			}
 		}
+
+		DispUI.instance.Disp(true);
+	}
+
+	private void Trap()
+	{
+
+	}
+
+	private void Reverse()
+	{
+		_openCard.RunOpenCard();
 	}
 
 	private void AddDraw()
 	{
 		DrawCard.instance.AddDrawNum(1);
+		DispUI.instance.Disp(true);
+	}
+
+	private void StrengthInversion()
+	{
+
+	}
+
+	private void SwapCard()
+	{
+		_swapCard.StartSwapMode();
+	}
+
+	private void AdditionalAttack()
+	{
+
+	}
+
+	private void SwapItem()
+	{
+		_item_SwapItem.StartItemSwap();
+	}
+
+	private void UnlimitedItem()
+	{
+		TurnManager.instance.SetUnlimitedItem();
+	}
+
+	private void ReDrawTarget()
+	{
+		item_RedrawTarget.StartRedraw();
 	}
 }

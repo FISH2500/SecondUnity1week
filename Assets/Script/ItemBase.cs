@@ -40,7 +40,7 @@ public class ItemBase : MonoBehaviour
 		if (!IsCPU) Highlight(false);
 	}
 
-	void SetSprite()
+	public void SetSprite()
 	{
 		_frontImage.sprite = _itemDatabase.itemDatas[ItemID].Front;//•ºŽm‚Ì‰æ‘œ‚ðƒZƒbƒg
 

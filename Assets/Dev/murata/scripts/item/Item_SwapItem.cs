@@ -60,6 +60,9 @@ public class Item_SwapItem : MonoBehaviour
 		pItemBase.ItemID = cpuItemID;
 		CPUItem.Instance.ReplaceFirstItem(playerItemID);
 
+		pItemBase.SetSprite();
+		pItemBase.Highlight(false);
+
 		Debug.Log($"アイテムを交換しました。新アイテムID: {cpuItemID}");
 
 		_isSwapping = false;
@@ -85,6 +88,8 @@ public class Item_SwapItem : MonoBehaviour
 		// IDの入れ替え
 		targetPItem.ItemID = cpuItemID;
 		CPUItem.Instance.ReplaceFirstItem(playerItemID);
+
+		targetPItem.SetSprite();
 
 		Debug.Log("CPUがアイテムを交換しました");
 	}

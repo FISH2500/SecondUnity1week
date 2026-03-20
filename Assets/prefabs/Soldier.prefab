@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33773577, g: 1, b: 0.607043, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -285,6 +285,7 @@ MonoBehaviour:
   OwnerPlayer: 0
   IsGeneral: 0
   IsBack: 0
+  IsTrap: 0
   _soldierData: {fileID: 11400000, guid: 43d3c916c1c8f8140bf1c403f4a6e352, type: 2}
   _frontImage: {fileID: 3261882522157365357}
   _backImage: {fileID: 8461504812913185378}

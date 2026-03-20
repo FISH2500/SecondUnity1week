@@ -17,8 +17,6 @@ public class TurnManager : MonoBehaviour
 
 	public bool IsDraw = false;
 
-	public bool UnlimitedItem = false;
-
 	public static TurnManager instance;
 
 	private void Awake()
@@ -30,7 +28,6 @@ public class TurnManager : MonoBehaviour
 
 	public void ChangeTurn()
 	{
-
         CurrentPlayer ^= 1;
 
         if (CurrentPlayer == 1)//自分のターンが来たらカウントする
@@ -49,18 +46,6 @@ public class TurnManager : MonoBehaviour
 		Revolution = false;
 		DoubleAttack = false;
 		IsDraw = false;
-
-        CurrentPlayer ^= 1;
-
-        if (CurrentPlayer == 1)//自分のターンが来たらカウントする
-        {
-            TurnCount++;
-            Debug.Log($"ターン数 {TurnCount}");
-            
-        }
-        UseItem = false;
-		IsAction = false;
-		UnlimitedItem = false;
 
 		DispUI.instance.Disp(CurrentPlayer == 0);
 

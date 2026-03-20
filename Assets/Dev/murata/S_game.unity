@@ -5230,6 +5230,7 @@ MonoBehaviour:
   _battleManegar: {fileID: 1945733654}
   _cpuArea: {fileID: 1904945652}
   _area: {fileID: 282771212}
+  cam: {fileID: 1095703153}
 --- !u!1 &1967267461
 GameObject:
   m_ObjectHideFlags: 0

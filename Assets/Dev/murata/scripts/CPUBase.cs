@@ -11,8 +11,6 @@ public class CPUBase : MonoBehaviour
 	[SerializeField] private BattleManegar _battleManegar;
 	[SerializeField] private CPUItem _cpuItem;
 
-	private bool _hasAction = false;
-
 	//private void Update()
 	//{
 	//	if (TurnManager.instance.CurrentPlayer != 1) return;

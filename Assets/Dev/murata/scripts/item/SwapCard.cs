@@ -4,6 +4,8 @@ public class SwapCard : MonoBehaviour
 {
 	private Camera _camera;
 
+	[Header("確認用")]
+	[SerializeField]
 	private GameObject _firstSelected = null;
 	private bool _isSwapping = false;
 
@@ -18,6 +20,7 @@ public class SwapCard : MonoBehaviour
 		{
 			_isSwapping = true;
 			_firstSelected = null;
+			DispUI.instance.Disp(false);
 			Debug.Log("交換モード開始");
 		}
 		else
@@ -65,28 +68,63 @@ public class SwapCard : MonoBehaviour
 
 	private void ExecuteSwap(GameObject a, GameObject b)
 	{
+		// 1. 座標を物理的に入れ替える
+		Vector3 posA = a.transform.position;
+		Vector3 posB = b.transform.position;
+
+		a.transform.position = posB;
+		b.transform.position = posA;
+
+		(b.tag, a.tag) = (a.tag, b.tag);
+
+		// 2. 各エリアの配列(CardObjなど)の中身を書き換える
+		UpdateAreaArrays(a, b);
+
 		SetSoldier sA = a.GetComponent<SetSoldier>();
 		SetSoldier sB = b.GetComponent<SetSoldier>();
 
-		// データ(IndexとAtk)の入れ替え
-		int tmpIdx = sA.CardIndex;
-		int tmpAtk = sA.SoldierAtk;
+		(sA.OwnerPlayer, sB.OwnerPlayer) = (sB.OwnerPlayer, sA.OwnerPlayer);
 
-		sA.CardIndex = sB.CardIndex;
-		sA.SoldierAtk = sB.SoldierAtk;
+		if (sA.IsBack) sA.SetBack(sA.OwnerPlayer);
+		else sA.SetFront();
 
-		sB.CardIndex = tmpIdx;
-		sB.SoldierAtk = tmpAtk;
+		if (sB.IsBack) sB.SetBack(sB.OwnerPlayer);
+		else sB.SetFront();
 
-		// 見た目のリセットと終了処理
-		_firstSelected.transform.localScale /= 1.1f;
+		// 4. 見た目のリセットと終了処理
+		if (TurnManager.instance.CurrentPlayer == 0 && _firstSelected != null)
+			_firstSelected.transform.localScale /= 1.1f;
+
 		_isSwapping = false;
 		_firstSelected = null;
 
-		Debug.Log("交換完了");
-
-		// アイテム使用後の後片付け（UI再表示など）
+		Debug.Log($"{a.name} と {b.name} を物理的に入れ替えました");
 		DispUI.instance.Disp(true);
+	}
+
+	private void UpdateAreaArrays(GameObject a, GameObject b)
+	{
+		// プレイヤー側の配列からaまたはbを探して入れ替える
+		GameObject[] pArray = Area.Instance.CardObj;
+		GameObject[] cArray = CPUArea.Instance.CardObject;
+
+		int idxA_inP = -1, idxB_inP = -1;
+		int idxA_inC = -1, idxB_inC = -1;
+
+		// どこに誰がいるかインデックスを特定
+		for (int i = 0; i < 6; i++)
+		{
+			if (pArray[i] == a) idxA_inP = i;
+			if (pArray[i] == b) idxB_inP = i;
+			if (cArray[i] == a) idxA_inC = i;
+			if (cArray[i] == b) idxB_inC = i;
+		}
+
+		// 配列の中身を入れ替え (aがいた場所にbを、bがいた場所にaを入れる)
+		if (idxA_inP != -1) pArray[idxA_inP] = b;
+		if (idxB_inP != -1) pArray[idxB_inP] = a;
+		if (idxA_inC != -1) cArray[idxA_inC] = b;
+		if (idxB_inC != -1) cArray[idxB_inC] = a;
 	}
 
 	private void ExecuteCPUSwap()

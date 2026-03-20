@@ -39,7 +39,7 @@ public class SetSoldier : MonoBehaviour
         SetSprite();
     }
 
-    void SetSprite() 
+    public void SetSprite() 
     {
         if(!_soldierData.SoldierList[CardIndex].CardBack) _frontImage.sprite = _soldierData.SoldierList[CardIndex].CardSprite;//兵士の画像をセット
         else _frontImage.sprite = _soldierData.SoldierBack;//兵士の裏の画像をセット

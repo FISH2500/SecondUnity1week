@@ -1,4 +1,5 @@
 using UnityEngine;
+using static CardManegar;
 
 public class SetCPUCard : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class SetCPUCard : MonoBehaviour
             GameObject card = _deck.DrawCard(1);//CPUのカードを6枚引く
 
 			SetSoldier sol = card.GetComponent<SetSoldier>();
+
+			sol.OwnerPlayer = 1;
 
 			sol.SetBack(1);//カードを裏にする
 

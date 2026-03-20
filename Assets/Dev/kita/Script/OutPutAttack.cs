@@ -116,4 +116,10 @@ public class OutPutAttack : MonoBehaviour
 
 		Destroy(_parent);
 	}
+
+	public void IN()
+	{
+		SetSoldier setSoldier = GetComponent<SetSoldier>();//SetCardスクリプトを取得する
+		soldierAtk = setSoldier.SoldierAtk;
+	}
 }

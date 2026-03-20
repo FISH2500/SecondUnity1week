@@ -18,6 +18,12 @@ public class SwapCard : MonoBehaviour
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
+			if (Area.Instance.CardNum == 1 || CPUArea.Instance.CardNum == 1)
+			{
+				DispUI.instance.Disp(true);
+				Debug.Log("交換するものがありません");
+				return;
+			}
 			_isSwapping = true;
 			_firstSelected = null;
 			DispUI.instance.Disp(false);
@@ -129,6 +135,10 @@ public class SwapCard : MonoBehaviour
 
 	private void ExecuteCPUSwap()
 	{
+		if(CPUArea.Instance.CardNum == 1 || Area.Instance.CardNum == 1)
+		{
+			return;
+		}
 		GameObject myWeakest = null;
 		GameObject targetStrongest = null;
 

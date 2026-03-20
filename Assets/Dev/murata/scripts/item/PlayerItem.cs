@@ -11,7 +11,7 @@ public class PlayerItem : MonoBehaviour
 	[SerializeField] private Canvas _itemCanvas;
 
 	[Header("確認用(設定不要)")]
-	[SerializeField] private List<GameObject> _myItems = new List<GameObject>();
+	[SerializeField] public List<GameObject> _myItems = new List<GameObject>();
 
 	private bool _selectItem = false;
 

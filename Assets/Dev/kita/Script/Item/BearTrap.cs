@@ -12,11 +12,21 @@ public class BearTrap : MonoBehaviour
     private GameObject _card;//選択したカード
 
     private GameObject _trapInstance;//生成したトラップのインスタンス
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        SetTrapFlag();
-    }
+		if (TurnManager.instance.CurrentPlayer == 0)
+		{
+			SetTrapFlag();
+			DispUI.instance.Disp(false);
+		}
+		else
+		{
+			_isCanTrapSet = false;
+			_spawnTurn = TurnManager.instance.TurnCount;
+			ExecuteCPUTrap();
+		}
+	}
 
     // Update is called once per frame
     void Update()
@@ -29,8 +39,8 @@ public class BearTrap : MonoBehaviour
             EndTask();
         }
 
-        if (_isCanTrapSet)//トラップの設置処理
-        SetTrapCard();
+        if (_isCanTrapSet)//㩂��Z�b�g�ł���
+          SetTrapCard();
     }
 
     //罠の設置フラグを立てる
@@ -59,11 +69,9 @@ public class BearTrap : MonoBehaviour
             Vector3 trapPosition = _card.transform.position;//クリックしたカードの位置を取得
 
             trapPosition.y += 0.2f;//トラップをカードの上に配置
-
-            _trapInstance= Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//トラップの生成
-
             _isCanTrapSet = false;//トラップ設置完了
-        }
+			DispUI.instance.Disp(true);
+      }
     }
 
     GameObject ClickObject() 
@@ -72,17 +80,14 @@ public class BearTrap : MonoBehaviour
         Ray selectRay = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
 
-        
+        if (Physics.Raycast(selectRay, out hit, 100.0f))
         {
-            if (Physics.Raycast(selectRay, out hit, 100.0f))
-            {
-                Debug.Log("hit");
-                GameObject hitObj = hit.collider.gameObject;
+            Debug.Log("hit");
+            GameObject hitObj = hit.collider.gameObject;
 
-                if (hitObj.CompareTag("Card"))
-                {
-                    return hitObj;//なんのカードを押したかチェック
-                }
+            if (hitObj.CompareTag("Card"))
+            {
+                return hitObj;//なんのカードを押したかチェック
             }
         }
 
@@ -96,4 +101,24 @@ public class BearTrap : MonoBehaviour
         Destroy(_trapInstance);
         Destroy(gameObject);
     }
+
+	private void ExecuteCPUTrap()
+	{
+		GameObject[] cpuCards = CPUArea.Instance.CardObject;
+		System.Collections.Generic.List<GameObject> candidates = new System.Collections.Generic.List<GameObject>();
+
+		foreach (var obj in cpuCards)
+		{
+			if (obj != null && !obj.GetComponent<SetSoldier>().IsGeneral)
+				candidates.Add(obj);
+		}
+
+		if (candidates.Count > 0)
+		{
+			_card = candidates[Random.Range(0, candidates.Count)];
+			_card.GetComponent<SetSoldier>().IsTrap = true;
+
+			Debug.Log($"{_card.name}に罠を設置しました");
+		}
+	}
 }

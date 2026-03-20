@@ -6,14 +6,24 @@ public class DrawMouse : MonoBehaviour
 	[SerializeField] private Camera _camera; // rayを飛ばすためのカメラ
 	[SerializeField] private Area _area; // セットするためのエリア
 
-	private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
+	[SerializeField] private GameObject _selectDestroyCardUI;//カードを破棄する時に表示されるUI
+
+    private GameObject _dragObj = null; // 今ドラッグしているオブジェクト
 	private float _zDistance = 0; // 選択した時のZ軸の位置
 
 	[NonSerialized] public GameObject DrawObject;
 
 	private float _yPos;//カードのYの固定位置
 
-	void Update()
+    private void OnEnable()//スクリプトが有効になるたびに呼ばれる
+    {
+		if (_area.AllSet)//カードがすべてセットされている場合
+		{
+			SetDestroySelectCardWindow();
+        }
+    }
+
+    void Update()
 	{
 		// クリックされた瞬間
 		if (Input.GetMouseButtonDown(0))
@@ -36,10 +46,12 @@ public class DrawMouse : MonoBehaviour
 					_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
 					_yPos = obj.transform.position.y;
 				}
-				else if(_area.AllSet)
-				{
-					_area.RemoveArea(obj);//破棄するカードを選択
-					Destroy(obj);
+				else if(_area.AllSet)//破棄するカードを選択
+                {
+					ReSetDestroySelectCardWindow();
+					_area.RemoveArea(obj);
+                    _selectDestroyCardUI.SetActive(false);
+                    Destroy(obj);
 				}
 
 				// ログを流す
@@ -76,4 +88,24 @@ public class DrawMouse : MonoBehaviour
 			_dragObj = null; // ドラッグしているオブジェクトをNULLに
 		}
 	}
+
+	void SetDestroySelectCardWindow() 
+	{
+        for (int i = 0; i < _area.CardObj.Length; i++)
+        {
+            _area.CardObj[i].GetComponent<SetOutLine>().SetOutline();//セットされているすべてのカードにアウトラインをつける
+        }
+
+        _selectDestroyCardUI.SetActive(true);
+    }
+
+    void ReSetDestroySelectCardWindow()
+    {
+        for (int i = 0; i < _area.CardObj.Length; i++)
+        {
+            _area.CardObj[i].GetComponent<SetOutLine>().ReSetOutline();//アウトラインを消す
+        }
+
+        _selectDestroyCardUI.SetActive(false);
+    }
 }

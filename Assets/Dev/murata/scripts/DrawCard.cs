@@ -28,6 +28,10 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 	{
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
 
+		if (TurnManager.instance.IsDraw) return;
+
+		TurnManager.instance.IsDraw = true;
+
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)
@@ -87,6 +91,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	public GameObject DrawCardCPU()
 	{
+		TurnManager.instance.IsDraw = true;
+
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)

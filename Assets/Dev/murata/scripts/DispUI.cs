@@ -7,8 +7,6 @@ public class DispUI : MonoBehaviour
 
 	public static DispUI instance;
 
-	private bool _isDisp = true;
-
 	private void Awake()
 	{
 		_canvas = GetComponent<Canvas>();

@@ -17,6 +17,9 @@ public class BattleManegar : MonoBehaviour
 	[SerializeField]
 	private CPUArea _cpuArea;
 
+	[SerializeField]
+	private CPUBase _cpuBase;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -133,6 +136,15 @@ public class BattleManegar : MonoBehaviour
 			}
         }
 
-		TurnManager.instance.ChangeTurn();
+		if (TurnManager.instance.DoubleAttackSimasuka())
+		{
+			TurnManager.instance.IsDraw = true;
+			if (TurnManager.instance.CurrentPlayer == 1) StartCoroutine(_cpuBase.SetAction());
+		}
+		else
+		{
+			TurnManager.instance.IsAction = true;
+			TurnManager.instance.ChangeTurn();
+		}
     }
 }

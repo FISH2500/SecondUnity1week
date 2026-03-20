@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CPUItem : MonoBehaviour
+{
+	[SerializeField] private ItemDeck _itemDeck;
+
+	[Header("確認用(設定不要)")]
+	[SerializeField] private List<int> _myItems = new List<int>();
+
+	private ItemBase _itemBase;
+	
+	private void Start()
+	{
+		_itemBase = GetComponent<ItemBase>();
+
+		for (int i = 0; i < 3; i++)
+		{
+			_myItems.Add(_itemDeck.CPUDrawItem());
+		}
+	}
+
+	public void CPUUseItem()
+	{
+		int id = _myItems[0];
+
+		_myItems.RemoveAt(0);
+
+		_itemBase.ItemID = id;
+		_itemBase.Use();
+	}
+}

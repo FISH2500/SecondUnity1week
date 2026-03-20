@@ -9,6 +9,7 @@ public class CPUBase : MonoBehaviour
 	[SerializeField] private Area _playerArea;
 	[SerializeField] private DrawCard _drawCard;
 	[SerializeField] private BattleManegar _battleManegar;
+	[SerializeField] private CPUItem _cpuItem;
 
 	private bool _hasAction = false;
 
@@ -179,6 +180,6 @@ public class CPUBase : MonoBehaviour
 
 	private void Item()
 	{
-
+		_cpuItem.CPUUseItem();
 	}
 }

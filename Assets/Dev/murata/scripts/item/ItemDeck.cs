@@ -27,7 +27,7 @@ public class ItemDeck : MonoBehaviour
 		}
 	}
 
-	public GameObject DrawItem(int ownerPlayer)
+	public GameObject DrawItem()
 	{
 		if (_deck.Count == 0) return null;
 
@@ -39,5 +39,16 @@ public class ItemDeck : MonoBehaviour
 		_deck.RemoveAt(0); // RD‚©‚çÁ‚·
 
 		return cardObj;
+	}
+
+	public int CPUDrawItem()
+	{
+		if (_deck.Count == 0) return -1;
+		
+		int id = _deck[0];
+
+		_deck.RemoveAt(0); // RD‚©‚çÁ‚·
+
+		return id;
 	}
 }

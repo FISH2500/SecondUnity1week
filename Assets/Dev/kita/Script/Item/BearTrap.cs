@@ -7,7 +7,7 @@ public class BearTrap : MonoBehaviour
 
     private int _spawnTurn;//�������ꂽ�^�[��
 
-   �@public bool _isCanTrapSet = false;//㩂��Z�b�g���ł���ǂ����̃t���O
+    public bool _isCanTrapSet = false;//㩂��Z�b�g���ł���ǂ����̃t���O
 
     private GameObject _card;//�N���b�N�����J�[�h�̃I�u�W�F�N�g
 

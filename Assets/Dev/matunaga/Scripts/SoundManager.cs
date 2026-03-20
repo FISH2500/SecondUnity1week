@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public struct SoundData
 {
     public string Name;
-    public AudioClip Clip;  //音源データ
-    [Range(0, 100)] public float Volume; //音量   0 - 100
+    public AudioClip Clip;
+    [Range(0f, 1f)] public float Volume;
 }
 
 public class SoundManager : MonoBehaviour
@@ -15,9 +15,9 @@ public class SoundManager : MonoBehaviour
 
     public SoundData[] SoundList;
 
-    [SerializeField]
-    private AudioSource _audioSource;
-
+    
+    [SerializeField] private AudioSource _bgmSource;
+    [SerializeField] private AudioSource _seSource;
 
     private void Awake()
     {
@@ -29,19 +29,55 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        // AudioSourceコンポーネントがアタッチされていない場合は、同じGameObjectから取得
-        if (_audioSource == null) _audioSource = GetComponent<AudioSource>();
     }
-    public void PlaySE(string soudName)
+    //--------------------------------------------------------------------------------
+    public void PlaySE(string soundName)
     {
         foreach (SoundData data in SoundList)
         {
-            if (data.Name == soudName)
+            if (data.Name == soundName)
             {
-                _audioSource.PlayOneShot(data.Clip, data.Volume);
+                _seSource.PlayOneShot(data.Clip, data.Volume);
                 return;
             }
         }
-        Debug.LogWarning("Soundが見つかりませんでした： " + soudName);
+        Debug.LogWarning("Sound(SE)が見つかりませんでした： " + soundName);
+    }
+    //public void StopSE()
+    //{
+    //    foreach (SoundData data in SoundList) {
+    //        if (data.Clip == _seSource.clip)
+    //        {
+    //            _seSource.Stop();
+    //            return;
+    //        }
+    //    }
+    //}
+    //--------------------------------------------------------------------------------
+    public void PlayBGM(string soundName)
+    {
+        foreach (SoundData data in SoundList)
+        {
+            if (data.Name == soundName)
+            {
+                _bgmSource.clip = data.Clip;
+                _bgmSource.volume = data.Volume;
+                _bgmSource.loop = true; 
+                _bgmSource.Play();
+                return;
+            }
+        }
+        Debug.LogWarning("Sound(BGM)が見つかりませんでした： " + soundName);
+    }
+    public void StopBGM()
+    {
+        foreach (SoundData data in SoundList)
+        {
+            if (data.Clip == _bgmSource.clip)
+            {
+                _bgmSource.Stop();
+                return;
+            }
+        }
     }
 }

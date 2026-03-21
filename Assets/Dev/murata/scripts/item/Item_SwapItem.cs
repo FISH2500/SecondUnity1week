@@ -17,7 +17,7 @@ public class Item_SwapItem : MonoBehaviour
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
-			if (PlayerItem.Instance._myItems.Count == 0)
+			if (PlayerItem.Instance._myItems.Count <= 1)
 			{
 				DispUI.instance.Disp(true);
 				Debug.Log("交換するものがありません");

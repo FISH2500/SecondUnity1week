@@ -114,7 +114,9 @@ public class CPUBase : MonoBehaviour
 		attacker = null;
 		target = null;
 		bool isRev = TurnManager.instance.Revolution;
-		int minPowerDiff = int.MaxValue; // 無駄撃ちを防ぐための「戦力差」
+
+		// スコア制を導入して、最も「効率の良い」ペアを探す
+		float bestEfficiencyScore = float.MinValue;
 
 		GameObject[] myCards = _cpuArea.CardObject;
 		GameObject[] enemyCards = _playerArea.CardObj;
@@ -124,7 +126,7 @@ public class CPUBase : MonoBehaviour
 			if (eCard == null) continue;
 			SetSoldier eSol = eCard.GetComponent<SetSoldier>();
 
-			// 裏向き、大将（条件未達）、または見えている罠は攻撃しない
+			// 攻撃対象の条件：表向き、かつ大将制限クリア、かつ罠でない
 			if (eSol.IsBack || (eSol.IsGeneral && _playerArea.CardNum > 1) || eSol.IsTrap) continue;
 
 			foreach (GameObject mCard in myCards)
@@ -132,18 +134,29 @@ public class CPUBase : MonoBehaviour
 				if (mCard == null) continue;
 				SetSoldier mSol = mCard.GetComponent<SetSoldier>();
 
+				// 自分の大将制限
 				if (mSol.IsGeneral && _cpuArea.CardNum > 1) continue;
 
-				// 革命ルールも考慮して勝敗を判定
+				// 勝利判定（革命考慮）
 				bool wins = isRev ? (mSol.SoldierAtk < eSol.SoldierAtk) : (mSol.SoldierAtk > eSol.SoldierAtk);
 
 				if (wins)
 				{
-					// 勝てるカードの中で、一番「ギリギリで勝てる」カードを選ぶ（エコな攻撃）
-					int diff = Mathf.Abs(mSol.SoldierAtk - eSol.SoldierAtk);
-					if (diff < minPowerDiff)
+					// --- 効率スコアの計算 ---
+					// 1. 基本は「戦力差」が小さいほど良い（オーバーキル防止）
+					int powerDiff = Mathf.Abs(mSol.SoldierAtk - eSol.SoldierAtk);
+					float efficiency = 100f - powerDiff;
+
+					// 2. 🌟 ここが重要：自分のカードがすでに「表向き」なら評価を大幅アップ
+					// すでにバレているカードを再利用するのは「情報の節約」になる
+					if (!mSol.IsBack)
 					{
-						minPowerDiff = diff;
+						efficiency += 50f;
+					}
+
+					if (efficiency > bestEfficiencyScore)
+					{
+						bestEfficiencyScore = efficiency;
 						attacker = mCard;
 						target = eCard;
 					}

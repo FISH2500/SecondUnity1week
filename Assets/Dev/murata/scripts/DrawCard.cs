@@ -30,13 +30,12 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 		if (TurnManager.instance.IsDraw) return;
 
-		TurnManager.instance.IsDraw = true;
-
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
 			if (_drawCountPlayer1 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
+                TurnManager.instance.IsDraw = true;
+                GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer1++;
 
@@ -58,7 +57,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 		{
 			if (_drawCountPlayer2 < _drawCardNum)
 			{
-				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
+                TurnManager.instance.IsDraw = true;
+                GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
 				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer2++;
 				

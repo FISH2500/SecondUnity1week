@@ -36,6 +36,7 @@ public class TurnManager : MonoBehaviour
 		Revolution = false;
 		DoubleAttack = false;
 		IsDraw = false;
+		gameObject.GetComponent<ActionButton>().ActionButtonDown();
 
 		if (CurrentPlayer == 0)//自分のターンが来たらカウントする
         {
@@ -61,8 +62,9 @@ public class TurnManager : MonoBehaviour
 		Revolution = false;
 		DoubleAttack = false;
 		IsDraw = false;
+        gameObject.GetComponent<ActionButton>().ActionButtonDown();
 
-		if (CurrentPlayer == 1)
+        if (CurrentPlayer == 1)
 			StartCoroutine(_cpuBase.SetAction());
 
 		DispUI.instance.Disp(CurrentPlayer == 0);

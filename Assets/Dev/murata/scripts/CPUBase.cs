@@ -71,11 +71,6 @@ public class CPUBase : MonoBehaviour
 				StartCoroutine(SetAction()); // アイテム使用後は再度行動評価
 				yield break;
 		}
-<<<<<<< Updated upstream
-
-		yield return new WaitForSeconds(1.0f);
-=======
->>>>>>> Stashed changes
 	}
 
 	private void Attack(bool isSafe, GameObject attacker, GameObject target)
@@ -202,66 +197,7 @@ public class CPUBase : MonoBehaviour
 				strongestCard = eCard;
 			}
 		}
-<<<<<<< Updated upstream
-
-		string log = $"{strongestAtk}でCPUの攻撃 ";
-
-        TextManegar.instance.SetText(log);
-        bool hasTarget = false;
-		// 表になっている相手のカードの中から、CPUのカードより攻撃力が低いカードの中で
-		// 一番攻撃力が高いカードを選択
-		// 表になっている相手のカードが全てCPUのカードより攻撃力が高い
-		// もしくは表になっている相手のカードがない場合は、裏のカードをランダムに選択する
-		for (int i = 0; i < 6; i++)
-		{
-			if (playerCard[i] == null) continue;
-
-			SetSoldier playerSoldier = playerCard[i].GetComponent<SetSoldier>();
-
-			if (playerSoldier.IsGeneral)
-			{
-				if (_playerArea.CardNum > 1) continue;
-
-				targetCard = playerCard[i];
-				hasTarget = true;
-				break; // 大将が狙えるなら確定
-			}
-
-			if (playerSoldier.SoldierAtk > targetAtk && // 現在ターゲットになっているカードより強い
-				playerSoldier.SoldierAtk < strongestAtk && // CPUのカードより弱い
-				!playerSoldier.IsBack) // 表になっているカード
-			{
-				targetCard = playerCard[i];
-				targetAtk = playerSoldier.SoldierAtk;
-				hasTarget = true;
-			}
-		}
-
-		if (!hasTarget) // ターゲットがない場合のランダム処理
-		{
-			List<GameObject> candidates = new List<GameObject>();
-
-			for (int i = 0; i < 6; i++)
-			{
-				if (playerCard[i] == null) continue;
-
-				var s = playerCard[i].GetComponent<SetSoldier>();
-
-				if (s.IsGeneral && _playerArea.CardNum > 1) continue;
-
-				candidates.Add(playerCard[i]);
-			}
-
-			if (candidates.Count > 0)
-			{
-				targetCard = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-			}
-		}
-
-		_battleManegar.Battle(targetCard, strongestCard);
-=======
 		return strongestCard;
->>>>>>> Stashed changes
 	}
 
 	private void Draw()
@@ -274,8 +210,6 @@ public class CPUBase : MonoBehaviour
 	{
 		_cpuItem.CPUUseItem();
 	}
-<<<<<<< Updated upstream
-=======
 
 	private IEnumerator AtkMotion(GameObject cpuCard, GameObject playerCard)
 	{
@@ -313,5 +247,4 @@ public class CPUBase : MonoBehaviour
 			}
 		}
 	}
->>>>>>> Stashed changes
 }

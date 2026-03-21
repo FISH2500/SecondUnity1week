@@ -13,11 +13,7 @@ public class PlayerItem : MonoBehaviour
 	[Header("確認用(設定不要)")]
 	[SerializeField] public List<GameObject> _myItems = new List<GameObject>();
 
-<<<<<<< Updated upstream
 	private bool _selectItem = false;
-=======
-    private bool _selectItem = false;
->>>>>>> Stashed changes
 
 	private GameObject UsingItem = null;
 
@@ -68,14 +64,7 @@ public class PlayerItem : MonoBehaviour
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);
-<<<<<<< Updated upstream
 			}
-=======
-
-				//アイテム使用ボタンの表示
-
-            }
->>>>>>> Stashed changes
 		}
 	}
 
@@ -111,11 +100,7 @@ public class PlayerItem : MonoBehaviour
 		_selectItem = false;
 
 		TurnManager.instance.UseItemFlag();
-<<<<<<< Updated upstream
 	}
-=======
-    }
->>>>>>> Stashed changes
 
 	public void SelectItem(bool select)
 	{
@@ -130,11 +115,7 @@ public class PlayerItem : MonoBehaviour
 		{
 			DispItem(select);
 		}
-<<<<<<< Updated upstream
 	}
-=======
-    }
->>>>>>> Stashed changes
 
 	public void DispItem(bool disp)
 	{

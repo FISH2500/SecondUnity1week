@@ -8,10 +8,7 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 {
 	[SerializeField] private CardSelect _cardSelect;
 
-<<<<<<< Updated upstream
-=======
 	[SerializeField] private Canvas _attackCanvas;
->>>>>>> Stashed changes
 
 	private Vector3 _scale;
 
@@ -19,19 +16,12 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	private void Awake()
 	{
 		_scale = transform.localScale;
-<<<<<<< Updated upstream
-	}
-=======
     }
->>>>>>> Stashed changes
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		TextManegar.instance.SetText("攻撃に使う札を選択してください");
 
-<<<<<<< Updated upstream
-        _cardSelect.enabled = true;//カードを選択するスクリプトを有効に
-=======
 		//_actionButton.ActionButtonDown();//アクションボタンの関数を呼び出す
 
 		DispUI.instance.Disp(false);
@@ -39,7 +29,6 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 		_attackCanvas.enabled = true;
 
 		_cardSelect.enabled = true;//カードを選択するスクリプトを有効に
->>>>>>> Stashed changes
 	}
 
 	// マウスが乗った時

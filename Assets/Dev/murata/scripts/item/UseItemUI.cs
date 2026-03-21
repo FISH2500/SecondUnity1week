@@ -16,12 +16,6 @@ public class UseItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
-<<<<<<< Updated upstream:Assets/Dev/murata/scripts/item/UseIteuUI.cs
-
-=======
-        //GetComponent<ActionButton>().ActionButtonDown();
-		//DispUI.instance.Disp(false);
->>>>>>> Stashed changes:Assets/Dev/murata/scripts/item/UseItemUI.cs
 		_playerItem.UseItem();
 	}
 

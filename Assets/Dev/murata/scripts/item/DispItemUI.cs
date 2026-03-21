@@ -19,11 +19,6 @@ public class DispItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 		Debug.Log($"{gameObject.name} がクリックされました");
 
 		if (!TurnManager.instance.UseItem) _playerItem.SelectItem(true);
-<<<<<<< Updated upstream
-=======
-
-		//gameObject.GetComponent<ActionButton>().ActionButtonDown();
->>>>>>> Stashed changes
 	}
 
 	// マウスが乗った時

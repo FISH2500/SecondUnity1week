@@ -29,7 +29,8 @@ public class Rule : MonoBehaviour
 	{
 		if (_spriteArray.Length == 0) return;
 
-		_currentIndex++;
+        SoundManager.Instance.PlaySE("MenuSE");
+        _currentIndex++;
 
 		if (_currentIndex >= _spriteArray.Length)
 		{
@@ -44,7 +45,8 @@ public class Rule : MonoBehaviour
 	{
 		if (_spriteArray.Length == 0) return;
 
-		_currentIndex--;
+        SoundManager.Instance.PlaySE("MenuSE");
+        _currentIndex--;
 
 		if (_currentIndex < 0)
 		{
@@ -75,6 +77,7 @@ public class Rule : MonoBehaviour
 
 		if (Input.GetMouseButtonDown(0))
 		{
+			SoundManager.Instance.PlaySE("MenuSE");
 			_canvas.enabled = true;
 		}
 	}

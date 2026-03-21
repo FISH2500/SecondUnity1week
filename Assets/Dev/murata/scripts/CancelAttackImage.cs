@@ -1,34 +1,29 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-//using UnityEngine.UIElements;
 
-public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class CancelAttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField] private CardSelect _cardSelect;
-
 	[SerializeField] private Canvas _attackCanvas;
 
 	private Vector3 _scale;
 
-
 	private void Awake()
 	{
 		_scale = transform.localScale;
-    }
+	}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		TextManegar.instance.SetText("攻撃に使う札を選択してください");
+		TextManegar.instance.SetText("攻撃をキャンセルした");
 
-		//_actionButton.ActionButtonDown();//アクションボタンの関数を呼び出す
+		//_actionButton.ActionButtonDown();//アクションボタンのキャンセル関数を呼び出す
 
-		DispUI.instance.Disp(false);
+		DispUI.instance.Disp(true);
 
-		_attackCanvas.enabled = true;
+		_attackCanvas.enabled = false;
 
-		_cardSelect.enabled = true;//カードを選択するスクリプトを有効に
+		_cardSelect.enabled = false;//カードを選択するスクリプトを無効に
 	}
 
 	// マウスが乗った時

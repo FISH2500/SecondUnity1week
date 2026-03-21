@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UseIteuUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class UseItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField]
 	PlayerItem _playerItem;
@@ -16,8 +16,7 @@ public class UseIteuUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
-        GetComponent<ActionButton>().ActionButtonDown();
-        _playerItem.UseItem();
+		_playerItem.UseItem();
 	}
 
 	// マウスが乗った時

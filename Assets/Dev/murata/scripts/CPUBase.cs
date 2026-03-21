@@ -60,7 +60,7 @@ public class CPUBase : MonoBehaviour
 				break;
 			case 2:
 				Debug.Log("CPU：アイテム使用");
-				TextManegar.instance.SetText("CPUがアイテムを使用");
+				TextManegar.instance.SetText("CPUがあいてむを使用");
 
 				// アイテム実行
 				Item();

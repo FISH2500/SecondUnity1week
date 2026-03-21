@@ -4287,6 +4287,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1422503618}
   m_CullTransparentMesh: 1
+--- !u!1 &1429468137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1429468139}
+  - component: {fileID: 1429468138}
+  m_Layer: 0
+  m_Name: GameJudge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1429468138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429468137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd0f6a8defe63346ae080436e18f2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameWinCount: 1
+--- !u!4 &1429468139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429468137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 15.44, z: 10.71793}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1432656119
 GameObject:
   m_ObjectHideFlags: 0
@@ -6002,6 +6047,7 @@ MonoBehaviour:
   _playerArea: {fileID: 282771212}
   _cpuArea: {fileID: 1904945652}
   _cpuBase: {fileID: 1081409389}
+  _sceneName: S_game
 --- !u!4 &1945733655
 Transform:
   m_ObjectHideFlags: 0
@@ -7018,3 +7064,4 @@ SceneRoots:
   - {fileID: 4684895277398285488}
   - {fileID: 1845044040}
   - {fileID: 214645710}
+  - {fileID: 1429468139}

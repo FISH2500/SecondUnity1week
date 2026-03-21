@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleManegar : MonoBehaviour
@@ -21,6 +23,9 @@ public class BattleManegar : MonoBehaviour
 	[SerializeField]
 	private CPUBase _cpuBase;
 
+	[SerializeField]
+	string _sceneName;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -36,11 +41,18 @@ public class BattleManegar : MonoBehaviour
 
     void Update()
     {
+		int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
 		if (EndGame)
 		{
 			_winImage.gameObject.SetActive(_playerWin);
 			_loseImage.gameObject.SetActive(!_playerWin);
-			Debug.Log("ゲーム終了");
+			gameJudgeIndex = GameJudge.Instance.Judge(_playerWin);
+			if (gameJudgeIndex == 0)
+			{
+				EndGame = false;
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			}
+            Debug.Log("ゲーム終了");
 		}
 		else
 		{

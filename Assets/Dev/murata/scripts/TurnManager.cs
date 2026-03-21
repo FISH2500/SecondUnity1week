@@ -9,8 +9,6 @@ public class TurnManager : MonoBehaviour
 	public int TurnCount = 1;//ターン経過数
     public int CPUTurnCount = 1;//ターン経過数
 
-	public int TurnCounter = 0;
-
     public bool UseItem = false;
 	public bool IsAction = false;
 

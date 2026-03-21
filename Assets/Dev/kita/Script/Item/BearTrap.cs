@@ -65,7 +65,7 @@ public class BearTrap : MonoBehaviour
     {
         TextManegar.instance.SetText("罠を設置する場所を決めてください");
         _isCanTrapSet = true;//トラップが設置できる
-        _spawnTurn = TurnManager.instance.TurnCounter;//設置時のターン
+        _spawnTurn = TurnManager.instance.TurnCount;//設置時のターン
     }
 
     //罠を設置する場所を決める

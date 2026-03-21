@@ -14,61 +14,56 @@ public class CPUBase : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.0f);
 
-		// 1. 現状で可能なアクションをチェック
 		bool canDraw = _cpuArea.CardNum < 6 && _drawCard.IsDraw() && !TurnManager.instance.IsDraw;
 		bool canUseItem = !TurnManager.instance.UseItem && _cpuItem.GetItemCount() > 0;
 
-		// 2. 盤面を解析し、安全に（確実に）勝てる攻撃があるか探す
+		// 1. まずは「確実に勝てる攻撃」があるか
 		bool hasSafeAttack = FindSafeAttack(out GameObject bestAttacker, out GameObject bestTarget);
 
-		int action = -1; // 0:安全な攻撃, 1:ドロー, 2:アイテム, 3:偵察(ブラインド)攻撃
+		int action = -1;
 
 		if (hasSafeAttack)
 		{
-			// 確実に勝てる相手がいるなら迷わず攻撃
+			// 倒せるなら倒す（最優先）
 			action = 0;
 		}
 		else
 		{
-			// 勝てる相手が見えていない場合
-			if (canUseItem && Random.value < 0.65f) // 65%の確率でアイテムを使って盤面を動かす
+			// 2. 倒せないなら「効果的なアイテム」があるか聞く
+			if (canUseItem && _cpuItem.ShouldUseItem())
 			{
 				action = 2;
 			}
+			// 3. アイテムも微妙ならドローする
 			else if (canDraw)
 			{
-				// アイテムがない、使わない場合はドローして戦力を整える
 				action = 1;
 			}
+			// 4. 何もできなければ、一番弱いカードで偵察攻撃
 			else
 			{
-				// ドローもアイテムも使えないなら、被害の少ないカードで特攻する
 				action = 3;
 			}
 		}
 
-		// 3. 決定したアクションの実行
+		// --- 実行処理 (switch) ---
 		switch (action)
 		{
 			case 0:
 			case 3:
-				Debug.Log(action == 0 ? "CPU：安全な攻撃を実行" : "CPU：やむを得ずブラインド攻撃を実行");
 				Attack(action == 0, bestAttacker, bestTarget);
 				TurnManager.instance.IsAction = true;
 				break;
 			case 1:
-				Debug.Log("CPU：ドロー");
-				TextManegar.instance.SetText("CPUが札を引きました");
 				Draw();
 				TurnManager.instance.ChangeTurn();
 				break;
 			case 2:
-				Debug.Log("CPU：アイテム使用");
-				TextManegar.instance.SetText("CPUがアイテムを使用");
 				Item();
 				TurnManager.instance.UseItemFlag();
-				yield return new WaitForSeconds(1.3f);
-				StartCoroutine(SetAction()); // アイテム使用後は再度行動評価
+				// アイテム使用後は「盤面が変わった」ので、もう一度思考させる
+				yield return new WaitForSeconds(1.5f);
+				StartCoroutine(SetAction());
 				yield break;
 		}
 	}
@@ -213,6 +208,10 @@ public class CPUBase : MonoBehaviour
 
 	private IEnumerator AtkMotion(GameObject cpuCard, GameObject playerCard)
 	{
+		cpuCard.GetComponent<SetSoldier>().RotateSetFront();
+
+		yield return new WaitForSeconds(1.0f);
+
 		Vector3 cardOriginPos = cpuCard.transform.position;
 		float speed = 40.0f;
 		while (true)

@@ -24,6 +24,8 @@ public class CardSelect : MonoBehaviour
     [SerializeField]
     Camera cam;
 
+	[SerializeField] private Canvas _attackCanvas;
+
 	private void Awake()
 	{
 		_player1Card = null;
@@ -125,7 +127,8 @@ public class CardSelect : MonoBehaviour
                     {
                         StopCoroutine(ReturnCard(_player1Card));
                     }
-                    enabled = false;
+					_attackCanvas.enabled = false;
+					enabled = false;
                 }
             }
             _player1Selected = false;

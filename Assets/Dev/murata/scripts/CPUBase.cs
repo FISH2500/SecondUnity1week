@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CPUBase : MonoBehaviour
@@ -11,162 +10,200 @@ public class CPUBase : MonoBehaviour
 	[SerializeField] private BattleManegar _battleManegar;
 	[SerializeField] private CPUItem _cpuItem;
 
-	//private void Update()
-	//{
-	//	if (TurnManager.instance.CurrentPlayer != 1) return;
-	//	if (TurnManager.instance.IsAction) return;
-	//	if (_hasAction) return;
-
-	//	_hasAction = true;
-	//	StartCoroutine(SetAction());
-	//}
-
 	public IEnumerator SetAction()
 	{
 		yield return new WaitForSeconds(1.0f);
 
-		// 有効なアクション番号を入れるリスト
-		List<int> validActions = new List<int>();
+		// 1. 現状で可能なアクションをチェック
+		bool canDraw = _cpuArea.CardNum < 6 && _drawCard.IsDraw() && !TurnManager.instance.IsDraw;
+		bool canUseItem = !TurnManager.instance.UseItem && _cpuItem.GetItemCount() > 0;
 
-		// 攻撃はいつでもできるので追加
-		validActions.Add(0);
+		// 2. 盤面を解析し、安全に（確実に）勝てる攻撃があるか探す
+		bool hasSafeAttack = FindSafeAttack(out GameObject bestAttacker, out GameObject bestTarget);
 
-		// カードが6枚未満でまだドローできるなら
-		if (_cpuArea.CardNum < 6 && _drawCard.IsDraw() && !TurnManager.instance.IsDraw)
+		int action = -1; // 0:安全な攻撃, 1:ドロー, 2:アイテム, 3:偵察(ブラインド)攻撃
+
+		if (hasSafeAttack)
 		{
-			validActions.Add(1);
+			// 確実に勝てる相手がいるなら迷わず攻撃
+			action = 0;
+		}
+		else
+		{
+			// 勝てる相手が見えていない場合
+			if (canUseItem && Random.value < 0.65f) // 65%の確率でアイテムを使って盤面を動かす
+			{
+				action = 2;
+			}
+			else if (canDraw)
+			{
+				// アイテムがない、使わない場合はドローして戦力を整える
+				action = 1;
+			}
+			else
+			{
+				// ドローもアイテムも使えないなら、被害の少ないカードで特攻する
+				action = 3;
+			}
 		}
 
-		// アイテムを持っていて、まだ使っていないなら
-		if (!TurnManager.instance.UseItem && _cpuItem.GetItemCount() > 0)
-		{
-			validActions.Add(2);
-		}
-
-		// リストの中からランダムに1つ選ぶ
-		int idx = Random.Range(0, validActions.Count);
-		int action = validActions[idx];
-
+		// 3. 決定したアクションの実行
 		switch (action)
 		{
 			case 0:
-				Debug.Log("CPUが攻撃");
-                Attack();
-                
-                TurnManager.instance.IsAction = true;
+			case 3:
+				Debug.Log(action == 0 ? "CPU：安全な攻撃を実行" : "CPU：やむを得ずブラインド攻撃を実行");
+				Attack(action == 0, bestAttacker, bestTarget);
+				TurnManager.instance.IsAction = true;
 				break;
 			case 1:
-				Debug.Log("CPUがドロー");
-                TextManegar.instance.SetText("CPUが札を引きました");
-                Draw();
-
+				Debug.Log("CPU：ドロー");
+				TextManegar.instance.SetText("CPUが札を引きました");
+				Draw();
 				TurnManager.instance.ChangeTurn();
-
 				break;
 			case 2:
-				Debug.Log("CPUがアイテム使用");
-                TextManegar.instance.SetText("CPUがアイテムを使用");
-                Item();
-
+				Debug.Log("CPU：アイテム使用");
+				TextManegar.instance.SetText("CPUがアイテムを使用");
+				Item();
 				TurnManager.instance.UseItemFlag();
-				StartCoroutine(SetAction()); // 再帰
+				yield return new WaitForSeconds(1.3f);
+				StartCoroutine(SetAction()); // アイテム使用後は再度行動評価
 				yield break;
 		}
-
-		yield return new WaitForSeconds(3.0f);
 	}
 
-	private void Attack()
+	private void Attack(bool isSafe, GameObject attacker, GameObject target)
 	{
-		// 攻撃の処理
+		if (!isSafe)
+		{
+			// 偵察攻撃：一番どうでもいいカードで、裏向きのカードを狙う
+			attacker = GetWorstCard();
+			target = GetRandomFaceDownEnemy();
+
+			// 裏向きの敵がいなければ、表向きの一番強い敵に特攻（どうせ負けるなら大物を削る期待）
+			if (target == null) target = GetStrongestEnemy();
+		}
+
+		if (attacker != null && target != null)
+		{
+			TextManegar.instance.SetText($"CPUの攻撃");
+			StartCoroutine(AtkMotion(attacker, target));
+		}
+		else
+		{
+			// 万が一ターゲットが見つからなかった場合（エラー回避）
+			TurnManager.instance.ChangeTurn();
+		}
+	}
+
+	private bool FindSafeAttack(out GameObject attacker, out GameObject target)
+	{
+		attacker = null;
+		target = null;
+		bool isRev = TurnManager.instance.Revolution;
+		int minPowerDiff = int.MaxValue; // 無駄撃ちを防ぐための「戦力差」
+
+		GameObject[] myCards = _cpuArea.CardObject;
+		GameObject[] enemyCards = _playerArea.CardObj;
+
+		foreach (GameObject eCard in enemyCards)
+		{
+			if (eCard == null) continue;
+			SetSoldier eSol = eCard.GetComponent<SetSoldier>();
+
+			// 裏向き、大将（条件未達）、または見えている罠は攻撃しない
+			if (eSol.IsBack || (eSol.IsGeneral && _playerArea.CardNum > 1) || eSol.IsTrap) continue;
+
+			foreach (GameObject mCard in myCards)
+			{
+				if (mCard == null) continue;
+				SetSoldier mSol = mCard.GetComponent<SetSoldier>();
+
+				if (mSol.IsGeneral && _cpuArea.CardNum > 1) continue;
+
+				// 革命ルールも考慮して勝敗を判定
+				bool wins = isRev ? (mSol.SoldierAtk < eSol.SoldierAtk) : (mSol.SoldierAtk > eSol.SoldierAtk);
+
+				if (wins)
+				{
+					// 勝てるカードの中で、一番「ギリギリで勝てる」カードを選ぶ（エコな攻撃）
+					int diff = Mathf.Abs(mSol.SoldierAtk - eSol.SoldierAtk);
+					if (diff < minPowerDiff)
+					{
+						minPowerDiff = diff;
+						attacker = mCard;
+						target = eCard;
+					}
+				}
+			}
+		}
+		return attacker != null;
+	}
+
+	private GameObject GetWorstCard()
+	{
+		bool isRev = TurnManager.instance.Revolution;
+		GameObject worstCard = null;
+		int worstValue = isRev ? -1 : 999; // 革命中は数字が大きいほど「弱い（不用）」
+
+		foreach (GameObject mCard in _cpuArea.CardObject)
+		{
+			if (mCard == null) continue;
+			SetSoldier mSol = mCard.GetComponent<SetSoldier>();
+			if (mSol.IsGeneral && _cpuArea.CardNum > 1) continue;
+
+			bool isWorse = isRev ? (mSol.SoldierAtk > worstValue) : (mSol.SoldierAtk < worstValue);
+			if (isWorse)
+			{
+				worstValue = mSol.SoldierAtk;
+				worstCard = mCard;
+			}
+		}
+		return worstCard;
+	}
+
+	private GameObject GetRandomFaceDownEnemy()
+	{
+		List<GameObject> faceDowns = new List<GameObject>();
+		foreach (GameObject eCard in _playerArea.CardObj)
+		{
+			if (eCard == null) continue;
+			SetSoldier eSol = eCard.GetComponent<SetSoldier>();
+			if (eSol.IsGeneral && _playerArea.CardNum > 1) continue;
+
+			if (eSol.IsBack) faceDowns.Add(eCard);
+		}
+		if (faceDowns.Count > 0) return faceDowns[Random.Range(0, faceDowns.Count)];
+		return null;
+	}
+
+	private GameObject GetStrongestEnemy()
+	{
+		bool isRev = TurnManager.instance.Revolution;
 		GameObject strongestCard = null;
-		int strongestAtk = -1;
-		GameObject[] cpuCard = _cpuArea.CardObject;
+		int strongestValue = isRev ? 999 : -1;
 
-		GameObject targetCard = null;
-		int targetAtk = -1;
-		GameObject[] playerCard = _playerArea.CardObj;
-
-		for (int i = 0; i < 6; i++) // 所持カードの中から、最強のカードを選択
+		foreach (GameObject eCard in _playerArea.CardObj)
 		{
-			if (cpuCard[i] == null) continue;
+			if (eCard == null) continue;
+			SetSoldier eSol = eCard.GetComponent<SetSoldier>();
+			if (eSol.IsGeneral && _playerArea.CardNum > 1) continue;
 
-			SetSoldier soldier = cpuCard[i].GetComponent<SetSoldier>();
-
-			if (soldier.IsGeneral && _cpuArea.CardNum > 1) continue;  // 大将は攻撃できないのでスキップ、大将のみの場合は攻撃可能
-
-			if (soldier.SoldierAtk > strongestAtk)
+			bool isStronger = isRev ? (eSol.SoldierAtk < strongestValue) : (eSol.SoldierAtk > strongestValue);
+			if (isStronger)
 			{
-				strongestCard = cpuCard[i];
-				strongestAtk = soldier.SoldierAtk;
+				strongestValue = eSol.SoldierAtk;
+				strongestCard = eCard;
 			}
 		}
-
-		string log = $"{strongestAtk}でCPUの攻撃 ";
-
-        TextManegar.instance.SetText(log);
-        bool hasTarget = false;
-		// 表になっている相手のカードの中から、CPUのカードより攻撃力が低いカードの中で
-		// 一番攻撃力が高いカードを選択
-		// 表になっている相手のカードが全てCPUのカードより攻撃力が高い
-		// もしくは表になっている相手のカードがない場合は、裏のカードをランダムに選択する
-		for (int i = 0; i < 6; i++)
-		{
-			if (playerCard[i] == null) continue;
-
-			SetSoldier playerSoldier = playerCard[i].GetComponent<SetSoldier>();
-
-			if (playerSoldier.IsGeneral)
-			{
-				if (_playerArea.CardNum > 1) continue;
-
-				targetCard = playerCard[i];
-				hasTarget = true;
-				break; // 大将が狙えるなら確定
-			}
-
-			if (playerSoldier.SoldierAtk > targetAtk && // 現在ターゲットになっているカードより強い
-				playerSoldier.SoldierAtk < strongestAtk && // CPUのカードより弱い
-				!playerSoldier.IsBack) // 表になっているカード
-			{
-				targetCard = playerCard[i];
-				targetAtk = playerSoldier.SoldierAtk;
-				hasTarget = true;
-			}
-		}
-
-		if (!hasTarget) // ターゲットがない場合のランダム処理
-		{
-			List<GameObject> candidates = new List<GameObject>();
-
-			for (int i = 0; i < 6; i++)
-			{
-				if (playerCard[i] == null) continue;
-
-				var s = playerCard[i].GetComponent<SetSoldier>();
-
-				if (s.IsGeneral && _playerArea.CardNum > 1) continue;
-
-				candidates.Add(playerCard[i]);
-			}
-
-			if (candidates.Count > 0)
-			{
-				targetCard = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-			}
-		}
-		StartCoroutine(AtkMotion(strongestCard, targetCard));
-
+		return strongestCard;
 	}
 
 	private void Draw()
 	{
 		GameObject cardObj = _drawCard.DrawCardCPU();
-
-		if (cardObj != null)
-		{
-			_cpuArea.AddCPUArea(cardObj);
-		}
+		if (cardObj != null) _cpuArea.AddCPUArea(cardObj);
 	}
 
 	private void Item()
@@ -176,40 +213,38 @@ public class CPUBase : MonoBehaviour
 
 	private IEnumerator AtkMotion(GameObject cpuCard, GameObject playerCard)
 	{
-        Vector3 cardOriginPos = cpuCard.transform.position;
-        float speed = 40.0f;
+		Vector3 cardOriginPos = cpuCard.transform.position;
+		float speed = 40.0f;
 		while (true)
 		{
 			yield return null;
+			if (cpuCard == null || playerCard == null) break; // Null回避
 			cpuCard.transform.position = Vector3.MoveTowards(
 											cpuCard.transform.position,
 											playerCard.transform.position,
 											speed * Time.deltaTime);
-			if (cpuCard.transform.position == playerCard.transform.position )
-				break;
+			if (cpuCard.transform.position == playerCard.transform.position) break;
 		}
-        _battleManegar.Battle(playerCard, cpuCard);
+		_battleManegar.Battle(playerCard, cpuCard);
 		StartCoroutine(ReturnMotion(cpuCard, cardOriginPos));
-    }
+	}
 
 	private IEnumerator ReturnMotion(GameObject cpuCard, Vector3 originPos)
 	{
 		yield return null;
 		if (cpuCard != null)
 		{
-			Debug.Log(cpuCard);
 			float speed = 40.0f;
 			while (true)
 			{
 				yield return null;
+				if (cpuCard == null) break;
 				cpuCard.transform.position = Vector3.MoveTowards(
 												cpuCard.transform.position,
 												originPos,
 												speed * Time.deltaTime);
-				if (cpuCard.transform.position == originPos)
-					break;
+				if (cpuCard.transform.position == originPos) break;
 			}
 		}
-    }
-
+	}
 }

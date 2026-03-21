@@ -1,33 +1,30 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class SwapCard : MonoBehaviour
 {
 	private Camera _camera;
+	private const float _time = 0.8f; // 演出時間
 
 	[Header("確認用")]
-	[SerializeField]
-	private GameObject _firstSelected = null;
+	[SerializeField] private GameObject _firstSelected = null;
 	private bool _isSwapping = false;
+	private bool _isAnimating = false; // アニメーション中フラグ
 
-	private void Awake()
-	{
-		_camera = Camera.main;
-	}
+	private void Awake() => _camera = Camera.main;
 
 	public void StartSwapMode()
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
-			if (Area.Instance.CardNum == 1 || CPUArea.Instance.CardNum == 1)
+			if (Area.Instance.CardNum <= 1 || CPUArea.Instance.CardNum <= 1)
 			{
 				DispUI.instance.Disp(true);
-				Debug.Log("交換するものがありません");
 				return;
 			}
 			_isSwapping = true;
 			_firstSelected = null;
 			DispUI.instance.Disp(false);
-			Debug.Log("交換モード開始");
 		}
 		else
 		{
@@ -37,7 +34,7 @@ public class SwapCard : MonoBehaviour
 
 	void Update()
 	{
-		if (!_isSwapping) return;
+		if (!_isSwapping || _isAnimating) return;
 
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -45,26 +42,20 @@ public class SwapCard : MonoBehaviour
 			if (Physics.Raycast(ray, out RaycastHit hit))
 			{
 				GameObject hitObj = hit.collider.gameObject;
-
-				// 大将は交換不可
 				SetSoldier s = hitObj.GetComponent<SetSoldier>();
 				if (s == null || s.IsGeneral) return;
 
-				// 1枚目の選択
 				if (_firstSelected == null)
 				{
 					_firstSelected = hitObj;
-					// 選択中エフェクト（あれば）
 					_firstSelected.transform.localScale *= 1.1f;
 				}
-				// 2枚目の選択（1枚目と違うタグ＝自分と相手のペアであること）
 				else if (hitObj != _firstSelected && hitObj.tag != _firstSelected.tag)
 				{
-					ExecuteSwap(_firstSelected, hitObj);
+					StartCoroutine(AnimateSwap(_firstSelected, hitObj));
 				}
 				else
 				{
-					// 同じ陣営を選んだらリセット
 					_firstSelected.transform.localScale /= 1.1f;
 					_firstSelected = null;
 				}
@@ -72,40 +63,65 @@ public class SwapCard : MonoBehaviour
 		}
 	}
 
-	private void ExecuteSwap(GameObject a, GameObject b)
+	private IEnumerator AnimateSwap(GameObject a, GameObject b)
 	{
-		// 1. 座標を物理的に入れ替える
-		Vector3 posA = a.transform.position;
-		Vector3 posB = b.transform.position;
+		_isAnimating = true;
 
-		a.transform.position = posB;
-		b.transform.position = posA;
+		// 1. スケールを戻す
+		if (_firstSelected != null) _firstSelected.transform.localScale /= 1.1f;
 
+		// 2. 移動開始座標と終了座標
+		Vector3 startPosA = a.transform.position;
+		Vector3 startPosB = b.transform.position;
+
+		// カードが重ならないように少し高さを出す演出を入れるなら
+		Vector3 peakA = (startPosA + startPosB) / 2 + Vector3.up * 1.0f;
+
+		float elapsed = 0;
+		while (elapsed < _time)
+		{
+			elapsed += Time.deltaTime;
+			float t = elapsed / _time;
+
+			// 滑らかな移動 (Lerp)
+			a.transform.position = Vector3.Lerp(startPosA, startPosB, t);
+			b.transform.position = Vector3.Lerp(startPosB, startPosA, t);
+
+			yield return null;
+		}
+
+		// 3. 座標を完全に固定
+		a.transform.position = startPosB;
+		b.transform.position = startPosA;
+
+		// 4. 内部データの入れ替え
+		FinalizeSwap(a, b);
+
+		_isAnimating = false;
+		_isSwapping = false;
+		_firstSelected = null;
+		DispUI.instance.Disp(true);
+	}
+
+	private void FinalizeSwap(GameObject a, GameObject b)
+	{
+		// タグの入れ替え
 		(b.tag, a.tag) = (a.tag, b.tag);
 
-		// 2. 各エリアの配列(CardObjなど)の中身を書き換える
+		// 配列の入れ替え
 		UpdateAreaArrays(a, b);
 
 		SetSoldier sA = a.GetComponent<SetSoldier>();
 		SetSoldier sB = b.GetComponent<SetSoldier>();
 
+		// 所有権の入れ替え
 		(sA.OwnerPlayer, sB.OwnerPlayer) = (sB.OwnerPlayer, sA.OwnerPlayer);
 
-		if (sA.IsBack) sA.SetBack(sA.OwnerPlayer);
-		else sA.SetFront();
+		// 表裏の再設定（新しい所有者の色にする）
+		if (sA.IsBack) sA.SetBack(sA.OwnerPlayer); else sA.SetFront();
+		if (sB.IsBack) sB.SetBack(sB.OwnerPlayer); else sB.SetFront();
 
-		if (sB.IsBack) sB.SetBack(sB.OwnerPlayer);
-		else sB.SetFront();
-
-		// 4. 見た目のリセットと終了処理
-		if (TurnManager.instance.CurrentPlayer == 0 && _firstSelected != null)
-			_firstSelected.transform.localScale /= 1.1f;
-
-		_isSwapping = false;
-		_firstSelected = null;
-
-		Debug.Log($"{a.name} と {b.name} を物理的に入れ替えました");
-		DispUI.instance.Disp(true);
+		Debug.Log("物理交換・演出完了");
 	}
 
 	private void UpdateAreaArrays(GameObject a, GameObject b)
@@ -189,7 +205,7 @@ public class SwapCard : MonoBehaviour
 		if (myWeakest != null && targetStrongest != null)
 		{
 			Debug.Log($"CPUが交換を実行: {myWeakest.name} <-> {targetStrongest.name}");
-			ExecuteSwap(myWeakest, targetStrongest);
+			StartCoroutine(AnimateSwap(myWeakest, targetStrongest));
 		}
 	}
 }

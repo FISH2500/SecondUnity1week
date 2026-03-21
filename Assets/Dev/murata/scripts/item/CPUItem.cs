@@ -26,21 +26,12 @@ public class CPUItem : MonoBehaviour
 
 	public void CPUUseItem()
 	{
-		int id = -1;
-		int itemIndex = 0;
-        for (int i = 0; i < _myItems.Count; i++)
-		{
-			itemIndex = i;
-			if (CPUItemSelect.ItemSelect(_myItems[i]))
-			{
-				id = _myItems[i];
-				break;
-            }
-		}
-		if (id == -1) return;
+		Debug.Log($"CPUがアイテム使用 : {_myItems[0]}");
 
-        Debug.Log($"CPUがアイテム使用 : {id}");
-        _myItems.RemoveAt(itemIndex);
+		int id = _myItems[0];
+
+		_myItems.RemoveAt(0);
+
 		_itemBase.ItemID = id;
 		_itemBase.Use();
 	}

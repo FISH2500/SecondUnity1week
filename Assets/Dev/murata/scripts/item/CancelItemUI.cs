@@ -16,8 +16,8 @@ public class CancelItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
-		GetComponent<ActionButton>().ActionButtonDown();
-        _playerItem.SelectItem(false);
+
+		_playerItem.SelectItem(false);
 	}
 
 	// マウスが乗った時

@@ -13,9 +13,7 @@ public class PlayerItem : MonoBehaviour
 	[Header("確認用(設定不要)")]
 	[SerializeField] public List<GameObject> _myItems = new List<GameObject>();
 
-	[SerializeField] private GameObject _useButton;
-
-    private bool _selectItem = false;
+	private bool _selectItem = false;
 
 	private GameObject UsingItem = null;
 
@@ -62,17 +60,11 @@ public class PlayerItem : MonoBehaviour
 				UsingItem = hit.collider.gameObject;
 
 				// ここに強調表示させる処理を書く
-				//UsingItem.GetComponent<SetOutLine>().SetOutline()
 				UsingItem.GetComponent<ItemBase>().Highlight(true);
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);
-
-				//アイテム使用ボタンの表示
-
-				_useButton.SetActive(true);
-
-            }
+			}
 		}
 	}
 
@@ -108,9 +100,7 @@ public class PlayerItem : MonoBehaviour
 		_selectItem = false;
 
 		TurnManager.instance.UseItemFlag();
-
-        _useButton.SetActive(false);
-    }
+	}
 
 	public void SelectItem(bool select)
 	{
@@ -125,9 +115,7 @@ public class PlayerItem : MonoBehaviour
 		{
 			DispItem(select);
 		}
-
-        _useButton.SetActive(false);
-    }
+	}
 
 	public void DispItem(bool disp)
 	{

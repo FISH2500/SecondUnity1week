@@ -3,109 +3,131 @@ using UnityEngine;
 
 public class DrawMouse : MonoBehaviour
 {
-	[SerializeField] private Camera _camera; // ray���΂����߂̃J����
-	[SerializeField] private Area _area; // �Z�b�g���邽�߂̃G���A
+	[SerializeField] private Camera _camera; // レイを飛ばすためのカメラ
+	[SerializeField] private Area _area; // セットするためのエリア
+	[SerializeField] private Canvas _selectDestroyCardUI; // 破壊選択UI
 
-	private GameObject _dragObj = null; // ���h���b�O���Ă���I�u�W�F�N�g
-	private float _zDistance = 0; // �I����������Z���̈ʒu
+	private GameObject _dragObj = null; // 現在ドラッグしているオブジェクト
+	private float _zDistance = 0; // 選択した時の奥行き位置
 
 	[NonSerialized] public GameObject DrawObject;
 
-	private float _yPos;//�J�[�h��Y�̌Œ�ʒu
+	private float _yPos; // カードのY軸固定位置
+
+	private void Awake()
+	{
+		if (_area.AllSet) SetDestroySelectCardWindow();
+	}
 
 	void Update()
 	{
-		// �N���b�N���ꂽ�u��
+		// クリックされた瞬間
 		if (Input.GetMouseButtonDown(0))
 		{
-			// �}�E�X�̉�ʏ�̈ʒu����A�J�����̉��Ɍ������������쐬
+			// マウスの画面上の位置から、カメラの奥に向かうレイを作成
 			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 
-			if (Physics.Raycast(ray, out hit)) // �������΂��ē�������
+			if (Physics.Raycast(ray, out hit)) // 何かに当たった場合
 			{
-				if (!hit.collider.CompareTag("Card")) return; // Card�ȊO�Ȃ炱��ȏ�s��Ȃ�
+				// Cardタグ以外ならこれ以上実行しない
+				if (!hit.collider.CompareTag("Card")) return;
 
-				//�叫�̏ꍇ�̓J�[�h��I���ł��Ȃ��悤�ɂ���
-				if (hit.collider.gameObject.GetComponent<SetSoldier>().IsGeneral) return;
+				// 大将の場合はカードを選択できないようにする
+				var soldier = hit.collider.gameObject.GetComponent<SetSoldier>();
+				if (soldier != null && soldier.IsGeneral) return;
 
-                GameObject obj = hit.collider.gameObject;
+				GameObject obj = hit.collider.gameObject;
 
 				if (DrawObject == obj)
 				{
-					// �I�������I�u�W�F�N�g��ۑ�
+					// 選択したオブジェクトを保存
 					_dragObj = obj;
-					// Z�̈ʒu��ۑ�
+					// Zの位置を保存
 					_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
 					_yPos = obj.transform.position.y;
 				}
-				else if(_area.AllSet)
+				else if (_area.AllSet)
 				{
-					_area.RemoveArea(obj);//�j������J�[�h��I��
+					// 全てセットされている状態で別のカードを選んだら、そのカードを削除
+					_area.RemoveArea(obj);
 					Destroy(obj);
+
+					// 削除したのでUIを閉じる
+					ReSetDestroySelectCardWindow();
 				}
 
-				// ���O�𗬂�
-				Debug.Log("�N���b�N�����I�u�W�F�N�g: " + hit.collider.gameObject.name);
+				Debug.Log("クリックされたオブジェクト: " + hit.collider.gameObject.name);
 			}
 		}
 
 		if (_dragObj == null) return;
 
-		// �h���b�O��
+		// ドラッグ中
 		if (Input.GetMouseButton(0))
 		{
+			// 平面を作成してマウス位置をワールド座標に変換
 			Plane plane = new Plane(Vector3.up, new Vector3(0, _yPos, 0));
-
 			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
 			if (plane.Raycast(ray, out float enter))
 			{
 				Vector3 hitPoint = ray.GetPoint(enter);
-
 				_dragObj.transform.position = hitPoint;
 			}
 		}
 
-		// �w�𗣂�����
+		// 指を離した時
 		if (Input.GetMouseButtonUp(0))
 		{
-			if(_area.SetAria(_dragObj))
+			// エリアにセットを試みる
+			if (_area.SetAria(_dragObj))
 			{
 				TurnManager.instance.ChangeTurn();
 				enabled = false;
 			}
 
-			_dragObj = null; // �h���b�O���Ă���I�u�W�F�N�g��NULL��
+			_dragObj = null; // ドラッグ対象をリセット
 		}
 	}
 
-	void SetDestroySelectCardWindow() 
+	// カードを捨てる選択ウィンドウを表示する
+	void SetDestroySelectCardWindow()
 	{
-        for (int i = 0; i < _area.CardObj.Length; i++)
-        {
-			bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;//�J�[�h���叫���ǂ����𔻒�
+		for (int i = 0; i < _area.CardObj.Length; i++)
+		{
+			if (_area.CardObj[i] == null) continue;
 
-			if (isGeneral) continue;//�叫�̏ꍇ�̓A�E�g���C�������Ȃ�
+			// 大将かどうかを判定
+			bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;
 
-            _area.CardObj[i].GetComponent<SetOutLine>().SetOutline(0.03f);//�Z�b�g����Ă��邷�ׂẴJ�[�h�ɃA�E�g���C��������
-        }
+			// 大将の場合はアウトラインをつけない
+			if (isGeneral) continue;
 
-        _selectDestroyCardUI.SetActive(true);
-    }
+			// セットされているすべてのカードにアウトラインをつける
+			var outline = _area.CardObj[i].GetComponent<SetOutLine>();
+			if (outline != null) outline.SetOutline(0.03f);
+		}
 
-    void ReSetDestroySelectCardWindow()
-    {
-        for (int i = 0; i < _area.CardObj.Length; i++)
-        {
+		_selectDestroyCardUI.enabled = true;
+	}
 
-            bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;//�J�[�h���叫���ǂ����𔻒�
+	// 削除選択ウィンドウを閉じてリセットする
+	void ReSetDestroySelectCardWindow()
+	{
+		for (int i = 0; i < _area.CardObj.Length; i++)
+		{
+			if (_area.CardObj[i] == null) continue;
 
-            if (isGeneral) continue;//�叫�̏ꍇ�̓A�E�g���C�������Ȃ�
+			bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;
 
-            _area.CardObj[i].GetComponent<SetOutLine>().ReSetOutline();//�A�E�g���C��������
-        }
+			if (isGeneral) continue;
 
-        _selectDestroyCardUI.SetActive(false);
-    }
+			// アウトラインを消去
+			var outline = _area.CardObj[i].GetComponent<SetOutLine>();
+			if (outline != null) outline.ReSetOutline();
+		}
+
+		_selectDestroyCardUI.enabled = false;
+	}
 }

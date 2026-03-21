@@ -7,7 +7,7 @@ public class GameAudio : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-            SoundManager.Instance.PlayBGM("GameBGM");
+            SoundManager.Instance.PlayBGM("kaigiBGM");
     }
     private void Update()
     {
@@ -15,6 +15,9 @@ public class GameAudio : MonoBehaviour
         {
             SoundManager.Instance.PlaySE("ok");
             okSE = true;
+
+            SoundManager.Instance.StopBGM();
+            SoundManager.Instance.PlayBGM("GameBGM");
         }
     }
 }

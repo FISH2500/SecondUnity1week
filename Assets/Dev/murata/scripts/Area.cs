@@ -99,8 +99,11 @@ public class Area : MonoBehaviour
 			// フラグを立てる
 			_isSet[nearestIndex] = true;
 
-			// 将軍にする
-			if (nearestIndex == _generalIndex)
+			//カードセット音
+			SoundManager.Instance.PlaySE("PutCard");
+
+            // 将軍にする
+            if (nearestIndex == _generalIndex)
 			{
 				card.GetComponent<SetSoldier>().IsGeneral = true;
 

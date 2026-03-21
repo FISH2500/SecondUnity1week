@@ -793,8 +793,9 @@ GameObject:
   m_Component:
   - component: {fileID: 214645710}
   - component: {fileID: 214645709}
-  - component: {fileID: 214645708}
   - component: {fileID: 214645707}
+  - component: {fileID: 214645711}
+  - component: {fileID: 214645708}
   m_Layer: 0
   m_Name: GameAudio
   m_TagString: Untagged
@@ -815,10 +816,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundList:
+  - Name: kaigiBGM
+    Clip: {fileID: 8300000, guid: 800ab3a147e4da745ad7e2306f1e98c6, type: 3}
+    Volume: 0.15
   - Name: GameBGM
     Clip: {fileID: 8300000, guid: c0dd558faaf2877489e0416d82b78174, type: 3}
-    Volume: 0.1
-  _bgmSource: {fileID: 214645708}
+    Volume: 0
+  - Name: ok
+    Clip: {fileID: 8300000, guid: 225018a05fbd8b34c9284bf79c3cc78c, type: 3}
+    Volume: 0.5
+  - Name: SetCard
+    Clip: {fileID: 8300000, guid: 7869edc132f635548a77a03a37885b86, type: 3}
+    Volume: 0.3
+  - Name: PutCard
+    Clip: {fileID: 8300000, guid: 7869edc132f635548a77a03a37885b86, type: 3}
+    Volume: 0.3
+  _bgmSource: {fileID: 214645711}
   _seSource: {fileID: 214645708}
 --- !u!82 &214645708
 AudioSource:
@@ -832,7 +845,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -944,6 +957,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &214645711
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214645706}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &275944119
 GameObject:
   m_ObjectHideFlags: 0

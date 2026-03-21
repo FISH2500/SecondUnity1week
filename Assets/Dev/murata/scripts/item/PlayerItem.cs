@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerItem : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerItem : MonoBehaviour
 	[SerializeField] private Camera _camera;
 
 	[SerializeField] private Canvas _itemCanvas;
+
+	[SerializeField] private ItemDataBase _itemData;
 
 	[Header("確認用(設定不要)")]
 	[SerializeField] public List<GameObject> _myItems = new List<GameObject>();
@@ -60,6 +63,10 @@ public class PlayerItem : MonoBehaviour
 
 				// ここに強調表示させる処理を書く
 				UsingItem.GetComponent<ItemBase>().Highlight(true);
+
+				int id = UsingItem.GetComponent<ItemBase>().ItemID;
+
+				TextManegar.instance.SetText($"{_itemData.itemDatas[id].Name} : {_itemData.itemDatas[id].ExplanatoryText}");
 
 				// ログを流す
 				Debug.Log("クリックしたオブジェクト: " + hit.collider.gameObject.name);

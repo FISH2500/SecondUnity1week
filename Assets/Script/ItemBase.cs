@@ -82,6 +82,8 @@ public class ItemBase : MonoBehaviour
 	{
 		DispUI.instance.Disp(true);
 
+		if (IsCPU) TextManegar.instance.SetText($"相手が{_itemDatabase.itemDatas[ItemID].Name}を使用！");
+
 		switch (ItemID)
 		{
 			case 0: // ①大将以外のカードを裏にして、シャッフルする

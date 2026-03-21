@@ -1,34 +1,37 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class StartTitle : MonoBehaviour
+public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[Header("シーン遷移の設定")]
-	[SerializeField] private float _waitTime = 2.0f;  // 入力有効化までの秒数
 	[SerializeField] private string _nextSceneName;   // 遷移先シーン名
 
-	private bool _canInput = false;
+	private Vector3 _scale;
 
-	void Start()
+	private void Awake()
 	{
-		// 一定時間後に入力を許可する
-		StartCoroutine(ReadyToStart());
+		_scale = transform.localScale;
+		GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
 	}
 
-	private IEnumerator ReadyToStart()
+	public void OnPointerDown(PointerEventData eventData)
 	{
-		yield return new WaitForSeconds(_waitTime);
-		_canInput = true;
+		Debug.Log($"{gameObject.name} がクリックされました");
+
+		SceneManager.LoadSceneAsync(_nextSceneName);
 	}
 
-	private void Update()
+	// マウスが乗った時
+	public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (!_canInput) return;
+		transform.localScale = _scale * 1.1f;
+	}
 
-		if (Input.GetMouseButtonDown(0))
-		{
-			SceneManager.LoadSceneAsync(_nextSceneName);
-		}
+	// マウスが離れた時
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		transform.localScale = _scale;
 	}
 }

@@ -1,6 +1,4 @@
-using UnityEditor.VersionControl;
 using UnityEngine;
-using static CardManegar;
 
 public class CPUArea : MonoBehaviour
 {

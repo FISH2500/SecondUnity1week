@@ -6,14 +6,14 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 {
 	[SerializeField] private Deck _deck;
 
-	[SerializeField] private int _drawCardNum;
+	[SerializeField] public int _drawCardNum;
 
 	[SerializeField] private Transform _drawCardPosition;
 	[SerializeField] private DrawMouse _drawMouse;
 
 	private Vector3 _scale;
 
-	private int _drawCountPlayer1 = 0;
+	public int _drawCountPlayer1 = 0;
 	private int _drawCountPlayer2 = 0;
 
 	public static DrawCard instance;

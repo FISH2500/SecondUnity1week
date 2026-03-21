@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitTime: 2
-  _nextSceneName: 
+  _nextSceneName: S_game
 --- !u!4 &917051950
 Transform:
   m_ObjectHideFlags: 0

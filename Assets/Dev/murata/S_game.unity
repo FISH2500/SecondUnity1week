@@ -2902,7 +2902,7 @@ MonoBehaviour:
   _backImage: {fileID: 0}
   _highlight: {fileID: 0}
   IsCPU: 1
-  _trap: {fileID: 0}
+  _trap: {fileID: 4664631847476407139, guid: f869faf9b0cd96e4289a3dbf6d60973c, type: 3}
   _swapCard: {fileID: 1081409394}
   _openCard: {fileID: 1081409393}
   item_RedrawTarget: {fileID: 1081409392}
@@ -2922,6 +2922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemDeck: {fileID: 1731830861}
   _myItems: 
+  _cpuArea: {fileID: 0}
+  _playerArea: {fileID: 0}
 --- !u!114 &1081409397
 MonoBehaviour:
   m_ObjectHideFlags: 0

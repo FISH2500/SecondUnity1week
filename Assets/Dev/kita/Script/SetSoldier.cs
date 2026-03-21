@@ -1,6 +1,8 @@
 using System.Collections;
 using Unity.VisualScripting;
+using Unity.XR.Oculus.Input;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SetSoldier : MonoBehaviour
@@ -29,7 +31,7 @@ public class SetSoldier : MonoBehaviour
     [SerializeField]
 	private Image _backImage;//•ºm‚Ì— ‚Ì‰æ‘œ‚ğ•\¦‚·‚éUI
 
-    void Awake()
+    void Start()
     {
         if (CardIndex > 12) 
         {
@@ -38,9 +40,11 @@ public class SetSoldier : MonoBehaviour
 
         SoldierAtk = _soldierData.SoldierList[CardIndex].CardNum;//•ºm‚ÌƒŒƒxƒ‹‚ğƒZƒbƒg
 
-        //Debug.Log("•ºm‚ÌUŒ‚—Í‚Í" + SoldierAtk + "‚Å‚·B");
+		GetComponent<OutPutAttack>().Setup();
 
-        SetSprite();
+		//Debug.Log("•ºm‚ÌUŒ‚—Í‚Í" + SoldierAtk + "‚Å‚·B");
+
+		SetSprite();
     }
 
     public void SetSprite() 

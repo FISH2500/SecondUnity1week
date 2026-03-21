@@ -31,8 +31,6 @@ public class TurnManager : MonoBehaviour
 	{
         CurrentPlayer ^= 1;
 
-		TurnCounter++;
-
 		UseItem = false;
 		IsAction = false;
 		UnlimitedItem = false;

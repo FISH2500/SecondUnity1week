@@ -20,10 +20,8 @@ public class OutPutAttack : MonoBehaviour
     float parentY;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Setup()
     {
-        
-
         SetSoldier setSoldier = GetComponent<SetSoldier>();//SetCardスクリプトを取得する
 
         if (setSoldier == null)

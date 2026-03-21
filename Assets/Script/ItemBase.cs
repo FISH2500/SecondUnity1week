@@ -80,6 +80,8 @@ public class ItemBase : MonoBehaviour
 
 	public void Use()
 	{
+		DispUI.instance.Disp(true);
+
 		switch (ItemID)
 		{
 			case 0: // ①大将以外のカードを裏にして、シャッフルする

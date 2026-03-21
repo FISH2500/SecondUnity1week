@@ -53,16 +53,23 @@ public class CardSelect : MonoBehaviour
             {
                 Debug.Log("hit");
                 GameObject hitObj = hit.collider.gameObject;
-                
+				SetSoldier soldier = hitObj.GetComponent<SetSoldier>();
 
-                if (hitObj.CompareTag("Card"))
+				if (hitObj.CompareTag("Card"))
                 {
-                    if (!_player1Selected)
-                        _player1Selected = true;
+					if (soldier.IsGeneral && _area.CardNum > 1)
+					{
+						TextManegar.instance.SetText("大将は最後にしか出せません");
+						return;
+					}
+
+					_player1Selected = true;
                     _player1Card = hitObj;
                     _cardOriginPos = hitObj.transform.position;
 
-                    TextManegar.instance.SetText("攻撃対象の札を選択してください");
+					soldier.RotateSetFront();
+
+					TextManegar.instance.SetText("攻撃対象の札を選択してください");
 
                 }
             }
@@ -76,7 +83,9 @@ public class CardSelect : MonoBehaviour
 
     void Drag()
     {
-        if (Input.GetMouseButton(0) && _player1Selected == true)
+		if (!_player1Selected) return;
+
+		if (Input.GetMouseButton(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             Vector3 cardPos = Area.Instance.GetCardPositions()[0].position;
@@ -94,10 +103,9 @@ public class CardSelect : MonoBehaviour
         }
 
         // 離したら解除
-        if (Input.GetMouseButtonUp(0) && _player1Selected)
+        if (Input.GetMouseButtonUp(0))
         {
             StartCoroutine(ReturnCard(_player1Card));
-            if (!_player1Selected) return;
             GameObject targetObj = null;
             float minDistance = float.MaxValue;
             for (int i = 0; i < _cpuArea.CardObject.Length; i++)
@@ -131,10 +139,15 @@ public class CardSelect : MonoBehaviour
 					enabled = false;
                 }
             }
-            _player1Selected = false;
-            _player2Selected = false;
-            _player1Card = null;
-            _player2Card = null;
+			else
+			{
+				_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+
+				_player1Selected = false;
+				_player2Selected = false;
+				_player1Card = null;
+				_player2Card = null;
+			}
         }
     }
 
@@ -142,15 +155,7 @@ public class CardSelect : MonoBehaviour
     {
 		if (_player1Card.GetComponent<SetSoldier>().IsGeneral)
 		{
-			Debug.Log("大将が選択されました。残り枚数: " + _area.CardNum);
-			if (_area.CardNum >= 2) // 大将以外のカードが残っていたら無効
-			{
-				_player1Selected = false;
-                _player2Selected = false;
-				Debug.Log("大将は最後の1枚でなければ選択できません。");
-			}
-            else
-                Debug.Log("大将が選択されました。バトル開始");
+			Debug.Log("大将が選択されました。バトル開始");
 		}
 
 		if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
@@ -158,8 +163,12 @@ public class CardSelect : MonoBehaviour
 			Debug.Log("大将が選択されました。残り枚数: " + _cpuArea.CardNum);
 			if (_cpuArea.CardNum >= 2) // 大将以外のカードが残っていたら無効
 			{
-                _player1Selected = false;
+				_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+
+				_player1Selected = false;
 				_player2Selected = false;
+				_player1Card = null;
+				_player2Card = null;
 				Debug.Log("大将は最後の1枚でなければ選択できません。");
 			}
             else

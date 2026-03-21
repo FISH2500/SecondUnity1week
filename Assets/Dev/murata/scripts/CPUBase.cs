@@ -224,7 +224,10 @@ public class CPUBase : MonoBehaviour
 											speed * Time.deltaTime);
 			if (cpuCard.transform.position == playerCard.transform.position) break;
 		}
-		_battleManegar.Battle(playerCard, cpuCard);
+
+		//攻撃を受けたカードを表にする処理
+
+        _battleManegar.Battle(playerCard, cpuCard);
 		StartCoroutine(ReturnMotion(cpuCard, cardOriginPos));
 	}
 

@@ -13,6 +13,8 @@ public class BearTrap : MonoBehaviour
 
     private GameObject _trapInstance;//生成したトラップのインスタンス
 
+    private bool _isCPUTrap = false;//CPUの罠かどうか
+
     void Start()
     {
 		if (TurnManager.instance.CurrentPlayer == 0)
@@ -22,25 +24,40 @@ public class BearTrap : MonoBehaviour
 		}
 		else
 		{
-			_isCanTrapSet = false;
-			_spawnTurn = TurnManager.instance.TurnCounter;
-			ExecuteCPUTrap();
+            _isCPUTrap = true;//CPUの罠
+            _isCanTrapSet = false;
+            _spawnTurn = TurnManager.instance.CPUTurnCount;//CPUのターン数を取得
+            ExecuteCPUTrap();
 		}
 	}
 
     // Update is called once per frame
     void Update()
     {
-        //設置してからターンが経過したらトラップを解除する
-        if (TurnManager.instance.TurnCounter > _spawnTurn)
+
+        if (!_isCPUTrap)//Playerの罠が消滅する条件と敵の罠が消滅する条件は違うため分ける
         {
-            _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
-            Debug.Log("罠破棄");
-            EndTask();
+            //設置してからプレイヤーターンが経過したらトラップを解除する
+            if (TurnManager.instance.TurnCount > _spawnTurn)
+            {
+                _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
+                Debug.Log("罠破棄");
+                EndTask();
+            }
+        }
+        else 
+        {
+            //設置してからプレイヤーターンが経過したらトラップを解除する
+            if (TurnManager.instance.CPUTurnCount > _spawnTurn)
+            {
+                _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
+                Debug.Log("CPU罠破棄");
+                EndTask();
+            }
         }
 
-        if (_isCanTrapSet)//㩂��Z�b�g�ł���
-          SetTrapCard();
+        if (_isCanTrapSet)//罠が配置できる状態ならば、罠を設置する場所を決める関数を呼び出す
+            SetTrapCard();
     }
 
     //罠の設置フラグを立てる
@@ -69,6 +86,9 @@ public class BearTrap : MonoBehaviour
             Vector3 trapPosition = _card.transform.position;//クリックしたカードの位置を取得
 
             trapPosition.y += 0.2f;//トラップをカードの上に配置
+
+            _trapInstance=Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//トラップを生成
+
             _isCanTrapSet = false;//トラップ設置完了
 			DispUI.instance.Disp(true);
       }
@@ -102,14 +122,14 @@ public class BearTrap : MonoBehaviour
         Destroy(gameObject);
     }
 
-	private void ExecuteCPUTrap()
-	{
+	private void ExecuteCPUTrap()//CPUの罠設置
+    {
 		GameObject[] cpuCards = CPUArea.Instance.CardObject;
 		System.Collections.Generic.List<GameObject> candidates = new System.Collections.Generic.List<GameObject>();
 
 		foreach (var obj in cpuCards)
 		{
-			if (obj != null && !obj.GetComponent<SetSoldier>().IsGeneral)
+			if (obj != null)// && !obj.GetComponent<SetSoldier>().IsGeneral) 大将にも罠を配置してよいためコメントアウト
 				candidates.Add(obj);
 		}
 

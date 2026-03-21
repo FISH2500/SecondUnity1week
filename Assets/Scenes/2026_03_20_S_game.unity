@@ -2921,7 +2921,7 @@ MonoBehaviour:
   _backImage: {fileID: 0}
   _highlight: {fileID: 0}
   IsCPU: 1
-  _trap: {fileID: 0}
+  _trap: {fileID: 4664631847476407139, guid: f869faf9b0cd96e4289a3dbf6d60973c, type: 3}
   _swapCard: {fileID: 1081409394}
   _openCard: {fileID: 1081409393}
   item_RedrawTarget: {fileID: 1081409392}
@@ -4054,7 +4054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1422503619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4139,10 +4139,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unSetButton:
   - {fileID: 1968219720}
+  - {fileID: 669026890}
   _setButton:
   - {fileID: 1746757456}
   - {fileID: 1163753719}
-  - {fileID: 669026890}
 --- !u!1 &1432656119
 GameObject:
   m_ObjectHideFlags: 0

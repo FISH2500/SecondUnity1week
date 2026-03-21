@@ -7,6 +7,7 @@ public class TurnManager : MonoBehaviour
 
 	public int CurrentPlayer;
 	public int TurnCount = 1;//ターン経過数
+    public int CPUTurnCount = 1;//ターン経過数
 
 	public int TurnCounter = 0;
 
@@ -48,7 +49,8 @@ public class TurnManager : MonoBehaviour
         }
 		else
 		{
-			StartCoroutine(_cpuBase.SetAction());
+            CPUTurnCount++;
+            StartCoroutine(_cpuBase.SetAction());
 		}
 
 		DispUI.instance.Disp(CurrentPlayer == 0);

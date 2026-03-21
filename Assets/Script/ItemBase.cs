@@ -213,7 +213,13 @@ public class ItemBase : MonoBehaviour
 
 	private void Trap()
 	{
-		Instantiate(_trap);
+
+        if (_trap == null)
+        {
+            Debug.LogError($"{gameObject.name} ‚Ì ItemBase ‚Å _trap ‚ª–¢İ’è‚Å‚·", this);
+            return;
+        }
+        Instantiate(_trap);
 	}
 
 	private void Reverse()

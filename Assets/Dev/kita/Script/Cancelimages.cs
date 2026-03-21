@@ -7,26 +7,25 @@ public class CancelImages : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
     [SerializeField] private GameObject _drawButton;
     [SerializeField] private GameObject _attackButton;
 
-	[SerializeField] private Canvas _attackCanvas;
+    private ActionButton _actionButton;
 
     private Vector3 _scale;
+
 
     private void Awake()
     {
         _scale = transform.localScale;
+        _actionButton = GetComponent<ActionButton>();
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         TextManegar.instance.SetText("攻撃をキャンセルした");
 
-        //_actionButton.ActionButtonDown();//アクションボタンのキャンセル関数を呼び出す
+        _actionButton.ActionButtonDown();//アクションボタンのキャンセル関数を呼び出す
 
-		DispUI.instance.Disp(true);
-
-		_attackCanvas.enabled = false;
-
-		_cardSelect.enabled = false;//カードを選択するスクリプトを無効に
+        _cardSelect.enabled = false;//カードを選択するスクリプトを無効に
     }
 
     // マウスが乗った時

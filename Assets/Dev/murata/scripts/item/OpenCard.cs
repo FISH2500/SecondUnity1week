@@ -19,6 +19,25 @@ public class OpenCard : MonoBehaviour
 
 		if (TurnManager.instance.CurrentPlayer == 0) // プレイヤーのターン
 		{
+			bool hasBackCard = false;
+			foreach (var obj in cpuArea.CardObject)
+			{
+				if (obj != null)
+				{
+					if (obj.GetComponent<SetSoldier>().IsBack)
+					{
+						hasBackCard = true;
+						break;
+					}
+				}
+			}
+
+			if (!hasBackCard)
+			{
+				Debug.Log("CPUのカードは全て表です。スキップします。");
+				return false;
+			}
+
 			// CPUに自分のカード（相手から見て）を選ばせる
 			GameObject target = null;
 
@@ -64,6 +83,28 @@ public class OpenCard : MonoBehaviour
 		}
 		else // CPUのターン
 		{
+			// プレイヤー側に裏向きのカードがあるかチェック
+			bool hasBackCard = false;
+			foreach (var obj in playerArea.CardObj)
+			{
+				if (obj != null)
+				{
+					if (obj.GetComponent<SetSoldier>().IsBack)
+					{
+						hasBackCard = true;
+						break;
+					}
+				}
+			}
+
+			if (!hasBackCard)
+			{
+				Debug.Log("プレイヤーのカードは全て表です。スキップします。");
+				IsProcessing = false;
+				_isChoosingSelfCard = false;
+				return false;
+			}
+
 			IsProcessing = true; // 待機開始
 			_isChoosingSelfCard = true;
 			Debug.Log("表にする自分のカードを選んでください");

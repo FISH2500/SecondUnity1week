@@ -26,6 +26,8 @@ public class CardSelect : MonoBehaviour
 
 	[SerializeField] private Canvas _attackCanvas;
 
+    [SerializeField] private CardBattleDirection _cardBattleDirection;
+
 	private void Awake()
 	{
 		_player1Card = null;
@@ -81,11 +83,11 @@ public class CardSelect : MonoBehaviour
 
     }
 
-    void Drag()
+    void Drag()//攻撃対象の選択
     {
-		if (!_player1Selected) return;
+		if (!_player1Selected) return;//攻撃するカードが選択されていない場合は攻撃対象を選択できない
 
-		if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             Vector3 cardPos = Area.Instance.GetCardPositions()[0].position;
@@ -100,12 +102,42 @@ public class CardSelect : MonoBehaviour
 
                 _player1Card.transform.position = hitPoint;
             }
+
+            
+            GameObject targetObj = null;
+
+            float minDistance = float.MaxValue;
+
+            for (int i = 0; i < _cpuArea.CardObject.Length; i++) 
+            {
+
+                if (_cpuArea.CardObject[i] == null) continue;
+                float distance = Vector3.Distance(_player1Card.transform.position, _cpuArea.CardObject[i].transform.position);//攻撃カードとCPUのカードの距離を取得
+                _cpuArea.CardObject[i].GetComponent<SetOutLine>().ReSetOutline();//アウトライン非表示
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    targetObj = _cpuArea.CardObject[i];
+                }
+
+            }
+
+            if (targetObj != null && minDistance <= 5.0f)
+            {
+                targetObj.GetComponent<SetOutLine>().SetOutline(0.02f);//アウトライン表示
+            }
+            
+            //ドラッグ中に攻撃対象と攻撃カードの距離を取得して一定の距離内に入ったオブジェクトをアウトラインにする
+
+
         }
+        
 
         // 離したら解除
         if (Input.GetMouseButtonUp(0))
         {
-            StartCoroutine(ReturnCard(_player1Card));
+            
             GameObject targetObj = null;
             float minDistance = float.MaxValue;
             for (int i = 0; i < _cpuArea.CardObject.Length; i++)
@@ -114,6 +146,9 @@ public class CardSelect : MonoBehaviour
                 Debug.Log(_cpuArea);
                 Debug.Log(_cpuArea.CardObject[i]);
                 if (_cpuArea.CardObject[i] == null) continue;
+
+                _cpuArea.CardObject[i].GetComponent<SetOutLine>().ReSetOutline();
+
                 float distance = Vector3.Distance(_player1Card.transform.position, _cpuArea.CardObject[i].transform.position);
                 if (distance < minDistance)
                 {
@@ -129,25 +164,40 @@ public class CardSelect : MonoBehaviour
             // カードが2枚選択されるとバトル開始
             if (_player1Selected && _player2Selected)
             {
+                //カードの演出
+                _cardBattleDirection.SetBattleDirection(_player1Card, _player2Card);
                 if (BattleStart())
                 {
+                    if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
+                    {
+                        // 大将を選択した場合はすぐ戻す
+                        StartCoroutine(ReturnCard(_player1Card, false));
+                    }
+                    else
+                    {
+                        // 通常バトルは演出後に戻す
+                        StartCoroutine(ReturnCard(_player1Card, true));
+                    }
+
+
                     if (BattleManegar.Result == BattleManegar.BattleResult.Lose)
                     {
-                        StopCoroutine(ReturnCard(_player1Card));
+                        StopCoroutine(ReturnCard(_player1Card,false));//
                     }
-					_attackCanvas.enabled = false;
-					enabled = false;
+                    _attackCanvas.enabled = false;
+                    enabled = false;
                 }
             }
-			else
-			{
-				_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+            else
+            {
+                StartCoroutine(ReturnCard(_player1Card,false));
+                _player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
 
-				_player1Selected = false;
-				_player2Selected = false;
-				_player1Card = null;
-				_player2Card = null;
-			}
+                _player1Selected = false;
+                _player2Selected = false;
+                _player1Card = null;
+                _player2Card = null;
+            }
         }
     }
 
@@ -181,11 +231,18 @@ public class CardSelect : MonoBehaviour
 		_player1Selected = false;
         _player2Selected = false;
         Debug.Log(BattleManegar.Result);
+
+        
         return true;
     }
 
-    private IEnumerator ReturnCard(GameObject moveCard)
+    private IEnumerator ReturnCard(GameObject moveCard ,bool isBattle)//バトルが開始されなかったときにカードを元の位置に戻すためのコルーチン
     {
+        if (isBattle) 
+        {
+            yield return new WaitForSeconds(3.0f);//演出のため戻るのに3秒間待たせる
+        }
+
         while (true)
         {
             yield return null;
@@ -201,4 +258,5 @@ public class CardSelect : MonoBehaviour
             }
         }
     }
+
 }

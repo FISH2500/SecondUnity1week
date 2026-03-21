@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3ee3f2bdd460848b3c3df6a0ef762b, type: 3}
   m_Name: Soldier Data
   m_EditorClassIdentifier: 
+  BreakSprite: {fileID: 21300000, guid: a5e5feca9f4a5b94db19d9b0b0bbdeef, type: 3}
   SoldierBack: {fileID: 21300000, guid: fa292564256979c4dbf2e4e2fb608a19, type: 3}
   SoldierList:
   - CardNum: 1

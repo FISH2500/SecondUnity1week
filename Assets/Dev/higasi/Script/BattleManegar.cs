@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -113,15 +114,15 @@ public class BattleManegar : MonoBehaviour
 		}
 
 		// --- 3. ターン終了・再行動処理 ---
-		HandleTurnEnd();
-	}
+		StartCoroutine(TurnChange(playerCard));
+    }
 
 	// 勝利時の共通処理
 	private void ProcessVictory(GameObject enemyCard, bool isEnemyGeneral)
 	{
 		Result = BattleResult.Win;
 		_cpuArea.RemoveCPUArea(enemyCard);
-		Destroy(enemyCard);
+		Destroy(enemyCard,3.0f);
 		if (isEnemyGeneral)
 		{
 			EndGame = true;
@@ -134,7 +135,7 @@ public class BattleManegar : MonoBehaviour
 	{
 		Result = BattleResult.Lose;
 		_playerArea.RemoveArea(playerCard);
-		Destroy(playerCard);
+		Destroy(playerCard,3.0f);
 		if (isPlayerGeneral)
 		{
 			EndGame = true;
@@ -148,8 +149,8 @@ public class BattleManegar : MonoBehaviour
 		Result = BattleResult.Draw;
 		_cpuArea.RemoveCPUArea(eCard);
 		_playerArea.RemoveArea(pCard);
-		Destroy(pCard);
-		Destroy(eCard);
+		Destroy(pCard, 3.0f);
+		Destroy(eCard, 3.0f);
 
 		if (pGen || eGen)
 		{
@@ -173,4 +174,13 @@ public class BattleManegar : MonoBehaviour
 			TurnManager.instance.ChangeTurn();
 		}
 	}
+
+    private IEnumerator TurnChange(GameObject moveCard) 
+	{
+		yield return new WaitForSeconds(5.0f);
+
+
+        HandleTurnEnd();
+    }
+
 }

@@ -1750,6 +1750,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoundList:
   - Name: MenuSE
+    Clip: {fileID: 8300000, guid: 1f85c6ae5e3f5f54faec677762e1b1ec, type: 3}
+    Volume: 0.4
+  - Name: MenuSelectSE
     Clip: {fileID: 8300000, guid: d5eb8df116d482d4f9115fb8f89a69f0, type: 3}
     Volume: 0.4
   _bgmSource: {fileID: 1791006859}

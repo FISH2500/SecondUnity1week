@@ -165,7 +165,7 @@ public class CardSelect : MonoBehaviour
             if (_player1Selected && _player2Selected)
             {
                 //カードの演出
-                _cardBattleDirection.SetBattleDirection(_player1Card, _player2Card);
+                //_cardBattleDirection.SetBattleDirection(_player1Card, _player2Card);
                 if (BattleStart())
                 {
                     if (_player2Card.GetComponent<SetSoldier>().IsGeneral)

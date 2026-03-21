@@ -111,14 +111,31 @@ public class CPUItem : MonoBehaviour
 		// 自分の平均攻撃力が低いなら「革命」の価値を高める
 		int totalAtk = 0;
 		int count = 0;
+
+		if (_cpuArea == null || _cpuArea.CardObject == null) return 0;
+
 		foreach (var c in _cpuArea.CardObject)
 		{
+			// ここで null チェックを追加
 			if (c == null) continue;
-			totalAtk += c.GetComponent<SetSoldier>().SoldierAtk;
-			count++;
+
+			var s = c.GetComponent<SetSoldier>();
+			if (s != null)
+			{
+				totalAtk += s.SoldierAtk;
+				count++;
+			}
 		}
+
+		// カードが1枚もない場合は革命の価値なし
+		if (count == 0) return 0;
+
 		float avg = (float)totalAtk / count;
-		return (12 - avg) * 10; // 平均が低いほど高スコア
+
+		// 平均攻撃力が低い（弱い札ばかり）ほど、スコアが高くなる計算
+		// 例: 平均 3 なら (12 - 3) * 10 = 90点（超使いたい）
+		// 例: 平均 10 なら (12 - 10) * 10 = 20点（あまり使いたくない）
+		return Mathf.Max(0, (12 - avg) * 10);
 	}
 
 	private float CheckRedrawValue()

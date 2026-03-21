@@ -59,10 +59,27 @@ public class CPUBase : MonoBehaviour
 				TurnManager.instance.ChangeTurn();
 				break;
 			case 2:
+				Debug.Log("CPU：アイテム使用");
+				TextManegar.instance.SetText("CPUがアイテムを使用");
+
+				// アイテム実行
 				Item();
+
+				// もし使ったアイテムが OpenCard なら、プレイヤーが選び終わるまで待つ
+				OpenCard openCardScript = _cpuItem.GetComponent<OpenCard>();
+				if (openCardScript != null)
+				{
+					// プレイヤーがカードを選び終わるまでループ
+					while (openCardScript.IsProcessing)
+					{
+						yield return null; // 1フレーム待機してループ継続
+					}
+				}
+
 				TurnManager.instance.UseItemFlag();
-				// アイテム使用後は「盤面が変わった」ので、もう一度思考させる
-				yield return new WaitForSeconds(1.5f);
+				yield return new WaitForSeconds(1.0f);
+
+				// 再度アクション評価
 				StartCoroutine(SetAction());
 				yield break;
 		}

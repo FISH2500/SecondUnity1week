@@ -164,6 +164,7 @@ public class BattleManegar : MonoBehaviour
 		if (TurnManager.instance.DoubleAttackSimasuka())
 		{
 			TurnManager.instance.IsDraw = true;
+			DispUI.instance.Disp(true);
 			if (TurnManager.instance.CurrentPlayer == 1) StartCoroutine(_cpuBase.SetAction());
 		}
 		else

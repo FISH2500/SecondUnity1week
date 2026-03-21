@@ -29,7 +29,7 @@ public class SetSoldier : MonoBehaviour
     [SerializeField]
 	private Image _backImage;//•ºŽm‚Ì— ‚Ì‰æ‘œ‚ð•\Ž¦‚·‚éUI
 
-    void Start()
+    void Awake()
     {
         if (CardIndex > 12) 
         {

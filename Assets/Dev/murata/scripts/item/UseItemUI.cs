@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UseIteuUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class UseItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField]
 	PlayerItem _playerItem;
@@ -16,7 +16,12 @@ public class UseIteuUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
+<<<<<<< Updated upstream:Assets/Dev/murata/scripts/item/UseIteuUI.cs
 
+=======
+        //GetComponent<ActionButton>().ActionButtonDown();
+		//DispUI.instance.Disp(false);
+>>>>>>> Stashed changes:Assets/Dev/murata/scripts/item/UseItemUI.cs
 		_playerItem.UseItem();
 	}
 

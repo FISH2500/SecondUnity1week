@@ -42,7 +42,7 @@ public class OpenCard : MonoBehaviour
 
 			if (target != null)
 			{
-				target.GetComponent<SetSoldier>().SetFront();
+				target.GetComponent<SetSoldier>().RotateSetFront();
 				return true;
 			}
 			return false;
@@ -71,7 +71,7 @@ public class OpenCard : MonoBehaviour
 				// 自分のカードかつ裏向きならOK
 				if (hitObj.CompareTag("Card") && s != null && s.IsBack)
 				{
-					s.SetFront();
+					s.RotateSetFront();
 					_isChoosingSelfCard = false;
 					DispUI.instance.Disp(true);
 					// アイテム処理終了

@@ -24,7 +24,13 @@ public class CardSelect : MonoBehaviour
     [SerializeField]
     Camera cam;
 
-    void Update()
+	private void Awake()
+	{
+		_player1Card = null;
+		_player2Card = null;
+	}
+
+	void Update()
     {
         // カードの選択
         Select();

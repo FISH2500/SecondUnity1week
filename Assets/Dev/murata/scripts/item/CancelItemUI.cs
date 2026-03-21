@@ -17,6 +17,13 @@ public class CancelItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
 	{
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
 
+<<<<<<< Updated upstream
+=======
+		//GetComponent<ActionButton>().ActionButtonDown();
+
+		//DispUI.instance.Disp(true);
+
+>>>>>>> Stashed changes
 		_playerItem.SelectItem(false);
 	}
 

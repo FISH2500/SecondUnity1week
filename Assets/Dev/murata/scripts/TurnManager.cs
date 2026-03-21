@@ -36,6 +36,10 @@ public class TurnManager : MonoBehaviour
 		Revolution = false;
 		DoubleAttack = false;
 		IsDraw = false;
+<<<<<<< Updated upstream
+=======
+		//gameObject.GetComponent<ActionButton>().ActionButtonDown();
+>>>>>>> Stashed changes
 
 		if (CurrentPlayer == 0)//自分のターンが来たらカウントする
         {
@@ -61,6 +65,10 @@ public class TurnManager : MonoBehaviour
 		Revolution = false;
 		DoubleAttack = false;
 		IsDraw = false;
+<<<<<<< Updated upstream
+=======
+        //gameObject.GetComponent<ActionButton>().ActionButtonDown();
+>>>>>>> Stashed changes
 
 		if (CurrentPlayer == 1)
 			StartCoroutine(_cpuBase.SetAction());

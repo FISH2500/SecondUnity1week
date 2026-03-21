@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 public class ItemBase : MonoBehaviour
 {
 	public int ItemID;        // 識別ID
+
+	private const float _time = 0.8f;
 
 	[SerializeField] ItemDataBase _itemDatabase;
 
@@ -108,11 +111,15 @@ public class ItemBase : MonoBehaviour
 
 	public void Shuffle()
 	{
+		StartCoroutine(AnimateShuffle());
+	}
+
+	private IEnumerator AnimateShuffle()
+	{
 		// 現在のターンから対象のAreaを取得
 		bool isPlayer = (TurnManager.instance.CurrentPlayer == 0);
 		GameObject[] targetCards;
 		Transform[] positions;
-		float cardY;
 
 		if (isPlayer)
 		{
@@ -127,6 +134,7 @@ public class ItemBase : MonoBehaviour
 			positions = cpuArea.CardPosition;
 		}
 
+		// --- 1. シャッフル対象のインデックスを抽出 ---
 		List<int> shuffleIndices = new List<int>();
 		for (int i = 0; i < targetCards.Length; i++)
 		{
@@ -135,10 +143,13 @@ public class ItemBase : MonoBehaviour
 			SetSoldier s = targetCards[i].GetComponent<SetSoldier>();
 			if (s.IsGeneral) continue;
 
-			s.SetBack(TurnManager.instance.CurrentPlayer);
+			s.RotateSetBack(TurnManager.instance.CurrentPlayer);
 			shuffleIndices.Add(i);
 		}
 
+		yield return new WaitForSeconds(0.6f);
+
+		// --- 2. ランダムな入れ替えパターンの作成 ---
 		List<int> randomIndices = new List<int>(shuffleIndices);
 		for (int i = randomIndices.Count - 1; i > 0; i--)
 		{
@@ -146,6 +157,9 @@ public class ItemBase : MonoBehaviour
 			(randomIndices[i], randomIndices[j]) = (randomIndices[j], randomIndices[i]);
 		}
 
+		// --- 3. アニメーション用の座標保持 ---
+		Vector3[] startPositions = new Vector3[targetCards.Length];
+		Vector3[] endPositions = new Vector3[targetCards.Length];
 		GameObject[] originalObjs = (GameObject[])targetCards.Clone();
 
 		for (int i = 0; i < shuffleIndices.Count; i++)
@@ -153,17 +167,39 @@ public class ItemBase : MonoBehaviour
 			int oldIdx = shuffleIndices[i];
 			int newIdx = randomIndices[i];
 
+			// 移動前の座標を記録
+			startPositions[oldIdx] = originalObjs[newIdx].transform.position;
+
+			// 移動後の座標（スロット位置）を計算
+			Vector3 newPos = positions[oldIdx].position;
+			newPos.y = originalObjs[newIdx].transform.position.y; // 高さは維持
+			endPositions[oldIdx] = newPos;
+
+			// 内部配列の参照を入れ替え
 			targetCards[oldIdx] = originalObjs[newIdx];
+		}
 
-			if (targetCards[oldIdx] != null)
+		// --- 4. 移動アニメーションの実行 ---
+		float elapsed = 0;
+		while (elapsed < _time)
+		{
+			elapsed += Time.deltaTime;
+			float t = elapsed / _time;
+			// 滑らかにするなら t = t * t * (3f - 2f * t); (SmoothStep)
+
+			for (int i = 0; i < shuffleIndices.Count; i++)
 			{
-				cardY = targetCards[oldIdx].transform.position.y;
-
-				Vector3 newPos = positions[oldIdx].position;
-				newPos.y = cardY;
-
-				targetCards[oldIdx].transform.position = newPos;
+				int idx = shuffleIndices[i];
+				targetCards[idx].transform.position = Vector3.Lerp(startPositions[idx], endPositions[idx], t);
 			}
+			yield return null;
+		}
+
+		// --- 5. 最終位置に固定 ---
+		for (int i = 0; i < shuffleIndices.Count; i++)
+		{
+			int idx = shuffleIndices[i];
+			targetCards[idx].transform.position = endPositions[idx];
 		}
 
 		DispUI.instance.Disp(true);

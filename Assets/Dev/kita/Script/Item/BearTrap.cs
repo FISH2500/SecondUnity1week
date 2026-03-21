@@ -23,7 +23,7 @@ public class BearTrap : MonoBehaviour
 		else
 		{
 			_isCanTrapSet = false;
-			_spawnTurn = TurnManager.instance.TurnCount;
+			_spawnTurn = TurnManager.instance.TurnCounter;
 			ExecuteCPUTrap();
 		}
 	}
@@ -32,7 +32,7 @@ public class BearTrap : MonoBehaviour
     void Update()
     {
         //設置してからターンが経過したらトラップを解除する
-        if (TurnManager.instance.TurnCount > _spawnTurn)
+        if (TurnManager.instance.TurnCounter > _spawnTurn)
         {
             _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
             Debug.Log("罠破棄");
@@ -48,7 +48,7 @@ public class BearTrap : MonoBehaviour
     {
         TextManegar.instance.SetText("罠を設置する場所を決めてください");
         _isCanTrapSet = true;//トラップが設置できる
-        _spawnTurn = TurnManager.instance.TurnCount;//設置時のターン
+        _spawnTurn = TurnManager.instance.TurnCounter;//設置時のターン
     }
 
     //罠を設置する場所を決める

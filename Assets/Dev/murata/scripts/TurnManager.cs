@@ -8,6 +8,8 @@ public class TurnManager : MonoBehaviour
 	public int CurrentPlayer;
 	public int TurnCount = 1;//ターン経過数
 
+	public int TurnCounter = 0;
+
     public bool UseItem = false;
 	public bool IsAction = false;
 
@@ -29,6 +31,8 @@ public class TurnManager : MonoBehaviour
 	public void ChangeTurn()
 	{
         CurrentPlayer ^= 1;
+
+		TurnCounter++;
 
 		UseItem = false;
 		IsAction = false;

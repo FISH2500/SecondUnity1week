@@ -40,7 +40,8 @@ public class BearTrap : MonoBehaviour
             //設置してからプレイヤーターンが経過したらトラップを解除する
             if (TurnManager.instance.TurnCount > _spawnTurn)
             {
-                _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
+                if (_card != null)
+                    _card.GetComponent<SetSoldier>().IsTrap = false;//トラップフラグを下げる
                 Debug.Log("罠破棄");
                 EndTask();
             }

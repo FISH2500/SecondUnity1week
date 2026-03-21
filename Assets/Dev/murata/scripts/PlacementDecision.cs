@@ -36,7 +36,7 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 		//_onClicked?.Invoke();
 		//GetComponent<Image>().color = new Color(Random.value, Random.value, Random.value);
 
-		SoundManager.Instance.PlaySE("OK"); //ともや追加
+		//SoundManager.Instance.PlaySE("OK"); //ともや追加
 
 		_mouse.enabled = false;
 

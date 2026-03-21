@@ -243,7 +243,6 @@ public class CPUBase : MonoBehaviour
 		}
 
 		//攻撃を受けたカードを表にする処理
-
         _battleManegar.Battle(playerCard, cpuCard);
 		StartCoroutine(ReturnMotion(cpuCard, cardOriginPos));
 	}

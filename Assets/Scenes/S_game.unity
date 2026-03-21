@@ -1338,6 +1338,8 @@ MonoBehaviour:
   _cpuBase: {fileID: 427349732}
   CurrentPlayer: 0
   TurnCount: 0
+  CPUTurnCount: 1
+  TurnCounter: 0
   UseItem: 0
   IsAction: 0
   UnlimitedItem: 0
@@ -1449,6 +1451,7 @@ MonoBehaviour:
   _backImage: {fileID: 0}
   _highlight: {fileID: 0}
   IsCPU: 1
+  _trap: {fileID: 0}
   _swapCard: {fileID: 427349729}
   _openCard: {fileID: 427349728}
   item_RedrawTarget: {fileID: 427349727}
@@ -1468,6 +1471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemDeck: {fileID: 2110631061}
   _myItems: 
+  _cpuArea: {fileID: 0}
+  _playerArea: {fileID: 0}
 --- !u!114 &427349732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3133,6 +3138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardSelect: {fileID: 1945733656}
+  _attackCanvas: {fileID: 0}
 --- !u!114 &1163753722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5093,6 +5099,8 @@ MonoBehaviour:
   _battleManegar: {fileID: 1945733654}
   _cpuArea: {fileID: 1904945652}
   _area: {fileID: 282771212}
+  cam: {fileID: 0}
+  _attackCanvas: {fileID: 0}
 --- !u!1 &1967267461
 GameObject:
   m_ObjectHideFlags: 0

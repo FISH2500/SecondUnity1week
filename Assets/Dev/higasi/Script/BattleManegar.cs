@@ -154,20 +154,22 @@ public class BattleManegar : MonoBehaviour
 		bool isTrapped = (TurnManager.instance.CurrentPlayer == 0 && solEnemy.IsTrap) ||
 						 (TurnManager.instance.CurrentPlayer == 1 && solPlayer.IsTrap);
 
-		if (isTrapped)
-		{
-			Debug.Log("罠発動！攻撃側が破壊されました");
-			if (TurnManager.instance.CurrentPlayer == 0) // プレイヤーが罠を踏んだ
-			{
-				ProcessDefeat(playerCard, isPlayerGeneral, false);
-			}
-			else // CPUが罠を踏んだ
-			{
-				ProcessVictory(enemyCard, isEnemyGeneral);
-			}
-		}
-		// --- 2. 通常の数値バトル (革命対応) ---
-		else
+        if (isTrapped)
+        {
+            Debug.Log("罠発動！攻撃側が破壊されました");
+            if (TurnManager.instance.CurrentPlayer == 0) // プレイヤーが罠を踏んだ
+            {
+                ProcessDefeat(playerCard, isPlayerGeneral, false);
+                TextManegar.instance.SetText("罠にかかってしまった...");
+            }
+            else // CPUが罠を踏んだ
+            {
+                ProcessVictory(enemyCard, isEnemyGeneral);
+                TextManegar.instance.SetText("相手が罠にかかった！");
+            }
+        }
+        // --- 2. 通常の数値バトル (革命対応) ---
+        else
 		{
 			// 革命フラグを取得
 			bool isRev = TurnManager.instance.Revolution;

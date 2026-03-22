@@ -12,23 +12,14 @@ public class TextManegar : MonoBehaviour
     [SerializeField]private Color _cpuColor;
 
     private TextMeshProUGUI _actionText;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake() 
     {
         instance = this;
         _actionText = GetComponent<TextMeshProUGUI>();
-    }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		_actionText.text = "";
+	}
 
     //•¶Žš‚Ì•\Ž¦
     public void SetText(string text) 

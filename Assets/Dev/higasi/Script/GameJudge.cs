@@ -51,4 +51,16 @@ public class GameJudge : MonoBehaviour
 			Instance = null;
 		}
 	}
+
+	public int ReturnMatchPoint(bool IsPlayer)
+	{
+		if (IsPlayer)
+		{
+			return PlayerWinCount;
+		}
+		else
+		{
+			return CPUWinCount;
+		}
+	}
 }

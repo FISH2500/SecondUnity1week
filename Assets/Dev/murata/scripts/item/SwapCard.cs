@@ -20,13 +20,27 @@ public class SwapCard : MonoBehaviour
 			bool playerHasNonGeneral = false;
 			foreach (var c in Area.Instance.CardObj)
 			{
-				if (c != null && !c.GetComponent<SetSoldier>().IsGeneral) { playerHasNonGeneral = true; break; }
+				if (c != null)
+				{
+					if (!c.GetComponent<SetSoldier>().IsGeneral)
+					{
+						playerHasNonGeneral = true;
+						break;
+					}
+				}
 			}
 
 			bool cpuHasNonGeneral = false;
 			foreach (var c in CPUArea.Instance.CardObject)
 			{
-				if (c != null && !c.GetComponent<SetSoldier>().IsGeneral) { cpuHasNonGeneral = true; break; }
+				if (c != null)
+				{
+					if (!c.GetComponent<SetSoldier>().IsGeneral)
+					{
+						cpuHasNonGeneral = true;
+						break;
+					}
+				}
 			}
 
 			if (!playerHasNonGeneral || !cpuHasNonGeneral)

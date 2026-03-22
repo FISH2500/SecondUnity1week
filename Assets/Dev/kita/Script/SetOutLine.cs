@@ -2,22 +2,10 @@ using UnityEngine;
 
 public class SetOutLine : MonoBehaviour
 {
-    public bool _isSetOutLine;//アウトラインをつけるかどうかのフラグ
+    public bool _isSetOutLine; //アウトラインをつけるかどうかのフラグ
 
     [SerializeField]
     Material _outLine;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //SetOutline();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //アウトラインをつける関数
     public void SetOutline(float thickness) 

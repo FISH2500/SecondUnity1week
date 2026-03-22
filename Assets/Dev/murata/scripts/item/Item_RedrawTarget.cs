@@ -9,6 +9,8 @@ public class Item_RedrawTarget : MonoBehaviour
 	private bool _isChoosingEnemyCard = false;
 	private bool _isAnimating = false;
 
+	private GameObject _lastHoveredCard = null;
+
 	private void Awake() => _camera = Camera.main;
 
 	public void StartRedraw()
@@ -27,24 +29,65 @@ public class Item_RedrawTarget : MonoBehaviour
 
 	void Update()
 	{
-		if (!_isChoosingEnemyCard || _isAnimating) return;
-
-		if (Input.GetMouseButtonDown(0))
+		if (!_isChoosingEnemyCard || _isAnimating)
 		{
-			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit))
+			// モード終了時などにアウトラインが残りっぱなしにならないよう掃除
+			ResetLastHover();
+			return;
+		}
+
+		Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+		if (Physics.Raycast(ray, out RaycastHit hit))
+		{
+			GameObject hitObj = hit.collider.gameObject;
+
+			// 相手のカード（Player2Card）に当たっているかチェック
+			if (hitObj.CompareTag("Player2Card"))
 			{
-				GameObject hitObj = hit.collider.gameObject;
-				if (hitObj.CompareTag("Player2Card"))
+				// 前回のカードと違うカードに乗ったら、前回のやつを消す
+				if (_lastHoveredCard != hitObj)
 				{
-					SetSoldier s = hitObj.GetComponent<SetSoldier>();
-					if (s != null && !s.IsGeneral)
+					ResetLastHover();
+
+					SetOutLine s = hitObj.GetComponent<SetOutLine>();
+					if (s != null)
 					{
-						StartCoroutine(AnimateRedraw(hitObj));
-						_isChoosingEnemyCard = false;
+						s.SetOutline(0.03f);
+						_lastHoveredCard = hitObj; // 今乗っているやつを保存
 					}
 				}
 			}
+			else
+			{
+				// Player2Card 以外のオブジェクト（地面など）に当たったら消す
+				ResetLastHover();
+			}
+		}
+		else
+		{
+			// 何にも当たっていないなら消す
+			ResetLastHover();
+		}
+
+		// --- クリック時の処理 ---
+		if (Input.GetMouseButtonDown(0) && _lastHoveredCard != null)
+		{
+			SetSoldier s = _lastHoveredCard.GetComponent<SetSoldier>();
+			if (s != null && !s.IsGeneral)
+			{
+				StartCoroutine(AnimateRedraw(_lastHoveredCard));
+				ResetLastHover(); // 決定したのでアウトラインを消す
+				_isChoosingEnemyCard = false;
+			}
+		}
+	}
+	private void ResetLastHover()
+	{
+		if (_lastHoveredCard != null)
+		{
+			SetOutLine s = _lastHoveredCard.GetComponent<SetOutLine>();
+			if (s != null) s.ReSetOutline();
+			_lastHoveredCard = null;
 		}
 	}
 

@@ -27,6 +27,12 @@ public class BattleManegar : MonoBehaviour
 	[SerializeField]
 	GameObject _loadCanvas;
 
+	[SerializeField]
+	private float _setGameEndUI;//ゲームの結果が出力されるまでの時間
+
+	[SerializeField]
+	private float _setTurnTime;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -38,11 +44,17 @@ public class BattleManegar : MonoBehaviour
     }
     public static BattleResult Result;
     public static bool EndGame = false;
+
+	public GameObject DefeatCrad;//敗北したカード
+
     bool _playerWin = false;
 
     IEnumerator GameEnd()
     {
-		int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
+
+        yield return new WaitForSeconds(_setGameEndUI);
+
+        int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
 
 		_winImage.gameObject.SetActive(_playerWin);
 		_loseImage.gameObject.SetActive(!_playerWin);
@@ -158,8 +170,9 @@ public class BattleManegar : MonoBehaviour
 	{
 		Result = BattleResult.Win;
 		_cpuArea.RemoveCPUArea(enemyCard);
-		Destroy(enemyCard,3.0f);
-		if (isEnemyGeneral)
+		Destroy(enemyCard,6.0f);
+        DefeatCrad = enemyCard;
+        if (isEnemyGeneral)
 		{
 			EndGame = true;
 			_playerWin = true;
@@ -172,7 +185,8 @@ public class BattleManegar : MonoBehaviour
 	{
 		Result = BattleResult.Lose;
 		_playerArea.RemoveArea(playerCard);
-		Destroy(playerCard,3.0f);
+		DefeatCrad = playerCard;
+		Destroy(playerCard,6.0f);
 		if (isPlayerGeneral)
 		{
 			EndGame = true;
@@ -218,7 +232,7 @@ public class BattleManegar : MonoBehaviour
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)//Playerなら演出がある為5秒待たせる
 		{
-			yield return new WaitForSeconds(5.0f);
+			yield return new WaitForSeconds(_setTurnTime);
 		}
 
         HandleTurnEnd();

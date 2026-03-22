@@ -238,7 +238,7 @@ public class CardSelect : MonoBehaviour
     {
         if (isBattle) 
         {
-            yield return new WaitForSeconds(3.0f);//ââèoÇÃÇΩÇﬂñﬂÇÈÇÃÇ…3ïbä‘ë“ÇΩÇπÇÈ
+            yield return new WaitForSeconds(5.5f);//ââèoÇÃÇΩÇﬂñﬂÇÈÇÃÇ…3ïbä‘ë“ÇΩÇπÇÈ
         }
 
         while (true)

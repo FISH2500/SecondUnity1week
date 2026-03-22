@@ -463,9 +463,10 @@ MonoBehaviour:
   _atkPosXOffset: 2.5
   _atkPosYOffset: 0.5
   _fadeOutImage: {fileID: 386994139}
-  _outSetTime: 2
-  _fadeOutSpeed: 0.5
+  _outSetTime: 1
+  _fadeOutSpeed: 0.3
   _fadeInSpeed: 0.2
+  _battleManegar: {fileID: 1945733654}
 --- !u!4 &140908766
 Transform:
   m_ObjectHideFlags: 0
@@ -5834,6 +5835,7 @@ MonoBehaviour:
   _drawCardNum: 3
   _drawCardPosition: {fileID: 1485462600}
   _drawMouse: {fileID: 1746757458}
+  _moveTime: 0.5
   _drawCountPlayer1: 0
 --- !u!114 &1746757460
 MonoBehaviour:
@@ -6711,6 +6713,9 @@ MonoBehaviour:
   _cpuBase: {fileID: 1081409389}
   _sceneName: menu
   _loadCanvas: {fileID: 6357732698999527679, guid: c8abdfaaf84811e4f8725c01a7067e58, type: 3}
+  _setGameEndUI: 3
+  _setTurnTime: 8
+  DefeatCrad: {fileID: 0}
 --- !u!4 &1945733655
 Transform:
   m_ObjectHideFlags: 0

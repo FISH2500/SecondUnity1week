@@ -22,6 +22,8 @@ public class SetSoldier : MonoBehaviour
 
     public bool IsTrap; // 罠カードかどうか
 
+	public bool IsBreak;//破壊されているかどうか
+
     [SerializeField]
     private SoldierData _soldierData;//兵士のデータベース
 
@@ -54,6 +56,12 @@ public class SetSoldier : MonoBehaviour
 
         _backImage.sprite = _soldierData.SoldierBack;//兵士の裏の画像をセット
     }
+
+	public void SetBreakSprite() 
+	{
+		_frontImage.sprite = _soldierData.BreakSprite;
+    }
+
 
     public void SetBack(int OwnerPlayer)//裏面にする
     {

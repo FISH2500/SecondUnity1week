@@ -3545,7 +3545,7 @@ MonoBehaviour:
   _itemDeck: {fileID: 1731830861}
   _camera: {fileID: 1095703153}
   _itemCanvas: {fileID: 1149186868}
-  _itemData: {fileID: 0}
+  _itemData: {fileID: 11400000, guid: 75eebdcf4f40f4d45b75aa7ab55c2ee0, type: 2}
   _myItems: []
 --- !u!4 &1288715051
 Transform:
@@ -5632,6 +5632,7 @@ MonoBehaviour:
   _playerArea: {fileID: 282771212}
   _cpuArea: {fileID: 1904945652}
   _cpuBase: {fileID: 1081409389}
+  _sceneName: 
 --- !u!4 &1945733655
 Transform:
   m_ObjectHideFlags: 0

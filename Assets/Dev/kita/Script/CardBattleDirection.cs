@@ -6,6 +6,8 @@ public class CardBattleDirection : MonoBehaviour
 {
     [SerializeField] private float _atkPosXOffset = 1.5f; // 攻撃側の位置を守備側からどれだけ左にずらすか
 
+    [SerializeField] private float _atkPosYOffset = 1.5f;//攻撃側の位置を守備側からどれだけ上にずらすか
+
     [SerializeField] private Image _fadeOutImage;//フェードアウトさせる画像
 
     [SerializeField] private float _outSetTime;//フェードアウトがセットされるまで
@@ -43,6 +45,8 @@ public class CardBattleDirection : MonoBehaviour
 
         defPos.x -= _atkPosXOffset;//守備側の少し左の位置を取得
 
+        defPos.y += _atkPosYOffset;//守備側の少し左の位置を取得
+
         Vector3 atkPos=defPos;//攻撃側の位置を取得
 
         attacker.transform.position=atkPos;//攻撃側の位置をセット
@@ -51,13 +55,20 @@ public class CardBattleDirection : MonoBehaviour
 
         //敗北カード位置にヒットエフェクトを出す
 
+
         //暗転させる
         _fadeOut = true;
-        
+
         //暗転している間にカードを壊れた状態に
+
+        //GameObject defeatCard=敗北カードの取得
+
+        //defeatCard.GetComponent<SetSoldier>().SetBreakSprite();破壊状態にする
+
 
         //オブジェクトを削除
 
+        //Destroy(defeatCard,2.0f);
 
     }
 

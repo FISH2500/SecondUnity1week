@@ -51,7 +51,7 @@ public class BattleManegar : MonoBehaviour
         Draw
     }
     public static BattleResult Result;
-    public static bool EndGame = false;
+    public bool EndGame = false;
 
 	public GameObject DefeatCrad;//îsñkÇµÇΩÉJÅ[Éh
 
@@ -67,17 +67,23 @@ public class BattleManegar : MonoBehaviour
 		_fadeImage.enabled = true;
 		float elapsed = 0f;
 
+		Color startColor = _fadeColor;
+		startColor.a = 0f;
+
+		Color targetColor = _fadeColor;
+
 		while (elapsed < _fadeTime)
 		{
 			elapsed += Time.deltaTime;
-			float a = Mathf.Clamp01(elapsed / _fadeTime);
 
-			Color c = _fadeColor;
-			c.a = a;
-			_fadeImage.color = c;
+			float t = Mathf.Clamp01(elapsed / _fadeTime);
+
+			_fadeImage.color = Color.Lerp(startColor, targetColor, t);
 
 			yield return null;
 		}
+
+		_fadeImage.color = targetColor;
 
 		_winImage.gameObject.SetActive(_playerWin);
 		_loseImage.gameObject.SetActive(!_playerWin);
@@ -110,9 +116,7 @@ public class BattleManegar : MonoBehaviour
 			{
 
 			}
-			GameObject judge = GameObject.Find("GameJudge");
 			Instantiate(_loadCanvas);
-			Destroy(judge);
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneName);
 			asyncLoad.allowSceneActivation = false;
 			yield return new WaitForSeconds(1.0f);
@@ -270,4 +274,20 @@ public class BattleManegar : MonoBehaviour
         HandleTurnEnd();
     }
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.B))
+		{
+			EndGame = true;
+			_playerWin = true;
+			StartCoroutine(GameEnd());
+		}
+
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			EndGame = true;
+			_playerWin = false;
+			StartCoroutine(GameEnd());
+		}
+	}
 }

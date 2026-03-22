@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameJudge : MonoBehaviour
@@ -62,5 +63,10 @@ public class GameJudge : MonoBehaviour
 		{
 			return CPUWinCount;
 		}
+	}
+
+	public bool PlayerWin()
+	{
+		return PlayerWinCount >= _gameWinCount;
 	}
 }

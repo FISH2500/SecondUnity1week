@@ -72,7 +72,7 @@ MonoBehaviour:
     CardArrangement: 0
     General: 0
   - CardNum: 9
-    CardSprite: {fileID: 21300000, guid: e79204f912a704c43a2c3ac21faa6323, type: 3}
+    CardSprite: {fileID: 21300000, guid: be34b9ba6671def4296aee041360a030, type: 3}
     CardPossession: 1
     CardBack: 0
     CardDie: 0

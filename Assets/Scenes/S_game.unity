@@ -887,6 +887,15 @@ MonoBehaviour:
   - Name: Command
     Clip: {fileID: 8300000, guid: 225018a05fbd8b34c9284bf79c3cc78c, type: 3}
     Volume: 0.3
+  - Name: BearTrap
+    Clip: {fileID: 8300000, guid: 067eb3f794085f54b8c0be220f4250e8, type: 3}
+    Volume: 0.3
+  - Name: BreakTrap
+    Clip: {fileID: 8300000, guid: 63d8c76ffc01bcf4a96581e7d24daffb, type: 3}
+    Volume: 0.3
+  - Name: Shot
+    Clip: {fileID: 8300000, guid: d5eb8df116d482d4f9115fb8f89a69f0, type: 3}
+    Volume: 0.3
   _bgmSource: {fileID: 214645711}
   _seSource: {fileID: 214645708}
 --- !u!82 &214645708

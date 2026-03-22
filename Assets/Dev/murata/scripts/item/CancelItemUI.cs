@@ -23,6 +23,7 @@ public class CancelItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
 	// ƒ}ƒEƒX‚ªæ‚Á‚½
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		SoundManager.Instance.PlaySE("Shot");
 		transform.localScale = _scale * 1.1f;
 	}
 

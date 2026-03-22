@@ -30,8 +30,9 @@ public class CancelImages : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
 
     // マウスが乗った時
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        transform.localScale = _scale * 1.1f;
+	{
+		SoundManager.Instance.PlaySE("Shot");
+		transform.localScale = _scale * 1.1f;
     }
 
     // マウスが離れた時

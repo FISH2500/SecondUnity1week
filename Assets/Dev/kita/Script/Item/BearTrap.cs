@@ -91,6 +91,7 @@ public class BearTrap : MonoBehaviour
             _trapInstance=Instantiate(_trapPrefab, trapPosition, Quaternion.identity);//トラップを生成
 
             _isCanTrapSet = false;//トラップ設置完了
+			SoundManager.Instance.PlaySE("BearTrap");
 			DispUI.instance.Disp(true);
       }
     }
@@ -118,8 +119,9 @@ public class BearTrap : MonoBehaviour
 
     //トラップ機能の終了
     void EndTask()
-    {
-        Destroy(_trapInstance);
+	{
+		SoundManager.Instance.PlaySE("BreakTrap");
+		Destroy(_trapInstance);
         Destroy(gameObject);
     }
 

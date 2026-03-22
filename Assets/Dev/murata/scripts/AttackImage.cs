@@ -27,6 +27,8 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 		}
 		TextManegar.instance.SetText("攻撃に使う札を選択してください");
 
+		SoundManager.Instance.PlaySE("Command");
+
 		//_actionButton.ActionButtonDown();//アクションボタンの関数を呼び出す
 
 		DispUI.instance.Disp(false);
@@ -39,6 +41,7 @@ public class AttackImage : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		SoundManager.Instance.PlaySE("Shot");
 		transform.localScale = _scale * 1.1f;
 	}
 

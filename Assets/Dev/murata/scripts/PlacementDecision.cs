@@ -53,6 +53,7 @@ public class PlacementDecision : MonoBehaviour, IPointerDownHandler, IPointerEnt
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		SoundManager.Instance.PlaySE("Shot");
 		transform.localScale = _scale * 1.1f;
 	}
 

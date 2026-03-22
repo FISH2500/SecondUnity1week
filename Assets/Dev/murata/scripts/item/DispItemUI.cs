@@ -17,12 +17,20 @@ public class DispItemUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
 
-		if (!TurnManager.instance.UseItem && PlayerItem.Instance.GetMyItems().Count > 0) _playerItem.SelectItem(true);
+		if (!TurnManager.instance.UseItem && PlayerItem.Instance.GetMyItems().Count > 0)
+		{
+			SoundManager.Instance.PlaySE("Command");
+			_playerItem.SelectItem(true);
+		}
 	}
 
 	// マウスが乗った時
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		if (!TurnManager.instance.UseItem && PlayerItem.Instance.GetMyItems().Count > 0)
+		{
+			SoundManager.Instance.PlaySE("Shot");
+		}
 		transform.localScale = _scale * 1.1f;
 	}
 

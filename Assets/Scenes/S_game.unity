@@ -881,6 +881,12 @@ MonoBehaviour:
   - Name: PutCard
     Clip: {fileID: 8300000, guid: 7869edc132f635548a77a03a37885b86, type: 3}
     Volume: 0.3
+  - Name: DrawCard
+    Clip: {fileID: 8300000, guid: 25d705031c63130489c2095550b2f8dc, type: 3}
+    Volume: 0.3
+  - Name: Command
+    Clip: {fileID: 8300000, guid: 225018a05fbd8b34c9284bf79c3cc78c, type: 3}
+    Volume: 0.3
   _bgmSource: {fileID: 214645711}
   _seSource: {fileID: 214645708}
 --- !u!82 &214645708
@@ -5834,6 +5840,7 @@ MonoBehaviour:
   _drawCardNum: 3
   _drawCardPosition: {fileID: 1485462600}
   _drawMouse: {fileID: 1746757458}
+  _moveTime: 0.5
   _drawCountPlayer1: 0
 --- !u!114 &1746757460
 MonoBehaviour:

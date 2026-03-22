@@ -99,6 +99,9 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 	// ƒ}ƒEƒX‚ªæ‚Á‚½
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		bool canDraw = (TurnManager.instance.CurrentPlayer == 0 && _drawCountPlayer1 < _drawCardNum) ||
+					   (TurnManager.instance.CurrentPlayer == 1 && _drawCountPlayer2 < _drawCardNum);
+		if (canDraw) SoundManager.Instance.PlaySE("Shot");
 		transform.localScale = _scale * 1.1f;
 	}
 

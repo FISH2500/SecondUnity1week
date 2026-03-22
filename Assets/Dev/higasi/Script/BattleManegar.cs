@@ -296,4 +296,10 @@ public class BattleManegar : MonoBehaviour
 
         HandleTurnEnd();
     }
+
+	private IEnumerator SoundWait(string soundName, float waitTime)
+	{
+		yield return new WaitForSeconds(waitTime);
+        SoundManager.Instance.PlaySE(soundName);
+    }
 }

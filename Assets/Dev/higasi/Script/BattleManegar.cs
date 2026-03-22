@@ -273,21 +273,4 @@ public class BattleManegar : MonoBehaviour
 
         HandleTurnEnd();
     }
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.B))
-		{
-			EndGame = true;
-			_playerWin = true;
-			StartCoroutine(GameEnd());
-		}
-
-		if (Input.GetKeyDown(KeyCode.N))
-		{
-			EndGame = true;
-			_playerWin = false;
-			StartCoroutine(GameEnd());
-		}
-	}
 }

@@ -16,6 +16,8 @@ public class CardBattleDirection : MonoBehaviour
 
     [SerializeField] private float _fadeInSpeed;
 
+    [SerializeField] private BattleManegar _battleManegar;
+
     bool _fadeOut = false;//フェードアウトのフラグ
 
     bool _fadeIn = false;//フェードインのフラグ
@@ -34,6 +36,7 @@ public class CardBattleDirection : MonoBehaviour
         }
         else if (_fadeIn) 
         {
+
             StartCoroutine(SetFadeIn());
         }
     }
@@ -60,15 +63,10 @@ public class CardBattleDirection : MonoBehaviour
         _fadeOut = true;
 
         //暗転している間にカードを壊れた状態に
-
-        //GameObject defeatCard=敗北カードの取得
-
-        //defeatCard.GetComponent<SetSoldier>().SetBreakSprite();破壊状態にする
-
-
+        StartCoroutine(SetBreakSprite());
         //オブジェクトを削除
 
-        //Destroy(defeatCard,2.0f);
+        //Destroy(defeatCard,10.0f);
 
     }
 
@@ -108,6 +106,16 @@ public class CardBattleDirection : MonoBehaviour
         }
 
         _fadeIn = false;
+    }
+
+    private IEnumerator SetBreakSprite() 
+    {
+
+        yield return new WaitForSeconds(3.5f);
+
+        GameObject defeatCard = _battleManegar.DefeatCrad;
+
+        defeatCard.GetComponent<SetSoldier>().SetBreakSprite();
     }
 
 }

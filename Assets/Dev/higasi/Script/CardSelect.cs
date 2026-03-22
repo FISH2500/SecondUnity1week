@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class CardSelect : MonoBehaviour
 {
@@ -69,7 +67,7 @@ public class CardSelect : MonoBehaviour
                     _player1Card = hitObj;
                     _cardOriginPos = hitObj.transform.position;
 
-					soldier.RotateSetFront();
+					//soldier.RotateSetFront();
 
 					TextManegar.instance.SetText("UŒ‚‘ÎÛ‚ÌD‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢");
 
@@ -188,7 +186,7 @@ public class CardSelect : MonoBehaviour
             else
             {
                 StartCoroutine(ReturnCard(_player1Card,false));
-                _player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+                //_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
 
                 _player1Selected = false;
                 _player2Selected = false;

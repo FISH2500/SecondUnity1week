@@ -112,6 +112,8 @@ public class Item_RedrawTarget : MonoBehaviour
 			// 相手のカードとして裏向きにする
 			oldS.SetBack(oldS.OwnerPlayer);
 
+			oldS.SetSprite();
+
 			Destroy(newCardTemp);
 			Debug.Log($"{oldCard.name} の中身を書き換えました");
 		}

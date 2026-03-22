@@ -6727,7 +6727,7 @@ MonoBehaviour:
   _cpuArea: {fileID: 1904945652}
   _cpuBase: {fileID: 1081409389}
   _sceneName: menu
-  _loadCanvas: {fileID: 6357732698999527679, guid: c8abdfaaf84811e4f8725c01a7067e58, type: 3}
+  _loadCanvas: {fileID: 8286306446043106187, guid: 17fbfaf84413eda479ddf5f86e0e0340, type: 3}
   _setGameEndUI: 3
   _setTurnTime: 8
   DefeatCrad: {fileID: 0}

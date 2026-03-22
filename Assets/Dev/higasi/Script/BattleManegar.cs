@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -33,6 +32,15 @@ public class BattleManegar : MonoBehaviour
 	[SerializeField]
 	private float _setTurnTime;
 
+	[SerializeField]
+	private Image _fadeImage;
+
+	[SerializeField]
+	private Color _fadeColor;
+
+	[SerializeField]
+	private float _fadeTime;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -56,6 +64,21 @@ public class BattleManegar : MonoBehaviour
 
         int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
 
+		_fadeImage.enabled = true;
+		float elapsed = 0f;
+
+		while (elapsed < _fadeTime)
+		{
+			elapsed += Time.deltaTime;
+			float a = Mathf.Clamp01(elapsed / _fadeTime);
+
+			Color c = _fadeColor;
+			c.a = a;
+			_fadeImage.color = c;
+
+			yield return null;
+		}
+
 		_winImage.gameObject.SetActive(_playerWin);
 		_loseImage.gameObject.SetActive(!_playerWin);
 
@@ -70,7 +93,7 @@ public class BattleManegar : MonoBehaviour
 			EndGame = false;
 			Instantiate(_loadCanvas);
 			// 現在のシーンをリロード
-			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("S_game");
 			asyncLoad.allowSceneActivation = false;
 
 			yield return new WaitForSeconds(0.7f);

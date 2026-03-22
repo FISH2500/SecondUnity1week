@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -21,9 +22,17 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
 
-		Instantiate( _loadCanvas );
+		StartCoroutine(GameStart());
+	}
 
-		SceneManager.LoadSceneAsync(_nextSceneName);
+	IEnumerator GameStart()
+	{
+		Instantiate(_loadCanvas);
+
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_nextSceneName);
+		asyncLoad.allowSceneActivation = false;
+		yield return new WaitForSeconds(1.0f);
+		asyncLoad.allowSceneActivation = true;
 	}
 
 	// マウスが乗った時

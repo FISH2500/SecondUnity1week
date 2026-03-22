@@ -11,22 +11,19 @@ public class GameJudge : MonoBehaviour
     static bool _oneTime;
     private void Awake()
     {
-        if (_oneTime)
-            Destroy(gameObject);
-        Instance = this;
-        DontDestroyOnLoad(this);
-        _oneTime = true;
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+		if (_oneTime)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		else
+		{
+			PlayerWinCount = 0;
+			CPUWinCount = 0;
+			Instance = this;
+			DontDestroyOnLoad(this);
+			_oneTime = true;
+		}
     }
 
     public int Judge(bool playerWin)
@@ -45,4 +42,13 @@ public class GameJudge : MonoBehaviour
             return 2;
         return 0;
     }
+
+	private void OnDestroy()
+	{
+		if (Instance == this)
+		{
+			_oneTime = false;
+			Instance = null;
+		}
+	}
 }

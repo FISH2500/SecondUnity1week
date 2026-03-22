@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,7 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 {
 	[Header("シーン遷移の設定")]
 	[SerializeField] private string _nextSceneName;   // 遷移先シーン名
+	[SerializeField] private GameObject _loadCanvas;
 
 	private Vector3 _scale;
 
@@ -20,7 +22,17 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
 
-		SceneManager.LoadSceneAsync(_nextSceneName);
+		StartCoroutine(GameStart());
+	}
+
+	IEnumerator GameStart()
+	{
+		Instantiate(_loadCanvas);
+
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_nextSceneName);
+		asyncLoad.allowSceneActivation = false;
+		yield return new WaitForSeconds(1.0f);
+		asyncLoad.allowSceneActivation = true;
 	}
 
 	// マウスが乗った時

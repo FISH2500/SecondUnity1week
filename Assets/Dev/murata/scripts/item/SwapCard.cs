@@ -17,11 +17,39 @@ public class SwapCard : MonoBehaviour
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
-			if (Area.Instance.CardNum <= 1 || CPUArea.Instance.CardNum <= 1)
+			bool playerHasNonGeneral = false;
+			foreach (var c in Area.Instance.CardObj)
 			{
+				if (c != null)
+				{
+					if (!c.GetComponent<SetSoldier>().IsGeneral)
+					{
+						playerHasNonGeneral = true;
+						break;
+					}
+				}
+			}
+
+			bool cpuHasNonGeneral = false;
+			foreach (var c in CPUArea.Instance.CardObject)
+			{
+				if (c != null)
+				{
+					if (!c.GetComponent<SetSoldier>().IsGeneral)
+					{
+						cpuHasNonGeneral = true;
+						break;
+					}
+				}
+			}
+
+			if (!playerHasNonGeneral || !cpuHasNonGeneral)
+			{
+				TextManegar.instance.SetText("交換可能なカードが足りないためアイテムを使用できません。");
 				DispUI.instance.Disp(true);
 				return;
 			}
+
 			_isSwapping = true;
 			_firstSelected = null;
 			DispUI.instance.Disp(false);

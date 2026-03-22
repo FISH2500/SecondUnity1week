@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,6 +24,9 @@ public class BattleManegar : MonoBehaviour
 	[SerializeField]
 	string _sceneName;
 
+	[SerializeField]
+	GameObject _loadCanvas;
+
     int PlayerCardPower;
     int EnemyCardPower;
 
@@ -39,27 +40,50 @@ public class BattleManegar : MonoBehaviour
     public static bool EndGame = false;
     bool _playerWin = false;
 
-    void Update()
+    IEnumerator GameEnd()
     {
 		int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
-		if (EndGame)
+
+		_winImage.gameObject.SetActive(_playerWin);
+		_loseImage.gameObject.SetActive(!_playerWin);
+
+		// 3秒待機
+		yield return new WaitForSeconds(3.0f);
+
+		gameJudgeIndex = GameJudge.Instance.Judge(_playerWin);
+
+		// 続行の場合
+		if (gameJudgeIndex == 0)
 		{
-			_winImage.gameObject.SetActive(_playerWin);
-			_loseImage.gameObject.SetActive(!_playerWin);
-			gameJudgeIndex = GameJudge.Instance.Judge(_playerWin);
-			if (gameJudgeIndex == 0)
-			{
-				EndGame = false;
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-			}
-            Debug.Log("ゲーム終了");
+			EndGame = false;
+			Instantiate(_loadCanvas);
+			// 現在のシーンをリロード
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+			asyncLoad.allowSceneActivation = false;
+
+			yield return new WaitForSeconds(0.7f);
+
+			asyncLoad.allowSceneActivation = true;
 		}
 		else
 		{
-			_winImage.gameObject.SetActive(false);
-			_loseImage.gameObject.SetActive(false);
+			if (gameJudgeIndex == 1)
+			{
+
+			}
+			else
+			{
+
+			}
+			GameObject judge = GameObject.Find("GameJudge");
+			Instantiate(_loadCanvas);
+			Destroy(judge);
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneName);
+			asyncLoad.allowSceneActivation = false;
+			yield return new WaitForSeconds(1.0f);
+			asyncLoad.allowSceneActivation = true;
 		}
-    }
+	}
 
 	public void Battle(GameObject playerCard, GameObject enemyCard)
 	{
@@ -139,6 +163,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = true;
+			StartCoroutine(GameEnd());
 		}
 	}
 
@@ -152,6 +177,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = playerWinsGame;
+			StartCoroutine(GameEnd());
 		}
 	}
 
@@ -168,6 +194,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = eGen; // 両方落ちた場合や大将が落ちた場合の判定
+			StartCoroutine(GameEnd());
 		}
 	}
 

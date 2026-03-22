@@ -115,6 +115,7 @@ public class CardBattleDirection : MonoBehaviour
 
         GameObject defeatCard = _battleManegar.DefeatCrad;
 
+        if (defeatCard != null ) 
         defeatCard.GetComponent<SetSoldier>().SetBreakSprite();
     }
 

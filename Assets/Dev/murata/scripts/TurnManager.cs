@@ -52,6 +52,10 @@ public class TurnManager : MonoBehaviour
 		DispUI.instance.Disp(CurrentPlayer == 0);
 
 		Debug.Log($"プレイヤー{CurrentPlayer} のターン");
+		if (CurrentPlayer == 0)
+			TextManegar.instance.SetText("プレイヤーの番");
+		else
+			TextManegar.instance.SetText("CPUの番");
 	}
 
 	public void SetTurn(int player)

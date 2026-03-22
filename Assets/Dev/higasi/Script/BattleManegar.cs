@@ -193,8 +193,11 @@ public class BattleManegar : MonoBehaviour
 	{
 		Result = BattleResult.Win;
 		_cpuArea.RemoveCPUArea(enemyCard);
-		Destroy(enemyCard,6.0f);
-        DefeatCrad = enemyCard;
+		if (TurnManager.instance.CurrentPlayer == 0)
+			Destroy(enemyCard,6.0f);
+		else 
+			Destroy(enemyCard);
+			DefeatCrad = enemyCard;
         if (isEnemyGeneral)
 		{
 			EndGame = true;
@@ -209,7 +212,10 @@ public class BattleManegar : MonoBehaviour
 		Result = BattleResult.Lose;
 		_playerArea.RemoveArea(playerCard);
 		DefeatCrad = playerCard;
-		Destroy(playerCard,6.0f);
+		if (TurnManager.instance.CurrentPlayer == 0)
+			Destroy(playerCard,6.0f);
+		else 
+			Destroy(playerCard);
 		if (isPlayerGeneral)
 		{
 			EndGame = true;
@@ -238,6 +244,8 @@ public class BattleManegar : MonoBehaviour
 	// ターン終了の管理
 	private void HandleTurnEnd()
 	{
+		if (EndGame) return;
+
 		if (TurnManager.instance.DoubleAttackSimasuka())
 		{
 			TurnManager.instance.IsDraw = true;
@@ -255,6 +263,7 @@ public class BattleManegar : MonoBehaviour
 	{
 		if (TurnManager.instance.CurrentPlayer == 0)//Playerなら演出がある為5秒待たせる
 		{
+			Debug.Log("waitooooooo");
 			yield return new WaitForSeconds(_setTurnTime);
 		}
 

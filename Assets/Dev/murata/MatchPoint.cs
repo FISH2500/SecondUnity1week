@@ -10,7 +10,7 @@ public class MatchPoint : MonoBehaviour
     {
 		int win = GameJudge.Instance.ReturnMatchPoint(_isPlayer);
 
-		TextMeshPro tm = GetComponent<TextMeshPro>();
+		TextMeshProUGUI tm = GetComponent<TextMeshProUGUI>();
 
 		if (_isPlayer)
 		{

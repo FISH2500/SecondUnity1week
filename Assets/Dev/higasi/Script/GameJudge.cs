@@ -8,7 +8,7 @@ public class GameJudge : MonoBehaviour
     public static GameJudge Instance;
     static int PlayerWinCount;
     static int CPUWinCount;
-    static bool _oneTime;
+    static bool _oneTime = false;
     private void Awake()
     {
 		if (_oneTime)

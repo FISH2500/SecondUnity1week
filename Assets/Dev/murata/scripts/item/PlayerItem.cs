@@ -95,7 +95,7 @@ public class PlayerItem : MonoBehaviour
 
 		Vector3 pos = item.transform.position;
 
-		pos.y += 10;
+		pos.y -= 30;
 
 		item.transform.position = pos;
 
@@ -142,7 +142,7 @@ public class PlayerItem : MonoBehaviour
 			{
 				Vector3 pos = item.transform.position;
 
-				pos.y += 10;
+				pos.y -= 30;
 
 				item.transform.position = pos;
 			}
@@ -155,7 +155,7 @@ public class PlayerItem : MonoBehaviour
 		{
 			Vector3 pos = item.transform.position;
 
-			pos.y += 10;
+			pos.y -= 30;
 
 			item.transform.position = pos;
 		}

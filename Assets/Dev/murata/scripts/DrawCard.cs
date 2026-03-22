@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -10,6 +10,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	[SerializeField] private Transform _drawCardPosition;
 	[SerializeField] private DrawMouse _drawMouse;
+
+	[SerializeField] private float _moveTime = 0.5f; // 移動にかかる時間
 
 	private Vector3 _scale;
 
@@ -26,55 +28,72 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Debug.Log($"{gameObject.name} がクリックされました");
-
 		if (TurnManager.instance.IsDraw) return;
 
-		TurnManager.instance.IsDraw = true;
+		// ドロー可能かチェック
+		bool canDraw = (TurnManager.instance.CurrentPlayer == 0 && _drawCountPlayer1 < _drawCardNum) ||
+					   (TurnManager.instance.CurrentPlayer == 1 && _drawCountPlayer2 < _drawCardNum);
 
-		if (TurnManager.instance.CurrentPlayer == 0)
+		if (canDraw)
 		{
-			if (_drawCountPlayer1 < _drawCardNum)
+			TurnManager.instance.IsDraw = true;
+
+			// カードを生成（Deckの位置で生成される想定）
+			GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
+
+			// 音
+			SoundManager.Instance.PlaySE("DrawCard");
+
+			// 移動演出を開始
+			StartCoroutine(MoveToDrawPosition(obj));
+
+			// カウント等の更新
+			if (TurnManager.instance.CurrentPlayer == 0)
 			{
-				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer1++;
-
-                TextManegar.instance.SetText("札を引きました");
-                Debug.Log($"ドローしました");
-
-				TurnManager.instance.IsAction = true;
-				_drawMouse.enabled = true;
-				_drawMouse.DrawObject = obj;
-
-				SetSoldier sol = obj.GetComponent<SetSoldier>();
-
-				sol.SetBack(0);
-
-				//TurnManager.instance.ChangeTurn();
+				TextManegar.instance.SetText("札を引きました");
 			}
-		}
-		else
-		{
-			if (_drawCountPlayer2 < _drawCardNum)
+			else
 			{
-				GameObject obj = _deck.DrawCard(TurnManager.instance.CurrentPlayer);
-				obj.transform.position = _drawCardPosition.position;
 				_drawCountPlayer2++;
-				
-				Debug.Log($"ドローしました");
-
-				TurnManager.instance.IsAction = true;
-				_drawMouse.enabled = true;
-				_drawMouse.DrawObject = obj;
-
-				SetSoldier sol = obj.GetComponent<SetSoldier>();
-
-				sol.SetBack(1);
-
-				//TurnManager.instance.ChangeTurn();
 			}
 		}
+	}
+
+	// カードをスライド移動させるコルーチン
+	private IEnumerator MoveToDrawPosition(GameObject card)
+	{
+		Vector3 startPos = _deck.transform.position; // 山札の位置
+		Vector3 endPos = _drawCardPosition.position; // 目的地
+
+		float elapsed = 0;
+
+		TurnManager.instance.IsAction = true;
+
+		// 最初は裏側に
+		SetSoldier sol = card.GetComponent<SetSoldier>();
+		sol.SetBack(TurnManager.instance.CurrentPlayer);
+		sol.OwnerPlayer = TurnManager.instance.CurrentPlayer;
+
+		while (elapsed < _moveTime)
+		{
+			elapsed += Time.deltaTime;
+			float t = elapsed / _moveTime;
+
+			t = Mathf.SmoothStep(0, 1, t);
+
+			card.transform.position = Vector3.Lerp(startPos, endPos, t);
+			yield return null;
+		}
+
+		// 最後に位置を完全に固定
+		card.transform.position = endPos;
+
+		// 移動が終わってから、マウス追従などの処理を有効にする
+		_drawMouse.enabled = true;
+		_drawMouse.DrawObject = card;
+
+		Debug.Log("ドロー移動完了");
 	}
 
 	// マウスが乗った時
@@ -110,6 +129,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				SetSoldier sol = obj.GetComponent<SetSoldier>();
 
 				sol.SetBack(0);
+				sol.OwnerPlayer = 0;
 
 				return obj;
 			}
@@ -131,6 +151,7 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 				SetSoldier sol = obj.GetComponent<SetSoldier>();
 
 				sol.SetBack(1);
+				sol.OwnerPlayer = 1;
 
 				return obj;
 			}

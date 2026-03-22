@@ -165,17 +165,14 @@ public class CardSelect : MonoBehaviour
             if (_player1Selected && _player2Selected)
             {
                 //カードの演出
-                //_cardBattleDirection.SetBattleDirection(_player1Card, _player2Card);
+                
                 if (BattleStart())
                 {
-                    if (_player2Card.GetComponent<SetSoldier>().IsGeneral)
-                    {
-                        // 大将を選択した場合はすぐ戻す
-                        StartCoroutine(ReturnCard(_player1Card, false));
-                    }
-                    else
+
+                    if(_player2Card != null)
                     {
                         // 通常バトルは演出後に戻す
+                        _cardBattleDirection.SetBattleDirection(_player1Card, _player2Card);
                         StartCoroutine(ReturnCard(_player1Card, true));
                     }
 
@@ -213,7 +210,8 @@ public class CardSelect : MonoBehaviour
 			Debug.Log("大将が選択されました。残り枚数: " + _cpuArea.CardNum);
 			if (_cpuArea.CardNum >= 2) // 大将以外のカードが残っていたら無効
 			{
-				_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+                StartCoroutine(ReturnCard(_player1Card, false));
+                _player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
 
 				_player1Selected = false;
 				_player2Selected = false;

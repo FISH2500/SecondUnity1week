@@ -189,8 +189,10 @@ public class BattleManegar : MonoBehaviour
 
     private IEnumerator TurnChange(GameObject moveCard) 
 	{
-		yield return new WaitForSeconds(5.0f);
-
+		if (TurnManager.instance.CurrentPlayer == 0)//Player‚È‚ç‰‰o‚ª‚ ‚éˆ×5•b‘Ò‚½‚¹‚é
+		{
+			yield return new WaitForSeconds(5.0f);
+		}
 
         HandleTurnEnd();
     }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerItem : MonoBehaviour
 {
@@ -60,6 +59,8 @@ public class PlayerItem : MonoBehaviour
 				}
 
 				UsingItem = hit.collider.gameObject;
+
+				SoundManager.Instance.PlaySE("Shot");
 
 				// ‚±‚±‚É‹­’²•\¦‚³‚¹‚éˆ—‚ğ‘‚­
 				UsingItem.GetComponent<ItemBase>().Highlight(true);

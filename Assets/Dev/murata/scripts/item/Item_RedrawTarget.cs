@@ -50,7 +50,8 @@ public class Item_RedrawTarget : MonoBehaviour
 					ResetLastHover();
 
 					SetOutLine s = hitObj.GetComponent<SetOutLine>();
-					if (s != null)
+					SetSoldier sol = hitObj.GetComponent<SetSoldier>();
+					if (s != null && !sol.IsGeneral)
 					{
 						s.SetOutline(0.03f);
 						_lastHoveredCard = hitObj; // 今乗っているやつを保存

@@ -15,32 +15,42 @@ MonoBehaviour:
   Back: {fileID: -2065550583, guid: bdb0dd1eb833a9c47bf96b831e13f24b, type: 3}
   itemDatas:
   - ID: 1
+    Name: 
     ExplanatoryText: "\u5927\u5C06\u4EE5\u5916\u306E\u30AB\u30FC\u30C9\u3092\u88CF\u306B\u3057\u3066\u3001\u30B7\u30E3\u30C3\u30D5\u30EB\u3059\u308B"
     Front: {fileID: 21300000, guid: 03129cca0974e6a46a621faa308ae467, type: 3}
   - ID: 2
+    Name: 
     ExplanatoryText: "\u9078\u3093\u3060\u81EA\u5206\u306E\u30AB\u30FC\u30C9\u306B\u7F60\u3092\u5F35\u308B"
     Front: {fileID: 21300000, guid: b156180693a99334d9f25d15e80b3ffd, type: 3}
   - ID: 3
+    Name: 
     ExplanatoryText: "\u76F8\u624B\u306B\u8868\u306B\u3055\u305B\u308B\u30AB\u30FC\u30C9\u3092\u9078\u3070\u305B\u308B"
     Front: {fileID: 21300000, guid: cca7d8ba5d75c764ab066a88e0b2220f, type: 3}
   - ID: 4
+    Name: 
     ExplanatoryText: "\u30AB\u30FC\u30C9\u306E\u5F15\u3051\u308B\u679A\u6570\u3092+1\u3059\u308B"
     Front: {fileID: 21300000, guid: 9b3e69123e00f4e4c882dbb7eec77795, type: 3}
   - ID: 5
-    ExplanatoryText: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\u30AB\u30FC\u30C9\u306E\u5F37\u3055\u3092\u9006\u8EE2\u3055\u305B\u308B"
+    Name: 
+    ExplanatoryText: "\u3053\u306E\u756A\u306E\u307F\u30AB\u30FC\u30C9\u306E\u5F37\u3055\u3092\u9006\u8EE2\u3055\u305B\u308B"
     Front: {fileID: 21300000, guid: b4565d2d2c578464f978a913df1a4d4c, type: 3}
   - ID: 6
+    Name: 
     ExplanatoryText: "1\u679A\u3060\u3051\u76F8\u624B\u306E\u30AB\u30FC\u30C9\u3068\u81EA\u5206\u306E\u30AB\u30FC\u30C9\u3092\u4EA4\u63DB\u3059\u308B"
     Front: {fileID: 21300000, guid: 46ad52c485294104d9c0ef3e38c0e410, type: 3}
   - ID: 7
+    Name: 
     ExplanatoryText: "\u6570\u5024\u52DD\u8CA0\u306B\u52DD\u3064\u3068\u3001\u3082\u3046\u4E00\u56DE\u653B\u6483\u3067\u304D\u308B"
     Front: {fileID: 21300000, guid: 0ca8cf9e48f2f994a9ff820100265127, type: 3}
   - ID: 8
+    Name: 
     ExplanatoryText: "1\u679A\u3060\u3051\u76F8\u624B\u306E\u30A2\u30A4\u30C6\u30E0\u30AB\u30FC\u30C9\u3068\u81EA\u5206\u306E\u3092\u4EA4\u63DB\u3059\u308B"
     Front: {fileID: 21300000, guid: a86f640796aa0784594c1d187db1f0fa, type: 3}
   - ID: 9
-    ExplanatoryText: "\u3053\u306E\u30BF\u30FC\u30F3\u4E2D\u3001\u30A2\u30A4\u30C6\u30E0\u306E\u4F7F\u7528\u5236\u9650\u304C\u306A\u304F\u306A\u308B"
+    Name: 
+    ExplanatoryText: "\u3053\u306E\u756A\u3001\u30A2\u30A4\u30C6\u30E0\u306E\u4F7F\u7528\u5236\u9650\u304C\u306A\u304F\u306A\u308B"
     Front: {fileID: 21300000, guid: 27bd9c6953ccb99438f076f457838d95, type: 3}
   - ID: 10
+    Name: 
     ExplanatoryText: "\u76F8\u624B\u306E\u30AB\u30FC\u30C9\u3092\u4E00\u679A\u9078\u3093\u3067\u3001\u30AB\u30FC\u30C9\u3092\u5F15\u304D\u76F4\u3055\u305B\u308B"
     Front: {fileID: 21300000, guid: ac2f54a1ba7755544bab670a3c917e24, type: 3}

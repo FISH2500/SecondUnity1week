@@ -26,12 +26,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/pause.unity
     guid: 84d5e3fb35193a94c91c892b3abf9fcb
-  - enabled: 0
-    path: Assets/Scenes/result.unity
-    guid: fee77bdbaf3ae5a458d3f60c3b53608d
   - enabled: 1
     path: Assets/Scenes/S_game.unity
     guid: db72537ba0b9df84abd3384cb185bd96
+  - enabled: 1
+    path: Assets/Scenes/result.unity
+    guid: fee77bdbaf3ae5a458d3f60c3b53608d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

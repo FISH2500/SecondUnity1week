@@ -6939,7 +6939,7 @@ MonoBehaviour:
   _playerArea: {fileID: 282771212}
   _cpuArea: {fileID: 1904945652}
   _cpuBase: {fileID: 1081409389}
-  _sceneName: menu
+  _sceneName: result
   _loadCanvas: {fileID: 8286306446043106187, guid: 17fbfaf84413eda479ddf5f86e0e0340, type: 3}
   _setGameEndUI: 3
   _setTurnTime: 8

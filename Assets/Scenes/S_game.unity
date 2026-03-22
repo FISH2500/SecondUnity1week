@@ -899,22 +899,19 @@ MonoBehaviour:
     Volume: 0.16
   - Name: battleLose
     Clip: {fileID: 8300000, guid: 3609af08390640b40ac684ffe77fdfd6, type: 3}
-    Volume: 0.16
+    Volume: 1
   - Name: battleWin
     Clip: {fileID: 8300000, guid: 482698cd33dcbba43a7027d28f49cf51, type: 3}
-    Volume: 0.16
+    Volume: 1
   - Name: tear
     Clip: {fileID: 8300000, guid: 3cb837c5c3126a446b1abe871e010037, type: 3}
-    Volume: 0.16
+    Volume: 1
   - Name: gameLose
     Clip: {fileID: 8300000, guid: 3cb837c5c3126a446b1abe871e010037, type: 3}
-    Volume: 0.16
+    Volume: 1
   - Name: gameWin
     Clip: {fileID: 8300000, guid: f7f5797cd4341fb47a5c7a97e818b9ff, type: 3}
-    Volume: 0.16
-  - Name: gameWin
-    Clip: {fileID: 8300000, guid: f7f5797cd4341fb47a5c7a97e818b9ff, type: 3}
-    Volume: 0.16
+    Volume: 1
   _bgmSource: {fileID: 214645711}
   _seSource: {fileID: 214645708}
 --- !u!82 &214645708

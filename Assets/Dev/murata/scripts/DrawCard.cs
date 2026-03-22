@@ -44,6 +44,8 @@ public class DrawCard : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 			// ‰¹
 			SoundManager.Instance.PlaySE("DrawCard");
 
+			DispUI.instance.Disp(false);
+
 			// ˆÚ“®‰‰o‚ğŠJn
 			StartCoroutine(MoveToDrawPosition(obj));
 

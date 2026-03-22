@@ -15,7 +15,7 @@ MonoBehaviour:
   Back: {fileID: -2065550583, guid: bdb0dd1eb833a9c47bf96b831e13f24b, type: 3}
   itemDatas:
   - ID: 1
-    Name: "\u672D\u306E\u64B9\u62CC"
+    Name: "\u672D\u4E4B\u64B9\u62CC"
     ExplanatoryText: "\u5927\u5C06\u4EE5\u5916\u306E\u672D\u3092\u88CF\u306B\u3057\u3066\u3001\u64B9\u62CC\u3059\u308B"
     Front: {fileID: 21300000, guid: 03129cca0974e6a46a621faa308ae467, type: 3}
   - ID: 2
@@ -51,6 +51,6 @@ MonoBehaviour:
     ExplanatoryText: "\u3053\u306E\u756A\u3001\u7279\u6B8A\u672D\u306E\u4F7F\u7528\u5236\u9650\u304C\u306A\u304F\u306A\u308B"
     Front: {fileID: 21300000, guid: 27bd9c6953ccb99438f076f457838d95, type: 3}
   - ID: 10
-    Name: "\u672D\u306E\u5F15\u304D\u76F4\u3057"
+    Name: "\u672D\u4E4B\u518D\u7DE8\u6210"
     ExplanatoryText: "\u76F8\u624B\u306E\u30AB\u30FC\u30C9\u3092\u4E00\u679A\u9078\u3093\u3067\u3001\u672D\u3092\u5F15\u304D\u76F4\u3055\u305B\u308B"
     Front: {fileID: 21300000, guid: ac2f54a1ba7755544bab670a3c917e24, type: 3}

@@ -7,6 +7,7 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 {
 	[Header("シーン遷移の設定")]
 	[SerializeField] private string _nextSceneName;   // 遷移先シーン名
+	[SerializeField] private GameObject _loadCanvas;
 
 	private Vector3 _scale;
 
@@ -19,6 +20,8 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log($"{gameObject.name} がクリックされました");
+
+		Instantiate( _loadCanvas );
 
 		SceneManager.LoadSceneAsync(_nextSceneName);
 	}

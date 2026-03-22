@@ -635,6 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextSceneName: S_game
+  _loadCanvas: {fileID: 6357732698999527679, guid: c8abdfaaf84811e4f8725c01a7067e58, type: 3}
 --- !u!1 &602778882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,15 +1209,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _confettiSprites:
+  - {fileID: 21300000, guid: 331e7f128f9f04345bc035a08c383eda, type: 3}
+  - {fileID: 21300000, guid: cc79f32be314ff3429abe718c53f986b, type: 3}
   - {fileID: 21300000, guid: a508825480e137947b4ebe876cc7af5f, type: 3}
+  - {fileID: 21300000, guid: 6be163fa2eba38048be15e2437024f4f, type: 3}
   - {fileID: 21300000, guid: 8d37ea7650d3ca848976624ccb748099, type: 3}
+  - {fileID: 21300000, guid: bbdb236b10cf2ea44ac47e53e35b0556, type: 3}
   - {fileID: 21300000, guid: 7b9edb6f22385394eacfa6a154352e9c, type: 3}
   - {fileID: 21300000, guid: 166fc9be3b2523e4db0b04ba11886ca5, type: 3}
+  - {fileID: 21300000, guid: 628b38c2720ade34495af55bcf28031c, type: 3}
   - {fileID: 21300000, guid: 6b613b9869abb944ba98731dfedc31dc, type: 3}
+  - {fileID: 21300000, guid: a193eb9e34a40ef45a13abac1930019c, type: 3}
   - {fileID: 21300000, guid: ee71feb04eaed5a449a0b859fffc6f1e, type: 3}
   - {fileID: 21300000, guid: 20718802e55d64147a2add43681506be, type: 3}
   - {fileID: 21300000, guid: 7a6c3409437eaed4dad1e78638138d81, type: 3}
   - {fileID: 21300000, guid: 7896c1718afae224fbadec72f192750e, type: 3}
+  - {fileID: 21300000, guid: fe045223197573f429a7d450371e4bae, type: 3}
+  - {fileID: 21300000, guid: 67e6fa1a951c9d145b360dff1f4d18d8, type: 3}
+  - {fileID: 21300000, guid: 8b26eaaedb9fd23429d19b0ff27b31aa, type: 3}
+  - {fileID: 21300000, guid: 57d9dc77eba3029468b0d9cd701046b9, type: 3}
+  - {fileID: 21300000, guid: 03ad5b49ea180a148a58e7db595bddd5, type: 3}
+  - {fileID: 21300000, guid: d6572fc413167c1409fe38775a28f10a, type: 3}
+  - {fileID: 21300000, guid: 071c4645d4864bb4f8ee38ae5d66c93a, type: 3}
+  - {fileID: 21300000, guid: e6db723f612af4d4cb5cd93043faa5a6, type: 3}
+  - {fileID: 21300000, guid: 809af3a3ed8f29944af747ea5bfedb96, type: 3}
+  - {fileID: 21300000, guid: abdd2a08bdd91444d84602c7d356180a, type: 3}
+  - {fileID: 21300000, guid: b91095df55368874299bada619b47be0, type: 3}
+  - {fileID: 21300000, guid: bff3f7076312e62449566d591d7b7149, type: 3}
+  - {fileID: 21300000, guid: f71db357b4e079c41a513112cfa22d71, type: 3}
   _targetCanvas: {fileID: 602778883}
   _spawnInterval: 0.2
   _speedRange: {x: 100, y: 300}

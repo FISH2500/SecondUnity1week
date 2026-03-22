@@ -64,7 +64,12 @@ public class BattleManegar : MonoBehaviour
 
         int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
 
-		_fadeImage.enabled = true;
+		if (_playerWin)
+			SoundManager.Instance.PlaySE("gameWin");
+		else
+			SoundManager.Instance.PlaySE("gameLose");
+
+			_fadeImage.enabled = true;
 		float elapsed = 0f;
 
 		Color startColor = _fadeColor;
@@ -198,10 +203,19 @@ public class BattleManegar : MonoBehaviour
 		Result = BattleResult.Win;
 		_cpuArea.RemoveCPUArea(enemyCard);
 		if (TurnManager.instance.CurrentPlayer == 0)
-			Destroy(enemyCard,6.0f);
-		else 
+		{
+			Destroy(enemyCard, 6.0f);
+			StartCoroutine(SoundWait("tear", 2.8f));
+			StartCoroutine(SoundWait("battleWin", 6.0f));
+		}
+		else
+		{
 			Destroy(enemyCard);
-			DefeatCrad = enemyCard;
+			SoundManager.Instance.PlaySE("tear");
+            StartCoroutine(SoundWait("battleWin", 0.8f));
+        }
+        DefeatCrad = enemyCard;
+		
         if (isEnemyGeneral)
 		{
 			EndGame = true;
@@ -217,10 +231,18 @@ public class BattleManegar : MonoBehaviour
 		_playerArea.RemoveArea(playerCard);
 		DefeatCrad = playerCard;
 		if (TurnManager.instance.CurrentPlayer == 0)
-			Destroy(playerCard,6.0f);
-		else 
+		{
+			Destroy(playerCard, 6.0f);
+            StartCoroutine(SoundWait("tear", 2.8f));
+            StartCoroutine(SoundWait("battleLose", 6.0f));
+		}
+		else
+		{
 			Destroy(playerCard);
-		if (isPlayerGeneral)
+            SoundManager.Instance.PlaySE("tear");
+			StartCoroutine(SoundWait("battleLose", 0.8f));
+        }
+        if (isPlayerGeneral)
 		{
 			EndGame = true;
 			_playerWin = playerWinsGame;
@@ -234,6 +256,7 @@ public class BattleManegar : MonoBehaviour
 		Result = BattleResult.Draw;
 		_cpuArea.RemoveCPUArea(eCard);
 		_playerArea.RemoveArea(pCard);
+		StartCoroutine(SoundWait("tear", 3.0f));
 		Destroy(pCard, 3.0f);
 		Destroy(eCard, 3.0f);
 
@@ -290,4 +313,10 @@ public class BattleManegar : MonoBehaviour
 			StartCoroutine(GameEnd());
 		}
 	}
+
+	private IEnumerator SoundWait(string soundName, float waitTime)
+	{
+		yield return new WaitForSeconds(waitTime);
+        SoundManager.Instance.PlaySE(soundName);
+    }
 }

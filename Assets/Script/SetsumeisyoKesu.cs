@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Setsumeisyo : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class SetsumeisyoKesu : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField]
 	Canvas _canvas;
@@ -17,9 +17,8 @@ public class Setsumeisyo : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	{
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
 
-		DispUI.instance.Disp(false);
-		_canvas.enabled = true;
-
+		DispUI.instance.Disp(true);
+		_canvas.enabled = false;
 		SoundManager.Instance.PlaySE("Command");
 	}
 

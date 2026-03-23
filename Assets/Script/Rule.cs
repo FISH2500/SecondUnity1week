@@ -9,6 +9,8 @@ public class Rule : MonoBehaviour
 	[SerializeField] private Image _targetImage;       // 切り替える対象のUI Image
 	[SerializeField] private Sprite[] _spriteArray;   // スプライトの配列
 
+	[SerializeField] private bool Title = true;
+
 	private int _currentIndex = 0; // 現在表示している添字
 
 	private bool _canInput = false;
@@ -21,7 +23,7 @@ public class Rule : MonoBehaviour
 		Instance = this;
 		// 初期表示の設定
 		UpdateImage();
-		StartCoroutine(ReadyToStart());
+		if (Title) StartCoroutine(ReadyToStart());
 	}
 
 	// --- 右ボタンなどで呼ぶ関数 ---
@@ -29,8 +31,8 @@ public class Rule : MonoBehaviour
 	{
 		if (_spriteArray.Length == 0) return;
 
-        SoundManager.Instance.PlaySE("MenuSelectSE");
-        _currentIndex++;
+		SoundManager.Instance.PlaySE("Command");
+		_currentIndex++;
 
 		if (_currentIndex >= _spriteArray.Length)
 		{
@@ -45,8 +47,8 @@ public class Rule : MonoBehaviour
 	{
 		if (_spriteArray.Length == 0) return;
 
-        SoundManager.Instance.PlaySE("MenuSelectSE");
-        _currentIndex--;
+		SoundManager.Instance.PlaySE("Command");
+		_currentIndex--;
 
 		if (_currentIndex < 0)
 		{
@@ -77,7 +79,7 @@ public class Rule : MonoBehaviour
 		if (_canvas.enabled) return;
 		if (Input.GetMouseButtonDown(0))
 		{
-			SoundManager.Instance.PlaySE("MenuSE");
+			SoundManager.Instance.PlaySE("Command");
 			_canvas.enabled = true;
 		}
 	}

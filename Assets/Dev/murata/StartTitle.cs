@@ -23,6 +23,7 @@ public class StartTitle : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 		Debug.Log($"{gameObject.name} ‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½");
 
 		StartCoroutine(GameStart());
+		SoundManager.Instance.PlaySE("Command");
 	}
 
 	IEnumerator GameStart()

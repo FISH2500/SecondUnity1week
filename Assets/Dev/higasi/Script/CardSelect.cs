@@ -209,7 +209,7 @@ public class CardSelect : MonoBehaviour
 			if (_cpuArea.CardNum >= 2) // 大将以外のカードが残っていたら無効
 			{
                 StartCoroutine(ReturnCard(_player1Card, false));
-                _player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
+                //_player1Card.GetComponent<SetSoldier>().RotateSetBack(TurnManager.instance.CurrentPlayer);
 
 				_player1Selected = false;
 				_player2Selected = false;

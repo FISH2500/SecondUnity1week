@@ -206,9 +206,7 @@ public class BattleManegar : MonoBehaviour
 		_cpuArea.RemoveCPUArea(enemyCard);
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
-			Destroy(enemyCard, 6.0f);
-			StartCoroutine(SoundWait("tear", 2.8f));
-			StartCoroutine(SoundWait("battleWin", 6.0f));
+			Destroy(enemyCard, _setTurnTime);
 		}
 		else
 		{
@@ -234,9 +232,7 @@ public class BattleManegar : MonoBehaviour
 		DefeatCrad = playerCard;
 		if (TurnManager.instance.CurrentPlayer == 0)
 		{
-			Destroy(playerCard, 6.0f);
-            StartCoroutine(SoundWait("tear", 2.8f));
-            StartCoroutine(SoundWait("battleLose", 6.0f));
+			Destroy(playerCard, _setTurnTime);
 		}
 		else
 		{
@@ -258,9 +254,9 @@ public class BattleManegar : MonoBehaviour
 		Result = BattleResult.Draw;
 		_cpuArea.RemoveCPUArea(eCard);
 		_playerArea.RemoveArea(pCard);
-		StartCoroutine(SoundWait("tear", 3.0f));
-		Destroy(pCard, 3.0f);
-		Destroy(eCard, 3.0f);
+		StartCoroutine(SoundWait("tear", 1.5f));
+		Destroy(pCard, _setTurnTime);
+		Destroy(eCard, _setTurnTime);
 
 		if (pGen || eGen)
 		{

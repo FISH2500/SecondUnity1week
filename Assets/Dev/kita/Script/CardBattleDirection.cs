@@ -10,36 +10,14 @@ public class CardBattleDirection : MonoBehaviour
 
     [SerializeField] private Image _fadeOutImage;//フェードアウトさせる画像
 
-    [SerializeField] private float _outSetTime;//フェードアウトがセットされるまで
+	[SerializeField] private BattleManegar _battleManegar;
 
-    [SerializeField] private float _fadeOutSpeed;
+	[Header("時間設定")]
+	[SerializeField] private float _outSetTime = 1.0f;     // 開始までの待ち時間
+	[SerializeField] private float _fadeOutDuration = 0.5f; // 何秒かけて暗くするか
+	[SerializeField] private float _blackoutHoldTime = 0.2f; // 真っ暗なまま維持する時間
+	[SerializeField] private float _fadeInDuration = 0.5f;  // 何秒かけて明るくするか
 
-    [SerializeField] private float _fadeInSpeed;
-
-    [SerializeField] private BattleManegar _battleManegar;
-
-    bool _fadeOut = false;//フェードアウトのフラグ
-
-    bool _fadeIn = false;//フェードインのフラグ
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (_fadeOut) 
-        {
-            StartCoroutine(SetFadeOut());
-        }
-        else if (_fadeIn) 
-        {
-
-            StartCoroutine(SetFadeIn());
-        }
-    }
 
     //攻撃演出をする際のオブジェクトの位置をセット
     public void SetBattleDirection(GameObject attacker,GameObject defender)//攻撃者と防御者の位置を受け取って、攻撃演出をする際のオブジェクトをセットする 
@@ -56,67 +34,61 @@ public class CardBattleDirection : MonoBehaviour
 
         defender.GetComponent<SetSoldier>().RotateSetFront();//守備側のカードを表にする
 
-        //敗北カード位置にヒットエフェクトを出す
+		//敗北カード位置にヒットエフェクトを出す
 
 
-        //暗転させる
-        _fadeOut = true;
+		//暗転させる
+		StartCoroutine(PlayBattleSequence());
 
-        //暗転している間にカードを壊れた状態に
-        StartCoroutine(SetBreakSprite());
-        //オブジェクトを削除
+		
+	}
 
-        //Destroy(defeatCard,10.0f);
+	private IEnumerator PlayBattleSequence()
+	{
+		yield return new WaitForSeconds(_outSetTime);
 
-    }
+		yield return StartCoroutine(FadeRoutine(0f, 1f, _fadeOutDuration));
 
-    private IEnumerator SetFadeOut()
-    {
-        yield return new WaitForSeconds(_outSetTime);
 
-        Color c = _fadeOutImage.color;
+		GameObject defeatCard = _battleManegar.DefeatCrad;
+		if (defeatCard != null)
+		{
+			defeatCard.GetComponent<SetSoldier>().SetBreakSprite();
+		}
 
-        while (c.a < 1.0f)
-        {
-            c.a += _fadeOutSpeed * Time.deltaTime;
-            c.a = Mathf.Clamp01(c.a);
-            _fadeOutImage.color = c;
+		SoundManager.Instance.PlaySE("tear");
 
-            yield return null;
-        }
+		yield return new WaitForSeconds(_blackoutHoldTime);
 
-        _fadeOut = false;
-        _fadeIn = true;
+		yield return StartCoroutine(FadeRoutine(1f, 0f, _fadeInDuration));
 
-    }
+		if (BattleManegar.Result == BattleManegar.BattleResult.Win)
+		{
+			SoundManager.Instance.PlaySE("battleWin");
+		}
+		else
+		{
+			SoundManager.Instance.PlaySE("battleLose");
+		}
+	}
 
-    private IEnumerator SetFadeIn()
-    {
-        yield return new WaitForSeconds(0.5f);
+	private IEnumerator FadeRoutine(float startAlpha, float endAlpha, float duration)
+	{
+		float elapsed = 0f;
+		Color c = _fadeOutImage.color;
 
-        Color c = _fadeOutImage.color;
+		while (elapsed < duration)
+		{
+			elapsed += Time.deltaTime;
+			float t = Mathf.Clamp01(elapsed / duration);
 
-        while (c.a > 0.0f)
-        {
-            c.a -= _fadeInSpeed * Time.deltaTime;
-            c.a = Mathf.Clamp01(c.a);
-            _fadeOutImage.color = c;
+			c.a = Mathf.Lerp(startAlpha, endAlpha, t);
+			_fadeOutImage.color = c;
 
-            yield return null;
-        }
+			yield return null;
+		}
 
-        _fadeIn = false;
-    }
-
-    private IEnumerator SetBreakSprite() 
-    {
-
-        yield return new WaitForSeconds(3.5f);
-
-        GameObject defeatCard = _battleManegar.DefeatCrad;
-
-        if (defeatCard != null ) 
-        defeatCard.GetComponent<SetSoldier>().SetBreakSprite();
-    }
-
+		c.a = endAlpha;
+		_fadeOutImage.color = c;
+	}
 }

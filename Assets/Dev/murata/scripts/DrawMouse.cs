@@ -3,37 +3,35 @@ using UnityEngine;
 
 public class DrawMouse : MonoBehaviour
 {
-	[SerializeField] private Camera _camera; // レイを飛ばすためのカメラ
-	[SerializeField] private Area _area; // セットするためのエリア
-	[SerializeField] private Canvas _selectDestroyCardUI; // 破壊選択UI
+	[SerializeField] private Camera _camera;
+	[SerializeField] private Area _area;
+	[SerializeField] private Canvas _selectDestroyCardUI;
 
-	private GameObject _dragObj = null; // 現在ドラッグしているオブジェクト
-	private float _zDistance = 0; // 選択した時の奥行き位置
-
+	private GameObject _dragObj = null;
+	private float _zDistance = 0;
 	[NonSerialized] public GameObject DrawObject;
+	private float _yPos;
 
-	private float _yPos; // カードのY軸固定位置
-
-	private void Awake()
-	{
-		if (_area.AllSet) SetDestroySelectCardWindow();
-	}
+	private GameObject _lastHoveredCard = null;
 
 	void Update()
 	{
+		if (_area.AllSet && _dragObj == null)
+		{
+			_selectDestroyCardUI.enabled = true;
+			HandleHoverHighlight();
+		}
+
 		// クリックされた瞬間
 		if (Input.GetMouseButtonDown(0))
 		{
-			// マウスの画面上の位置から、カメラの奥に向かうレイを作成
 			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 
-			if (Physics.Raycast(ray, out hit)) // 何かに当たった場合
+			if (Physics.Raycast(ray, out hit))
 			{
-				// Cardタグ以外ならこれ以上実行しない
 				if (!hit.collider.CompareTag("Card")) return;
 
-				// 大将の場合はカードを選択できないようにする
 				var soldier = hit.collider.gameObject.GetComponent<SetSoldier>();
 				if (soldier != null && soldier.IsGeneral) return;
 
@@ -41,93 +39,91 @@ public class DrawMouse : MonoBehaviour
 
 				if (DrawObject == obj)
 				{
-					// 選択したオブジェクトを保存
 					_dragObj = obj;
-					// Zの位置を保存
 					_zDistance = _camera.WorldToScreenPoint(_dragObj.transform.position).z;
 					_yPos = obj.transform.position.y;
 				}
 				else if (_area.AllSet)
 				{
-					// 全てセットされている状態で別のカードを選んだら、そのカードを削除
 					_area.RemoveArea(obj);
 					Destroy(obj);
 
-					// 削除したのでUIを閉じる
-					ReSetDestroySelectCardWindow();
+					// ハイライトもリセット
+					ResetLastHover();
+					_selectDestroyCardUI.enabled = false;
 				}
-
-				Debug.Log("クリックされたオブジェクト: " + hit.collider.gameObject.name);
 			}
 		}
 
-		if (_dragObj == null) return;
-
-		// ドラッグ中
-		if (Input.GetMouseButton(0))
+		if (_dragObj != null)
 		{
-			// 平面を作成してマウス位置をワールド座標に変換
-			Plane plane = new Plane(Vector3.up, new Vector3(0, _yPos, 0));
-			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-			if (plane.Raycast(ray, out float enter))
+			if (Input.GetMouseButton(0))
 			{
-				Vector3 hitPoint = ray.GetPoint(enter);
-				_dragObj.transform.position = hitPoint;
-			}
-		}
-
-		// 指を離した時
-		if (Input.GetMouseButtonUp(0))
-		{
-			// エリアにセットを試みる
-			if (_area.SetAria(_dragObj))
-			{
-				TurnManager.instance.ChangeTurn();
-				enabled = false;
+				Plane plane = new Plane(Vector3.up, new Vector3(0, _yPos, 0));
+				Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+				if (plane.Raycast(ray, out float enter))
+				{
+					Vector3 hitPoint = ray.GetPoint(enter);
+					_dragObj.transform.position = hitPoint;
+				}
 			}
 
-			_dragObj = null; // ドラッグ対象をリセット
+			if (Input.GetMouseButtonUp(0))
+			{
+				if (_area.SetAria(_dragObj))
+				{
+					TurnManager.instance.ChangeTurn();
+					enabled = false;
+				}
+				_dragObj = null;
+			}
 		}
 	}
 
-	// カードを捨てる選択ウィンドウを表示する
-	void SetDestroySelectCardWindow()
+	private void HandleHoverHighlight()
 	{
-		for (int i = 0; i < _area.CardObj.Length; i++)
+		Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+		if (Physics.Raycast(ray, out RaycastHit hit))
 		{
-			if (_area.CardObj[i] == null) continue;
+			GameObject hitObj = hit.collider.gameObject;
 
-			// 大将かどうかを判定
-			bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;
+			// 自分のエリアに配置済みのカードか、タグで判定（適宜調整してください）
+			if (hitObj.CompareTag("Card") && hitObj != DrawObject)
+			{
+				if (_lastHoveredCard != hitObj)
+				{
+					ResetLastHover();
 
-			// 大将の場合はアウトラインをつけない
-			if (isGeneral) continue;
+					SetSoldier sol = hitObj.GetComponent<SetSoldier>();
+					SetOutLine outline = hitObj.GetComponent<SetOutLine>();
 
-			// セットされているすべてのカードにアウトラインをつける
-			var outline = _area.CardObj[i].GetComponent<SetOutLine>();
-			if (outline != null) outline.SetOutline(0.03f);
+					// 大将以外ならハイライト
+					if (sol != null && !sol.IsGeneral && outline != null)
+					{
+						outline.SetOutline(0.05f); // 少し太めに強調
+						_lastHoveredCard = hitObj;
+					}
+				}
+			}
+			else
+			{
+				ResetLastHover();
+			}
 		}
-
-		_selectDestroyCardUI.enabled = true;
+		else
+		{
+			ResetLastHover();
+		}
 	}
 
-	// 削除選択ウィンドウを閉じてリセットする
-	void ReSetDestroySelectCardWindow()
+	// ハイライト解除
+	private void ResetLastHover()
 	{
-		for (int i = 0; i < _area.CardObj.Length; i++)
+		if (_lastHoveredCard != null)
 		{
-			if (_area.CardObj[i] == null) continue;
-
-			bool isGeneral = _area.CardObj[i].GetComponent<SetSoldier>().IsGeneral;
-
-			if (isGeneral) continue;
-
-			// アウトラインを消去
-			var outline = _area.CardObj[i].GetComponent<SetOutLine>();
+			SetOutLine outline = _lastHoveredCard.GetComponent<SetOutLine>();
 			if (outline != null) outline.ReSetOutline();
+			_lastHoveredCard = null;
 		}
-
-		_selectDestroyCardUI.enabled = false;
 	}
 }

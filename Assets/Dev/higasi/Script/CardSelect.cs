@@ -22,6 +22,9 @@ public class CardSelect : MonoBehaviour
     [SerializeField]
     Camera cam;
 
+	[SerializeField]
+	float _returnSec;
+
 	[SerializeField] private Canvas _attackCanvas;
 
     [SerializeField] private CardBattleDirection _cardBattleDirection;
@@ -236,7 +239,7 @@ public class CardSelect : MonoBehaviour
     {
         if (isBattle) 
         {
-            yield return new WaitForSeconds(5.5f);//ââèoÇÃÇΩÇﬂñﬂÇÈÇÃÇ…3ïbä‘ë“ÇΩÇπÇÈ
+            yield return new WaitForSeconds(_returnSec);//ââèoÇÃÇΩÇﬂñﬂÇÈÇÃÇ…3ïbä‘ë“ÇΩÇπÇÈ
         }
 
         while (true)

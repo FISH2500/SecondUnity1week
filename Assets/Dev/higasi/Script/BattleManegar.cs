@@ -57,10 +57,10 @@ public class BattleManegar : MonoBehaviour
 
     bool _playerWin = false;
 
-    IEnumerator GameEnd()
+    IEnumerator GameEnd(bool kousan)
     {
 
-        yield return new WaitForSeconds(_setGameEndUI);
+        if (!kousan) yield return new WaitForSeconds(_setGameEndUI);
 
         int gameJudgeIndex = 0; // 0:続行 1:プレイヤーの勝利 2:CPUの勝利
 
@@ -220,7 +220,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = true;
-			StartCoroutine(GameEnd());
+			StartCoroutine(GameEnd(false));
 		}
 	}
 
@@ -244,7 +244,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = playerWinsGame;
-			StartCoroutine(GameEnd());
+			StartCoroutine(GameEnd(false));
 		}
 	}
 
@@ -262,7 +262,7 @@ public class BattleManegar : MonoBehaviour
 		{
 			EndGame = true;
 			_playerWin = eGen; // 両方落ちた場合や大将が落ちた場合の判定
-			StartCoroutine(GameEnd());
+			StartCoroutine(GameEnd(false));
 		}
 	}
 
@@ -300,4 +300,15 @@ public class BattleManegar : MonoBehaviour
 		yield return new WaitForSeconds(waitTime);
         SoundManager.Instance.PlaySE(soundName);
     }
+
+	public void kousan()
+	{
+		if (EndGame) return; // すでに終わってたら何もしない
+
+		DispUI.instance.Disp(false);
+
+		EndGame = true;
+		_playerWin = false; // プレイヤーの負け確定
+		StartCoroutine(GameEnd(true)); // 敗北演出開始
+	}
 }
